@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-CU14-ubuntu-20.04
+    container_name: sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "P@ssw0rd123"
+    ports:
+      - "1433:1433"
+    networks:
+      - sqlnetwork
+
+networks:
+  sqlnetwork:
+    driver: bridge
