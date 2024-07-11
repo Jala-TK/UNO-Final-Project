@@ -8,7 +8,7 @@ Após, inicie o servidor com ``npm run start``
 
 ## Documentação no Postman
 
-Para acessar a documentação das APIs criadas neste projeto, você pode visitar o seguinte link no Postman: [Documentação no Postman](https://documenter.getpostman.com/view/19057141/2sA3e2gACo)
+Para acessar a documentação das APIs criadas neste projeto, você pode visitar o seguinte link no Postman: [Documentação no Postman](https://documenter.getpostman.com/view/15534443/2sA3e2gVcK)
 
 ## Dúvidas
 
