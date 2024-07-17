@@ -2,11 +2,11 @@ import { DataTypes } from 'sequelize';
 import sequelize from '../config/database.js';
 
 const Player = sequelize.define('Player', {
-  name: {
+  username: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  age: {
+  password: {
     type: DataTypes.STRING,
     allowNull: false,
   },

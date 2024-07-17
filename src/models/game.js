@@ -18,7 +18,9 @@ const Game = sequelize.define('Game', {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
     allowNull: false,
-  }
+  },
+
 });
+
 
 export default Game;

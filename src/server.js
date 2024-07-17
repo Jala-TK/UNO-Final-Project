@@ -5,6 +5,7 @@ import playerRoutes from './routes/playerRoutes.js';
 import scoreRoutes from './routes/scoreRoutes.js';
 import cardRoutes from './routes/cardRoutes.js';
 import errorHandler from './middleware/errorHandler.js';
+import authRoutes from './routes/authRoutes.js'
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,6 +15,7 @@ app.use('/api', gameRoutes);
 app.use('/api', playerRoutes);
 app.use('/api', scoreRoutes);
 app.use('/api', cardRoutes);
+app.use('/api', authRoutes);
 app.use(errorHandler);
 
 const startServer = async () => {
