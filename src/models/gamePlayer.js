@@ -19,7 +19,11 @@ const GamePlayer = sequelize.define('GamePlayer', {
       model: Game,
       key: 'id',
     }
-  }
+  },
+  status: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+  },
 });
 
 
