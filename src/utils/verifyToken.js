@@ -1,11 +1,11 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
 export default function VerifyToken(access_token) {
   return jwt.verify(access_token, process.env.JWT_SALT, (err, user) => {
     if (err) {
-      err.statusCode = 401
-      throw new Error(err)
+      err.statusCode = 401;
+      throw new Error(err);
     }
-    return user
-  })
+    return user;
+  });
 }
