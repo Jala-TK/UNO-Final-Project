@@ -10,14 +10,13 @@ export const createGame = async (req, res, next) => {
   try {
     let { title, maxPlayers } = req.body;
     const { name, access_token } = req.body;
-    if (name != null) title = name;
 
-    if (!title || !access_token || !maxPlayers)
+    if ((!title && !name) || !access_token || !maxPlayers)
       return res.status(400).json({ message: "Invalid params" });
-    const user = VerifyToken(access_token);
+    const user = await VerifyToken(access_token);
 
     const newGame = await Game.create({
-      title,
+      title: name | title,
       status: "Waiting for players",
       maxPlayers,
       creatorId: user.id,
@@ -58,7 +57,7 @@ export const updateGame = async (req, res, next) => {
     if (!game || game?.auditExcluded) {
       return res.status(404).json({ message: "Game not found" });
     }
-    const user = VerifyToken(access_token);
+    const user = await VerifyToken(access_token);
 
     if (game.creatorId !== user.id) {
       return res
@@ -80,7 +79,7 @@ export const deleteGame = async (req, res, next) => {
     if (!game || game?.auditExcluded) {
       return res.status(404).json({ message: "Game not found" });
     }
-    const user = VerifyToken(access_token);
+    const user = await VerifyToken(access_token);
 
     if (game.creatorId !== user.id) {
       return res
@@ -105,7 +104,7 @@ export const joinGame = async (req, res, next) => {
     if (!game || game?.auditExcluded)
       return res.status(404).json({ message: "Game not found" });
 
-    const user = VerifyToken(access_token);
+    const user = await VerifyToken(access_token);
 
     const playerInGame = await GamePlayer.findOne({
       where: { gameId: game_id, playerId: user.id, auditExcluded: false },
@@ -135,7 +134,7 @@ export const getReady = async (req, res, next) => {
     if (!game || game?.auditExcluded)
       return res.status(404).json({ message: "Game not found" });
 
-    const user = VerifyToken(access_token);
+    const user = await VerifyToken(access_token);
 
     const playerInGame = await GamePlayer.findOne({
       where: { gameId: game_id, playerId: user.id, auditExcluded: false },
@@ -166,7 +165,7 @@ export const startGame = async (req, res, next) => {
     if (!game || game?.auditExcluded)
       return res.status(404).json({ message: "Game not found" });
 
-    const user = VerifyToken(access_token);
+    const user = await VerifyToken(access_token);
 
     if (game.creatorId !== user.id) {
       return res
@@ -212,7 +211,7 @@ export const leaveGame = async (req, res, next) => {
     if (!game || game?.auditExcluded)
       return res.status(404).json({ message: "Game not found" });
 
-    const user = VerifyToken(access_token);
+    const user = await VerifyToken(access_token);
 
     const gamePlayer = await GamePlayer.findOne({
       where: { gameId: game_id, playerId: user.id, auditExcluded: false },
@@ -274,7 +273,7 @@ export const endGame = async (req, res, next) => {
     if (!game || game?.auditExcluded)
       return res.status(404).json({ message: "Game not found" });
 
-    const user = VerifyToken(access_token);
+    const user = await VerifyToken(access_token);
 
     if (game.creatorId !== user.id) {
       return res

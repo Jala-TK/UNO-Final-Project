@@ -60,7 +60,7 @@ export const playCard = async (req, res, next) => {
       return res.status(400).json({ message: "Invalid params" });
     }
 
-    const user = VerifyToken(access_token);
+    const user = await VerifyToken(access_token);
 
     const game = await Game.findByPk(game_id);
     if (!game || game?.auditExcluded) {
