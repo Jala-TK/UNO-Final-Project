@@ -83,7 +83,7 @@ export const setNextPlayer = async (game_id, res) => {
   }
 };
 
-export const setNewPoints = async (card_id, game_id, res) => {
+export const setNewPoints = async (card_id, game_id, user, res) => {
   try {
     const card = await Card.findByPk(card_id);
     if (!card || card?.auditExcluded)
@@ -107,7 +107,7 @@ export const setNewPoints = async (card_id, game_id, res) => {
     await gamePlayer.save();
   } catch (error) {
     return res.status(500).json({
-      message: "An error occurred while setting the next player",
+      message: "An error occurred while setting the points of player",
       error: error.message,
     });
   }

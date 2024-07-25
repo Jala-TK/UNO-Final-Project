@@ -118,8 +118,6 @@ export const joinGame = async (req, res, next) => {
       .status(200)
       .json({ message: "User joined the game successfully" });
   } catch (err) {
-    if ((err.statusCode = 401))
-      return res.status(401).json({ error: "Token is not valid" });
     next(err);
   }
 };
@@ -149,8 +147,6 @@ export const getReady = async (req, res, next) => {
 
     return res.status(200).json({ message: "The player is ready" });
   } catch (err) {
-    if ((err.statusCode = 401))
-      return res.status(401).json({ error: "Token is not valid" });
     next(err);
   }
 };
@@ -186,17 +182,13 @@ export const startGame = async (req, res, next) => {
     if (game.status == "In progress")
       return res.status(400).json({ message: "The game has already started" });
 
-    const { shuffledDeck, hands } = await initializeGame(game_id);
+    await initializeGame(game_id);
     game.status = "In progress";
     game.currentPlayer = user.id;
     await game.save();
 
-    res
-      .status(200)
-      .json({ message: "Game started successfully", shuffledDeck, hands });
+    res.status(200).json({ message: "Game started successfully" });
   } catch (err) {
-    if ((err.statusCode = 401))
-      return res.status(401).json({ error: "Token is not valid" });
     next(err);
   }
 };
@@ -257,8 +249,6 @@ export const leaveGame = async (req, res, next) => {
         .json({ message: "User left the game successfully" });
     }
   } catch (err) {
-    if ((err.statusCode = 401))
-      return res.status(401).json({ error: "Token is not valid" });
     next(err);
   }
 };
@@ -289,8 +279,6 @@ export const endGame = async (req, res, next) => {
       return res.status(400).json({ error: "The game is not running" });
     }
   } catch (err) {
-    if ((err.statusCode = 401))
-      return res.status(401).json({ error: "Token is not valid" });
     next(err);
   }
 };
@@ -440,10 +428,13 @@ export const getPlayerHands = async (req, res, next) => {
 
     const response = {
       game_id: game.id,
-      hands: Object.keys(playerHands).reduce((acc, playerId) => {
-        acc[playerNames[playerId]] = playerHands[playerId];
-        return acc;
-      }, {}),
+      hands: Object.keys(playerHands).reduce(
+        (acc, playerId) => ({
+          ...acc,
+          [playerNames[playerId]]: playerHands[playerId],
+        }),
+        {}
+      ),
     };
 
     res.status(200).json(response);

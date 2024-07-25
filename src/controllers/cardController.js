@@ -94,7 +94,7 @@ export const playCard = async (req, res, next) => {
     await card.save();
 
     await setNextPlayer(game_id, res);
-    await setNewPoints(card_id, game_id, res);
+    await setNewPoints(card_id, game_id, user, res);
 
     res.status(200).json({ message: "Card played successfully", card });
   } catch (error) {

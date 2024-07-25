@@ -9,6 +9,7 @@ import {
   deleteGame,
   joinGame,
   getReady,
+  endGame,
   leaveGame,
   startGame,
   getTopCard,
@@ -26,6 +27,7 @@ router.post("/game/join", joinGame);
 router.post("/game/ready", getReady);
 router.post("/game/leave", leaveGame);
 router.post("/game/start", startGame);
+router.post("/game/end", endGame);
 router.get("/game/status", getStatusGame);
 router.get("/game/players", getPlayersInGame);
 router.get("/game/currentPlayer", getCurrentPlayer);
