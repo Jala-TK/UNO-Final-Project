@@ -4,8 +4,7 @@ const { sign } = jwt;
 import "dotenv/config";
 import Player from "../models/player.js";
 import VerifyToken from "../utils/verifyToken.js";
-
-const blacklist = new Set();
+import blacklist from "../utils/blacklist.js";
 
 export const login = async (req, res, next) => {
   const username = req?.body?.username;
@@ -58,8 +57,7 @@ export const login = async (req, res, next) => {
       return res.status(401).json({ error: "Invalid credentials" });
     }
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: error });
+    next(err);
   }
 };
 
@@ -68,10 +66,9 @@ export const logout = async (req, res, next) => {
   if (!access_token)
     res.status(400).json({ error: "Access token not provided" });
 
-  if (blacklist.has(access_token)) {
-    return res.status(403).json({ error: "Token is blacklisted" });
-  }
-
+  await VerifyToken(access_token).catch((error) => {
+    next(error);
+  });
   blacklist.add(access_token);
 
   return res.status(200).json({ message: "User logged out successfully" });
@@ -84,18 +81,14 @@ export const getPerfil = async (req, res, next) => {
     return res.status(404).json({ error: "Invalid credentials" });
   }
 
-  if (blacklist.has(access_token)) {
-    return res.status(403).json({ error: "Token is blacklisted" });
-  }
+  const responsePerfil = await VerifyToken(access_token).catch((error) => {
+    next(error);
+  });
 
-  try {
-    const responsePerfil = VerifyToken(access_token);
-    res
-      .status(200)
-      .json({ username: responsePerfil.username, email: responsePerfil.email });
-  } catch (err) {
-    if ((err.statusCode = 401))
-      return res.status(401).json({ error: "Token is not valid" });
-    next(err);
+  if (responsePerfil?.username && responsePerfil?.email) {
+    res.status(200).json({
+      username: responsePerfil.username,
+      email: responsePerfil.email,
+    });
   }
 };
