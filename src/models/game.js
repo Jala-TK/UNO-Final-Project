@@ -1,8 +1,8 @@
-import { DataTypes } from 'sequelize';
-import sequelize from '../config/database.js';
-import Player from './player.js';
+import { DataTypes } from "sequelize";
+import sequelize from "../config/database.js";
+import Player from "./player.js";
 
-const Game = sequelize.define('Game', {
+const Game = sequelize.define("Game", {
   title: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -20,7 +20,7 @@ const Game = sequelize.define('Game', {
     allowNull: false,
     references: {
       model: Player,
-      key: 'id',
+      key: "id",
     },
   },
   currentPlayer: {
@@ -28,7 +28,7 @@ const Game = sequelize.define('Game', {
     allowNull: true,
     references: {
       model: Player,
-      key: 'id',
+      key: "id",
     },
   },
   auditExcluded: {
@@ -36,9 +36,6 @@ const Game = sequelize.define('Game', {
     defaultValue: false,
     allowNull: false,
   },
-
-
 });
-
 
 export default Game;
