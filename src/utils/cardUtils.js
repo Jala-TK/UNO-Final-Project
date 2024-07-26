@@ -8,12 +8,21 @@ export const shuffle = (deck) => {
 };
 
 //Distributes cards to players
-export const dealCards = (deck, numPlayers, handSize) => {
-  const hands = Array.from({ length: numPlayers }, () => []);
-  for (let i = 0; i < numPlayers; i++) {
-    for (let j = 0; j < handSize; j++) {
-      hands[i].push(deck.pop());
+export const dealCards = (deck, players, handSize) => {
+  if (!Array.isArray(players)) {
+    throw new Error("players should be an array");
+  }
+
+  const hands = players.map((player) => ({
+    playerId: player.playerId,
+    cards: [],
+  }));
+
+  for (let i = 0; i < handSize; i++) {
+    for (let j = 0; j < players.length; j++) {
+      hands[j].cards.push(deck.pop());
     }
   }
+
   return hands;
 };

@@ -25,7 +25,6 @@ export const initializeGame = async (gameId) => {
     where: { gameId, auditExcluded: false },
   });
 
-  const numPlayers = players.length;
   const handSize = 7;
 
   // Creates cards in the database
@@ -45,7 +44,37 @@ export const initializeGame = async (gameId) => {
     console.error("Error creating cards:", error);
     throw error;
   }
-  const hands = dealCards(shuffledDeck, numPlayers, handSize);
+  const hands = dealCards(shuffledDeck, players, handSize);
+
+  console.log(hands);
+
+  // Calculate and update the player points
+  const playerPoints = players
+    .map(async (player) => {
+      const playerHand = hands.find(
+        (hand) => hand.playerId === player.playerId
+      );
+
+      const points = playerHand.cards.reduce(
+        (total, card) => total + card.points,
+        0
+      );
+
+      const gamePlayer = await GamePlayer.findOne({
+        where: { gameId: gameId, playerId: player.playerId },
+      });
+
+      gamePlayer.score += points;
+      await gamePlayer.save();
+    })
+    .filter((update) => update !== null);
+
+  try {
+    await Promise.all(playerPoints);
+  } catch (error) {
+    console.error("Error updating player points:", error);
+    throw error;
+  }
 
   return { shuffledDeck, hands };
 };
