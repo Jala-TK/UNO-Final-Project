@@ -9,7 +9,7 @@
     <Counters>
         <Counter>
             <Name>table</Name>
-            <Value>11</Value>
+            <Value>21</Value>
             <Prefix>t</Prefix>
         </Counter>
         <Counter>
@@ -19,7 +19,7 @@
         </Counter>
         <Counter>
             <Name>column</Name>
-            <Value>33</Value>
+            <Value>111</Value>
             <Prefix>c</Prefix>
         </Counter>
         <Counter>
@@ -34,7 +34,7 @@
         </Counter>
         <Counter>
             <Name>reference</Name>
-            <Value>15</Value>
+            <Value>33</Value>
             <Prefix>r</Prefix>
         </Counter>
         <Counter>
@@ -44,7 +44,7 @@
         </Counter>
         <Counter>
             <Name>alternate_key</Name>
-            <Value>0</Value>
+            <Value>2</Value>
             <Prefix>a</Prefix>
         </Counter>
         <Counter>
@@ -89,7 +89,7 @@
         </Counter>
         <Counter>
             <Name>tableDisplay</Name>
-            <Value>11</Value>
+            <Value>21</Value>
             <Prefix>td</Prefix>
         </Counter>
         <Counter>
@@ -109,7 +109,7 @@
         </Counter>
         <Counter>
             <Name>referenceDisplay</Name>
-            <Value>15</Value>
+            <Value>28</Value>
             <Prefix>rd</Prefix>
         </Counter>
     </Counters>
@@ -118,20 +118,33 @@
     <AdditionalSQLBeforeDrop></AdditionalSQLBeforeDrop>
     <AdditionalSQLAfterDrop></AdditionalSQLAfterDrop>
     <Tables>
-        <Table Id="t1">
+        <Table Id="t13">
             <Name>Cards</Name>
             <Description></Description>
             <Columns>
-                <Column Id="c26">
+                <Column Id="c40">
                     <Name>id</Name>
                     <Type>int</Type>
                     <Description></Description>
                     <Nullable>false</Nullable>
                     <DefaultValue></DefaultValue>
                     <CheckExpression></CheckExpression>
-                    <Properties/>
+                    <Properties>
+                        <Property>
+                            <Name>identity_seed</Name>
+                            <Value>1</Value>
+                        </Property>
+                        <Property>
+                            <Name>identity</Name>
+                            <Value>true</Value>
+                        </Property>
+                        <Property>
+                            <Name>identity_increment</Name>
+                            <Value>1</Value>
+                        </Property>
+                    </Properties>
                 </Column>
-                <Column Id="c18">
+                <Column Id="c41">
                     <Name>color</Name>
                     <Type>nvarchar(255)</Type>
                     <Description></Description>
@@ -140,8 +153,17 @@
                     <CheckExpression></CheckExpression>
                     <Properties/>
                 </Column>
-                <Column Id="c19">
+                <Column Id="c42">
                     <Name>value</Name>
+                    <Type>nvarchar(255)</Type>
+                    <Description></Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c43">
+                    <Name>points</Name>
                     <Type>int</Type>
                     <Description></Description>
                     <Nullable>false</Nullable>
@@ -149,7 +171,16 @@
                     <CheckExpression></CheckExpression>
                     <Properties/>
                 </Column>
-                <Column Id="c20">
+                <Column Id="c44">
+                    <Name>image</Name>
+                    <Type>nvarchar(255)</Type>
+                    <Description></Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c45">
                     <Name>gameId</Name>
                     <Type>int</Type>
                     <Description></Description>
@@ -158,7 +189,7 @@
                     <CheckExpression></CheckExpression>
                     <Properties/>
                 </Column>
-                <Column Id="c27">
+                <Column Id="c46">
                     <Name>whoOwnerCard</Name>
                     <Type>int</Type>
                     <Description></Description>
@@ -167,162 +198,36 @@
                     <CheckExpression></CheckExpression>
                     <Properties/>
                 </Column>
-                <Column Id="c29">
-                    <Name>discarded</Name>
-                    <Type>bit</Type>
-                    <Description></Description>
-                    <Nullable>false</Nullable>
-                    <DefaultValue></DefaultValue>
-                    <CheckExpression></CheckExpression>
-                    <Properties/>
-                </Column>
-                <Column Id="c33">
-                    <Name>auditExcluded</Name>
-                    <Type>bit</Type>
-                    <Description></Description>
-                    <Nullable>false</Nullable>
-                    <DefaultValue></DefaultValue>
-                    <CheckExpression></CheckExpression>
-                    <Properties/>
-                </Column>
-            </Columns>
-            <PrimaryKey>
-                <Name></Name>
-                <Columns>
-                    <Column>c26</Column>
-                </Columns>
-            </PrimaryKey>
-            <AlternateKeys/>
-            <Indexes/>
-            <TableChecks/>
-            <AdditionalSQLBefore></AdditionalSQLBefore>
-            <AdditionalSQLAfter></AdditionalSQLAfter>
-            <Properties/>
-        </Table>
-        <Table Id="t5">
-            <Name>Players</Name>
-            <Description></Description>
-            <Columns>
-                <Column Id="c3">
-                    <Name>id</Name>
-                    <Type>int</Type>
-                    <Description></Description>
-                    <Nullable>false</Nullable>
-                    <DefaultValue></DefaultValue>
-                    <CheckExpression></CheckExpression>
-                    <Properties/>
-                </Column>
-                <Column Id="c1">
-                    <Name>username</Name>
-                    <Type>nvarchar(255)</Type>
-                    <Description></Description>
-                    <Nullable>false</Nullable>
-                    <DefaultValue></DefaultValue>
-                    <CheckExpression></CheckExpression>
-                    <Properties/>
-                </Column>
-                <Column Id="c2">
-                    <Name>password</Name>
-                    <Type>nvarchar(255)</Type>
-                    <Description></Description>
-                    <Nullable>false</Nullable>
-                    <DefaultValue></DefaultValue>
-                    <CheckExpression></CheckExpression>
-                    <Properties/>
-                </Column>
-                <Column Id="c4">
-                    <Name>email</Name>
-                    <Type>nvarchar(255)</Type>
-                    <Description></Description>
-                    <Nullable>false</Nullable>
-                    <DefaultValue></DefaultValue>
-                    <CheckExpression></CheckExpression>
-                    <Properties/>
-                </Column>
-                <Column Id="c5">
-                    <Name>auditExcluded</Name>
-                    <Type>bit</Type>
-                    <Description></Description>
-                    <Nullable>false</Nullable>
-                    <DefaultValue></DefaultValue>
-                    <CheckExpression></CheckExpression>
-                    <Properties/>
-                </Column>
-            </Columns>
-            <PrimaryKey>
-                <Name></Name>
-                <Columns>
-                    <Column>c3</Column>
-                </Columns>
-            </PrimaryKey>
-            <AlternateKeys/>
-            <Indexes/>
-            <TableChecks/>
-            <AdditionalSQLBefore></AdditionalSQLBefore>
-            <AdditionalSQLAfter></AdditionalSQLAfter>
-            <Properties/>
-        </Table>
-        <Table Id="t6">
-            <Name>Games</Name>
-            <Description></Description>
-            <Columns>
-                <Column Id="c12">
-                    <Name>id</Name>
-                    <Type>int</Type>
-                    <Description></Description>
-                    <Nullable>false</Nullable>
-                    <DefaultValue></DefaultValue>
-                    <CheckExpression></CheckExpression>
-                    <Properties/>
-                </Column>
-                <Column Id="c8">
-                    <Name>title</Name>
-                    <Type>nvarchar(255)</Type>
-                    <Description></Description>
-                    <Nullable>false</Nullable>
-                    <DefaultValue></DefaultValue>
-                    <CheckExpression></CheckExpression>
-                    <Properties/>
-                </Column>
-                <Column Id="c9">
-                    <Name>status</Name>
-                    <Type>nvarchar(255)</Type>
-                    <Description></Description>
-                    <Nullable>false</Nullable>
-                    <DefaultValue></DefaultValue>
-                    <CheckExpression></CheckExpression>
-                    <Properties/>
-                </Column>
-                <Column Id="c10">
-                    <Name>maxPlayers</Name>
-                    <Type>int</Type>
-                    <Description></Description>
-                    <Nullable>false</Nullable>
-                    <DefaultValue></DefaultValue>
-                    <CheckExpression></CheckExpression>
-                    <Properties/>
-                </Column>
-                <Column Id="c16">
-                    <Name>currentPlayer</Name>
+                <Column Id="c47">
+                    <Name>orderDiscarded</Name>
                     <Type>int</Type>
                     <Description></Description>
                     <Nullable>true</Nullable>
-                    <DefaultValue></DefaultValue>
+                    <DefaultValue>NULL</DefaultValue>
                     <CheckExpression></CheckExpression>
                     <Properties/>
                 </Column>
-                <Column Id="c17">
-                    <Name>Players_id</Name>
-                    <Type>int</Type>
-                    <Description></Description>
-                    <Nullable>true</Nullable>
-                    <DefaultValue></DefaultValue>
-                    <CheckExpression></CheckExpression>
-                    <Properties/>
-                </Column>
-                <Column Id="c11">
+                <Column Id="c48">
                     <Name>auditExcluded</Name>
                     <Type>bit</Type>
+                    <Description></Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue>( 0 )</DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c49">
+                    <Name>createdAt</Name>
+                    <Type>datetimeoffset(7)</Type>
+                    <Description></Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c50">
+                    <Name>updatedAt</Name>
+                    <Type>datetimeoffset(7)</Type>
                     <Description></Description>
                     <Nullable>false</Nullable>
                     <DefaultValue></DefaultValue>
@@ -331,9 +236,9 @@
                 </Column>
             </Columns>
             <PrimaryKey>
-                <Name></Name>
+                <Name>dbo.Cards_pk</Name>
                 <Columns>
-                    <Column>c12</Column>
+                    <Column>c40</Column>
                 </Columns>
             </PrimaryKey>
             <AlternateKeys/>
@@ -341,22 +246,48 @@
             <TableChecks/>
             <AdditionalSQLBefore></AdditionalSQLBefore>
             <AdditionalSQLAfter></AdditionalSQLAfter>
-            <Properties/>
+            <Properties>
+                <Property>
+                    <Name>schema</Name>
+                    <Value>dbo</Value>
+                </Property>
+                <Property>
+                    <Name>on_clause</Name>
+                    <Value>PRIMARY</Value>
+                </Property>
+                <Property>
+                    <Name>is_primary_key_clustered</Name>
+                    <Value>CLUSTERED</Value>
+                </Property>
+            </Properties>
         </Table>
-        <Table Id="t7">
+        <Table Id="t14">
             <Name>GamePlayers</Name>
             <Description></Description>
             <Columns>
-                <Column Id="c7">
+                <Column Id="c51">
                     <Name>id</Name>
                     <Type>int</Type>
                     <Description></Description>
                     <Nullable>false</Nullable>
                     <DefaultValue></DefaultValue>
                     <CheckExpression></CheckExpression>
-                    <Properties/>
+                    <Properties>
+                        <Property>
+                            <Name>identity_seed</Name>
+                            <Value>1</Value>
+                        </Property>
+                        <Property>
+                            <Name>identity</Name>
+                            <Value>true</Value>
+                        </Property>
+                        <Property>
+                            <Name>identity_increment</Name>
+                            <Value>1</Value>
+                        </Property>
+                    </Properties>
                 </Column>
-                <Column Id="c13">
+                <Column Id="c52">
                     <Name>playerId</Name>
                     <Type>int</Type>
                     <Description></Description>
@@ -365,7 +296,7 @@
                     <CheckExpression></CheckExpression>
                     <Properties/>
                 </Column>
-                <Column Id="c14">
+                <Column Id="c53">
                     <Name>gameId</Name>
                     <Type>int</Type>
                     <Description></Description>
@@ -374,27 +305,45 @@
                     <CheckExpression></CheckExpression>
                     <Properties/>
                 </Column>
-                <Column Id="c30">
+                <Column Id="c54">
                     <Name>status</Name>
                     <Type>bit</Type>
                     <Description></Description>
                     <Nullable>false</Nullable>
-                    <DefaultValue></DefaultValue>
+                    <DefaultValue>( 0 )</DefaultValue>
                     <CheckExpression></CheckExpression>
                     <Properties/>
                 </Column>
-                <Column Id="c31">
+                <Column Id="c55">
                     <Name>score</Name>
                     <Type>int</Type>
+                    <Description></Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue>( 0 )</DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c56">
+                    <Name>auditExcluded</Name>
+                    <Type>bit</Type>
+                    <Description></Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue>( 0 )</DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c57">
+                    <Name>createdAt</Name>
+                    <Type>datetimeoffset(7)</Type>
                     <Description></Description>
                     <Nullable>false</Nullable>
                     <DefaultValue></DefaultValue>
                     <CheckExpression></CheckExpression>
                     <Properties/>
                 </Column>
-                <Column Id="c32">
-                    <Name>auditExcluded</Name>
-                    <Type>bit</Type>
+                <Column Id="c58">
+                    <Name>updatedAt</Name>
+                    <Type>datetimeoffset(7)</Type>
                     <Description></Description>
                     <Nullable>false</Nullable>
                     <DefaultValue></DefaultValue>
@@ -403,9 +352,9 @@
                 </Column>
             </Columns>
             <PrimaryKey>
-                <Name></Name>
+                <Name>dbo.GamePlayers_pk</Name>
                 <Columns>
-                    <Column>c7</Column>
+                    <Column>c51</Column>
                 </Columns>
             </PrimaryKey>
             <AlternateKeys/>
@@ -413,104 +362,470 @@
             <TableChecks/>
             <AdditionalSQLBefore></AdditionalSQLBefore>
             <AdditionalSQLAfter></AdditionalSQLAfter>
-            <Properties/>
+            <Properties>
+                <Property>
+                    <Name>schema</Name>
+                    <Value>dbo</Value>
+                </Property>
+                <Property>
+                    <Name>on_clause</Name>
+                    <Value>PRIMARY</Value>
+                </Property>
+                <Property>
+                    <Name>is_primary_key_clustered</Name>
+                    <Value>CLUSTERED</Value>
+                </Property>
+            </Properties>
+        </Table>
+        <Table Id="t15">
+            <Name>Games</Name>
+            <Description></Description>
+            <Columns>
+                <Column Id="c59">
+                    <Name>id</Name>
+                    <Type>int</Type>
+                    <Description></Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties>
+                        <Property>
+                            <Name>identity_seed</Name>
+                            <Value>1</Value>
+                        </Property>
+                        <Property>
+                            <Name>identity</Name>
+                            <Value>true</Value>
+                        </Property>
+                        <Property>
+                            <Name>identity_increment</Name>
+                            <Value>1</Value>
+                        </Property>
+                    </Properties>
+                </Column>
+                <Column Id="c60">
+                    <Name>title</Name>
+                    <Type>nvarchar(255)</Type>
+                    <Description></Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c61">
+                    <Name>status</Name>
+                    <Type>nvarchar(255)</Type>
+                    <Description></Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c62">
+                    <Name>maxPlayers</Name>
+                    <Type>int</Type>
+                    <Description></Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c63">
+                    <Name>creatorId</Name>
+                    <Type>int</Type>
+                    <Description></Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c64">
+                    <Name>currentPlayer</Name>
+                    <Type>int</Type>
+                    <Description></Description>
+                    <Nullable>true</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c65">
+                    <Name>auditExcluded</Name>
+                    <Type>bit</Type>
+                    <Description></Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue>( 0 )</DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c66">
+                    <Name>createdAt</Name>
+                    <Type>datetimeoffset(7)</Type>
+                    <Description></Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c67">
+                    <Name>updatedAt</Name>
+                    <Type>datetimeoffset(7)</Type>
+                    <Description></Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+            </Columns>
+            <PrimaryKey>
+                <Name>dbo.Games_pk</Name>
+                <Columns>
+                    <Column>c59</Column>
+                </Columns>
+            </PrimaryKey>
+            <AlternateKeys/>
+            <Indexes/>
+            <TableChecks/>
+            <AdditionalSQLBefore></AdditionalSQLBefore>
+            <AdditionalSQLAfter></AdditionalSQLAfter>
+            <Properties>
+                <Property>
+                    <Name>schema</Name>
+                    <Value>dbo</Value>
+                </Property>
+                <Property>
+                    <Name>on_clause</Name>
+                    <Value>PRIMARY</Value>
+                </Property>
+                <Property>
+                    <Name>is_primary_key_clustered</Name>
+                    <Value>CLUSTERED</Value>
+                </Property>
+            </Properties>
+        </Table>
+        <Table Id="t17">
+            <Name>BlacklistTokens</Name>
+            <Description></Description>
+            <Columns>
+                <Column Id="c75">
+                    <Name>id</Name>
+                    <Type>int</Type>
+                    <Description></Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties>
+                        <Property>
+                            <Name>identity_seed</Name>
+                            <Value>1</Value>
+                        </Property>
+                        <Property>
+                            <Name>identity</Name>
+                            <Value>true</Value>
+                        </Property>
+                        <Property>
+                            <Name>identity_increment</Name>
+                            <Value>1</Value>
+                        </Property>
+                    </Properties>
+                </Column>
+                <Column Id="c76">
+                    <Name>token</Name>
+                    <Type>nvarchar(255)</Type>
+                    <Description></Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c77">
+                    <Name>createdAt</Name>
+                    <Type>datetimeoffset(7)</Type>
+                    <Description></Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c78">
+                    <Name>updatedAt</Name>
+                    <Type>datetimeoffset(7)</Type>
+                    <Description></Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+            </Columns>
+            <PrimaryKey>
+                <Name>dbo.BlacklistTokens_pk</Name>
+                <Columns>
+                    <Column>c75</Column>
+                </Columns>
+            </PrimaryKey>
+            <AlternateKeys>
+                <AlternateKey Id="a2">
+                    <Name>AK_0</Name>
+                    <Description></Description>
+                    <Columns>
+                        <Column>c76</Column>
+                    </Columns>
+                    <Properties>
+                        <Property>
+                            <Name>on_clause</Name>
+                            <Value>PRIMARY</Value>
+                        </Property>
+                        <Property>
+                            <Name>with_index_options</Name>
+                            <Value>PAD_INDEX = OFF , STATISTICS_NORECOMPUTE = OFF , IGNORE_DUP_KEY = OFF , ALLOW_ROW_LOCKS = ON , ALLOW_PAGE_LOCKS = ON , OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF</Value>
+                        </Property>
+                        <Property>
+                            <Name>is_clustered</Name>
+                            <Value>NONCLUSTERED</Value>
+                        </Property>
+                    </Properties>
+                </AlternateKey>
+            </AlternateKeys>
+            <Indexes/>
+            <TableChecks/>
+            <AdditionalSQLBefore></AdditionalSQLBefore>
+            <AdditionalSQLAfter></AdditionalSQLAfter>
+            <Properties>
+                <Property>
+                    <Name>schema</Name>
+                    <Value>dbo</Value>
+                </Property>
+                <Property>
+                    <Name>on_clause</Name>
+                    <Value>PRIMARY</Value>
+                </Property>
+                <Property>
+                    <Name>is_primary_key_clustered</Name>
+                    <Value>CLUSTERED</Value>
+                </Property>
+            </Properties>
+        </Table>
+        <Table Id="t16">
+            <Name>Players</Name>
+            <Description></Description>
+            <Columns>
+                <Column Id="c68">
+                    <Name>id</Name>
+                    <Type>int</Type>
+                    <Description></Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties>
+                        <Property>
+                            <Name>identity_seed</Name>
+                            <Value>1</Value>
+                        </Property>
+                        <Property>
+                            <Name>identity</Name>
+                            <Value>true</Value>
+                        </Property>
+                        <Property>
+                            <Name>identity_increment</Name>
+                            <Value>1</Value>
+                        </Property>
+                    </Properties>
+                </Column>
+                <Column Id="c69">
+                    <Name>username</Name>
+                    <Type>nvarchar(255)</Type>
+                    <Description></Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c70">
+                    <Name>password</Name>
+                    <Type>nvarchar(255)</Type>
+                    <Description></Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c71">
+                    <Name>email</Name>
+                    <Type>nvarchar(255)</Type>
+                    <Description></Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c72">
+                    <Name>auditExcluded</Name>
+                    <Type>bit</Type>
+                    <Description></Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue>( 0 )</DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c73">
+                    <Name>createdAt</Name>
+                    <Type>datetimeoffset(7)</Type>
+                    <Description></Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c74">
+                    <Name>updatedAt</Name>
+                    <Type>datetimeoffset(7)</Type>
+                    <Description></Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+            </Columns>
+            <PrimaryKey>
+                <Name>dbo.Players_pk</Name>
+                <Columns>
+                    <Column>c68</Column>
+                </Columns>
+            </PrimaryKey>
+            <AlternateKeys/>
+            <Indexes/>
+            <TableChecks/>
+            <AdditionalSQLBefore></AdditionalSQLBefore>
+            <AdditionalSQLAfter></AdditionalSQLAfter>
+            <Properties>
+                <Property>
+                    <Name>schema</Name>
+                    <Value>dbo</Value>
+                </Property>
+                <Property>
+                    <Name>on_clause</Name>
+                    <Value>PRIMARY</Value>
+                </Property>
+                <Property>
+                    <Name>is_primary_key_clustered</Name>
+                    <Value>CLUSTERED</Value>
+                </Property>
+            </Properties>
         </Table>
     </Tables>
     <ExternalTables/>
     <Views/>
     <MaterializedViews/>
     <References>
-        <Reference Id="r2">
-            <Name>Games_Users_Users</Name>
-            <Description></Description>
-            <PKTable>t5</PKTable>
-            <FKTable>t7</FKTable>
-            <PKRole></PKRole>
-            <FKRole></FKRole>
-            <ReferenceColumns>
-                <ReferenceColumn>
-                    <PKColumn>c3</PKColumn>
-                    <FKColumn>c13</FKColumn>
-                </ReferenceColumn>
-            </ReferenceColumns>
-            <Cardinality>0..*</Cardinality>
-            <Mandatory>true</Mandatory>
-            <OnUpdateAction>None</OnUpdateAction>
-            <OnDeleteAction>None</OnDeleteAction>
-            <Properties/>
-        </Reference>
-        <Reference Id="r4">
-            <Name>Games_Users_Games</Name>
-            <Description></Description>
-            <PKTable>t6</PKTable>
-            <FKTable>t7</FKTable>
-            <PKRole></PKRole>
-            <FKRole></FKRole>
-            <ReferenceColumns>
-                <ReferenceColumn>
-                    <PKColumn>c12</PKColumn>
-                    <FKColumn>c14</FKColumn>
-                </ReferenceColumn>
-            </ReferenceColumns>
-            <Cardinality>0..*</Cardinality>
-            <Mandatory>true</Mandatory>
-            <OnUpdateAction>None</OnUpdateAction>
-            <OnDeleteAction>None</OnDeleteAction>
-            <Properties/>
-        </Reference>
-        <Reference Id="r13">
-            <Name>Games_Players</Name>
-            <Description></Description>
-            <PKTable>t5</PKTable>
-            <FKTable>t6</FKTable>
-            <PKRole></PKRole>
-            <FKRole></FKRole>
-            <ReferenceColumns>
-                <ReferenceColumn>
-                    <PKColumn>c3</PKColumn>
-                    <FKColumn>c17</FKColumn>
-                </ReferenceColumn>
-            </ReferenceColumns>
-            <Cardinality>0..*</Cardinality>
-            <Mandatory>false</Mandatory>
-            <OnUpdateAction>None</OnUpdateAction>
-            <OnDeleteAction>None</OnDeleteAction>
-            <Properties/>
-        </Reference>
-        <Reference Id="r14">
-            <Name>Cards_Games</Name>
-            <Description></Description>
-            <PKTable>t6</PKTable>
-            <FKTable>t1</FKTable>
-            <PKRole></PKRole>
-            <FKRole></FKRole>
-            <ReferenceColumns>
-                <ReferenceColumn>
-                    <PKColumn>c12</PKColumn>
-                    <FKColumn>c20</FKColumn>
-                </ReferenceColumn>
-            </ReferenceColumns>
-            <Cardinality>0..*</Cardinality>
-            <Mandatory>true</Mandatory>
-            <OnUpdateAction>None</OnUpdateAction>
-            <OnDeleteAction>None</OnDeleteAction>
-            <Properties/>
-        </Reference>
-        <Reference Id="r15">
+        <Reference Id="r26">
             <Name>Cards_Players</Name>
             <Description></Description>
-            <PKTable>t5</PKTable>
-            <FKTable>t1</FKTable>
+            <PKTable>t16</PKTable>
+            <FKTable>t13</FKTable>
             <PKRole></PKRole>
             <FKRole></FKRole>
             <ReferenceColumns>
                 <ReferenceColumn>
-                    <PKColumn>c3</PKColumn>
-                    <FKColumn>c27</FKColumn>
+                    <PKColumn>c68</PKColumn>
+                    <FKColumn>c46</FKColumn>
                 </ReferenceColumn>
             </ReferenceColumns>
             <Cardinality>0..*</Cardinality>
             <Mandatory>false</Mandatory>
+            <OnUpdateAction>None</OnUpdateAction>
+            <OnDeleteAction>None</OnDeleteAction>
+            <Properties/>
+        </Reference>
+        <Reference Id="r27">
+            <Name>Cards_Games</Name>
+            <Description></Description>
+            <PKTable>t15</PKTable>
+            <FKTable>t13</FKTable>
+            <PKRole></PKRole>
+            <FKRole></FKRole>
+            <ReferenceColumns>
+                <ReferenceColumn>
+                    <PKColumn>c59</PKColumn>
+                    <FKColumn>c45</FKColumn>
+                </ReferenceColumn>
+            </ReferenceColumns>
+            <Cardinality>0..*</Cardinality>
+            <Mandatory>true</Mandatory>
+            <OnUpdateAction>None</OnUpdateAction>
+            <OnDeleteAction>None</OnDeleteAction>
+            <Properties/>
+        </Reference>
+        <Reference Id="r30">
+            <Name>GamePlayers_Games</Name>
+            <Description></Description>
+            <PKTable>t15</PKTable>
+            <FKTable>t14</FKTable>
+            <PKRole></PKRole>
+            <FKRole></FKRole>
+            <ReferenceColumns>
+                <ReferenceColumn>
+                    <PKColumn>c59</PKColumn>
+                    <FKColumn>c53</FKColumn>
+                </ReferenceColumn>
+            </ReferenceColumns>
+            <Cardinality>0..*</Cardinality>
+            <Mandatory>true</Mandatory>
+            <OnUpdateAction>None</OnUpdateAction>
+            <OnDeleteAction>None</OnDeleteAction>
+            <Properties/>
+        </Reference>
+        <Reference Id="r31">
+            <Name>GamePlayers_Players</Name>
+            <Description></Description>
+            <PKTable>t16</PKTable>
+            <FKTable>t14</FKTable>
+            <PKRole></PKRole>
+            <FKRole></FKRole>
+            <ReferenceColumns>
+                <ReferenceColumn>
+                    <PKColumn>c68</PKColumn>
+                    <FKColumn>c52</FKColumn>
+                </ReferenceColumn>
+            </ReferenceColumns>
+            <Cardinality>0..*</Cardinality>
+            <Mandatory>true</Mandatory>
+            <OnUpdateAction>None</OnUpdateAction>
+            <OnDeleteAction>None</OnDeleteAction>
+            <Properties/>
+        </Reference>
+        <Reference Id="r32">
+            <Name>Player_Games_Players_Current</Name>
+            <Description></Description>
+            <PKTable>t16</PKTable>
+            <FKTable>t15</FKTable>
+            <PKRole></PKRole>
+            <FKRole></FKRole>
+            <ReferenceColumns>
+                <ReferenceColumn>
+                    <PKColumn>c68</PKColumn>
+                    <FKColumn>c64</FKColumn>
+                </ReferenceColumn>
+            </ReferenceColumns>
+            <Cardinality>0..*</Cardinality>
+            <Mandatory>false</Mandatory>
+            <OnUpdateAction>None</OnUpdateAction>
+            <OnDeleteAction>None</OnDeleteAction>
+            <Properties/>
+        </Reference>
+        <Reference Id="r33">
+            <Name>Player_Games_Players_Creator</Name>
+            <Description></Description>
+            <PKTable>t16</PKTable>
+            <FKTable>t15</FKTable>
+            <PKRole></PKRole>
+            <FKRole></FKRole>
+            <ReferenceColumns>
+                <ReferenceColumn>
+                    <PKColumn>c68</PKColumn>
+                    <FKColumn>c63</FKColumn>
+                </ReferenceColumn>
+            </ReferenceColumns>
+            <Cardinality>0..*</Cardinality>
+            <Mandatory>true</Mandatory>
             <OnUpdateAction>None</OnUpdateAction>
             <OnDeleteAction>None</OnDeleteAction>
             <Properties/>
@@ -521,44 +836,54 @@
     <Areas/>
     <Texts/>
     <TableDisplays>
-        <TableDisplay Id="td1">
-            <X>6907.5</X>
-            <Y>7346.5</Y>
-            <Width>210.0</Width>
-            <Height>145.0</Height>
+        <TableDisplay Id="td13">
+            <X>4980.5</X>
+            <Y>7711.5</Y>
+            <Width>225.0</Width>
+            <Height>202.0</Height>
             <LineColor>#000000</LineColor>
             <FillColor>#ffffff</FillColor>
-            <Table>t1</Table>
+            <Table>t13</Table>
             <FixedSize>false</FixedSize>
         </TableDisplay>
-        <TableDisplay Id="td5">
-            <X>7087.5</X>
-            <Y>7098.5</Y>
-            <Width>191.0</Width>
-            <Height>116.0</Height>
+        <TableDisplay Id="td14">
+            <X>4949.5</X>
+            <Y>7257.5</Y>
+            <Width>216.0</Width>
+            <Height>159.0</Height>
             <LineColor>#000000</LineColor>
             <FillColor>#ffffff</FillColor>
-            <Table>t5</Table>
+            <Table>t14</Table>
             <FixedSize>false</FixedSize>
         </TableDisplay>
-        <TableDisplay Id="td6">
-            <X>6730.5</X>
-            <Y>7104.5</Y>
-            <Width>218.0</Width>
-            <Height>148.0</Height>
+        <TableDisplay Id="td15">
+            <X>4679.5</X>
+            <Y>7478.5</Y>
+            <Width>217.0</Width>
+            <Height>174.0</Height>
             <LineColor>#000000</LineColor>
             <FillColor>#ffffff</FillColor>
-            <Table>t6</Table>
+            <Table>t15</Table>
             <FixedSize>false</FixedSize>
         </TableDisplay>
-        <TableDisplay Id="td7">
-            <X>6948.5</X>
-            <Y>6949.5</Y>
-            <Width>129.0</Width>
-            <Height>116.0</Height>
+        <TableDisplay Id="td17">
+            <X>5216.5</X>
+            <Y>7280.5</Y>
+            <Width>216.0</Width>
+            <Height>89.0</Height>
             <LineColor>#000000</LineColor>
             <FillColor>#ffffff</FillColor>
-            <Table>t7</Table>
+            <Table>t17</Table>
+            <FixedSize>false</FixedSize>
+        </TableDisplay>
+        <TableDisplay Id="td16">
+            <X>5224.5</X>
+            <Y>7508.5</Y>
+            <Width>216.0</Width>
+            <Height>137.0</Height>
+            <LineColor>#000000</LineColor>
+            <FillColor>#ffffff</FillColor>
+            <Table>t16</Table>
             <FixedSize>false</FixedSize>
         </TableDisplay>
     </TableDisplays>
@@ -566,114 +891,123 @@
     <ViewDisplays/>
     <MaterializedViewDisplays/>
     <ReferenceDisplays>
-        <ReferenceDisplay Id="rd2">
-            <Color>#000000</Color>
-            <Type>Vertical_4CP</Type>
-            <ControlPoints>
-                <ControlPoint>
-                    <X>7173.5</X>
-                    <Y>7141.5</Y>
-                </ControlPoint>
-                <ControlPoint>
-                    <X>7173.5</X>
-                    <Y>6991.5</Y>
-                </ControlPoint>
-                <ControlPoint>
-                    <X>7018.5</X>
-                    <Y>6991.5</Y>
-                </ControlPoint>
-                <ControlPoint>
-                    <X>7018.5</X>
-                    <Y>6984.5</Y>
-                </ControlPoint>
-            </ControlPoints>
-            <PkTableDisplay>td5</PkTableDisplay>
-            <FkTableDisplay>td7</FkTableDisplay>
-            <Reference>r2</Reference>
-        </ReferenceDisplay>
-        <ReferenceDisplay Id="rd4">
+        <ReferenceDisplay Id="rd21">
             <Color>#000000</Color>
             <Type>Cross_3CP</Type>
             <ControlPoints>
                 <ControlPoint>
-                    <X>6814.5</X>
-                    <Y>7140.5</Y>
+                    <X>5358.5</X>
+                    <Y>7635.5</Y>
                 </ControlPoint>
                 <ControlPoint>
-                    <X>6814.5</X>
-                    <Y>6992.5</Y>
+                    <X>5358.5</X>
+                    <Y>7823.5</Y>
                 </ControlPoint>
                 <ControlPoint>
-                    <X>7004.5</X>
-                    <Y>6992.5</Y>
+                    <X>5195.5</X>
+                    <Y>7823.5</Y>
                 </ControlPoint>
             </ControlPoints>
-            <PkTableDisplay>td6</PkTableDisplay>
-            <FkTableDisplay>td7</FkTableDisplay>
-            <Reference>r4</Reference>
+            <PkTableDisplay>td16</PkTableDisplay>
+            <FkTableDisplay>td13</FkTableDisplay>
+            <Reference>r26</Reference>
         </ReferenceDisplay>
-        <ReferenceDisplay Id="rd13">
+        <ReferenceDisplay Id="rd22">
+            <Color>#000000</Color>
+            <Type>Cross_3CP</Type>
+            <ControlPoints>
+                <ControlPoint>
+                    <X>4885.5</X>
+                    <Y>7637.5</Y>
+                </ControlPoint>
+                <ControlPoint>
+                    <X>4885.5</X>
+                    <Y>7852.5</Y>
+                </ControlPoint>
+                <ControlPoint>
+                    <X>4990.5</X>
+                    <Y>7852.5</Y>
+                </ControlPoint>
+            </ControlPoints>
+            <PkTableDisplay>td15</PkTableDisplay>
+            <FkTableDisplay>td13</FkTableDisplay>
+            <Reference>r27</Reference>
+        </ReferenceDisplay>
+        <ReferenceDisplay Id="rd25">
+            <Color>#000000</Color>
+            <Type>Cross_3CP</Type>
+            <ControlPoints>
+                <ControlPoint>
+                    <X>4806.5</X>
+                    <Y>7488.5</Y>
+                </ControlPoint>
+                <ControlPoint>
+                    <X>4806.5</X>
+                    <Y>7388.5</Y>
+                </ControlPoint>
+                <ControlPoint>
+                    <X>4959.5</X>
+                    <Y>7388.5</Y>
+                </ControlPoint>
+            </ControlPoints>
+            <PkTableDisplay>td15</PkTableDisplay>
+            <FkTableDisplay>td14</FkTableDisplay>
+            <Reference>r30</Reference>
+        </ReferenceDisplay>
+        <ReferenceDisplay Id="rd26">
+            <Color>#000000</Color>
+            <Type>Cross_3CP</Type>
+            <ControlPoints>
+                <ControlPoint>
+                    <X>5338.5</X>
+                    <Y>7518.5</Y>
+                </ControlPoint>
+                <ControlPoint>
+                    <X>5338.5</X>
+                    <Y>7406.5</Y>
+                </ControlPoint>
+                <ControlPoint>
+                    <X>5155.5</X>
+                    <Y>7406.5</Y>
+                </ControlPoint>
+            </ControlPoints>
+            <PkTableDisplay>td16</PkTableDisplay>
+            <FkTableDisplay>td14</FkTableDisplay>
+            <Reference>r31</Reference>
+        </ReferenceDisplay>
+        <ReferenceDisplay Id="rd27">
             <Color>#000000</Color>
             <Type>Horizontal_2CP</Type>
             <ControlPoints>
                 <ControlPoint>
-                    <X>7121.5</X>
-                    <Y>7152.5</Y>
+                    <X>5264.5</X>
+                    <Y>7558.5</Y>
                 </ControlPoint>
                 <ControlPoint>
-                    <X>6807.5</X>
-                    <Y>7152.5</Y>
+                    <X>4774.5</X>
+                    <Y>7558.5</Y>
                 </ControlPoint>
             </ControlPoints>
-            <PkTableDisplay>td5</PkTableDisplay>
-            <FkTableDisplay>td6</FkTableDisplay>
-            <Reference>r13</Reference>
+            <PkTableDisplay>td16</PkTableDisplay>
+            <FkTableDisplay>td15</FkTableDisplay>
+            <Reference>r32</Reference>
         </ReferenceDisplay>
-        <ReferenceDisplay Id="rd14">
+        <ReferenceDisplay Id="rd28">
             <Color>#000000</Color>
-            <Type>Cross_3CP</Type>
+            <Type>Horizontal_2CP</Type>
             <ControlPoints>
                 <ControlPoint>
-                    <X>6829.5</X>
-                    <Y>7177.5</Y>
+                    <X>5320.5</X>
+                    <Y>7592.5</Y>
                 </ControlPoint>
                 <ControlPoint>
-                    <X>6829.5</X>
-                    <Y>7395.5</Y>
-                </ControlPoint>
-                <ControlPoint>
-                    <X>6969.5</X>
-                    <Y>7395.5</Y>
+                    <X>4824.5</X>
+                    <Y>7592.5</Y>
                 </ControlPoint>
             </ControlPoints>
-            <PkTableDisplay>td6</PkTableDisplay>
-            <FkTableDisplay>td1</FkTableDisplay>
-            <Reference>r14</Reference>
-        </ReferenceDisplay>
-        <ReferenceDisplay Id="rd15">
-            <Color>#000000</Color>
-            <Type>Vertical_4CP</Type>
-            <ControlPoints>
-                <ControlPoint>
-                    <X>7168.5</X>
-                    <Y>7111.5</Y>
-                </ControlPoint>
-                <ControlPoint>
-                    <X>7168.5</X>
-                    <Y>7268.5</Y>
-                </ControlPoint>
-                <ControlPoint>
-                    <X>7084.5</X>
-                    <Y>7268.5</Y>
-                </ControlPoint>
-                <ControlPoint>
-                    <X>7084.5</X>
-                    <Y>7447.5</Y>
-                </ControlPoint>
-            </ControlPoints>
-            <PkTableDisplay>td5</PkTableDisplay>
-            <FkTableDisplay>td1</FkTableDisplay>
-            <Reference>r15</Reference>
+            <PkTableDisplay>td16</PkTableDisplay>
+            <FkTableDisplay>td15</FkTableDisplay>
+            <Reference>r33</Reference>
         </ReferenceDisplay>
     </ReferenceDisplays>
     <Properties>
