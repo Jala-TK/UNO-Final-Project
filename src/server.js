@@ -1,11 +1,11 @@
 import express from "express";
 import sequelize from "./config/database.js";
-import gameRoutes from "./routes/gameRoutes.js";
-import playerRoutes from "./routes/playerRoutes.js";
-import scoreRoutes from "./routes/scoreRoutes.js";
-import cardRoutes from "./routes/cardRoutes.js";
+import gameRoutes from "./controllers/gameController.js";
+import playerRoutes from "./controllers/playerController.js";
+import scoreRoutes from "./controllers/scoreController.js";
+import cardRoutes from "./controllers/cardController.js";
 import errorHandler from "./middleware/errorHandler.js";
-import authRoutes from "./routes/authRoutes.js";
+import authRoutes from "./controllers/authController.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -23,7 +23,7 @@ const startServer = async () => {
     await sequelize.authenticate();
     console.log("\x1b[32m%s\x1b[0m", "Conectado ao banco com sucesso.");
 
-    await sequelize.sync(); //{force: true}
+    await sequelize.sync();
     console.log("\x1b[32m%s\x1b[0m", "Database sincronizado");
 
     app.listen(PORT, () => {
