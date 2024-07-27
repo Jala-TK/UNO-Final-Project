@@ -1,11 +1,14 @@
 import { Sequelize } from 'sequelize';
+import * as dotenv from 'dotenv';
 
-const sequelize = new Sequelize('unoDB', 'sa', 'P@ssw0rd123', {
-  host: 'localhost',
-  dialect: 'mssql',
+dotenv.config();
+
+const sequelize = new Sequelize(process.env.DB_NAME || '', process.env.DB_USER || '', process.env.DB_PASSWORD || '', {
+  host: process.env.DB_HOST || 'localhost',
+  dialect: process.env.DB_DIALECT,
   dialectOptions: {
     options: {
-      encrypt: true
+      encrypt: process.env.DB_DIALECT == true
     }
   }
 });
