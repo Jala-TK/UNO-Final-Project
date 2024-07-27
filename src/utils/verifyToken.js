@@ -1,9 +1,11 @@
 import jwt from "jsonwebtoken";
-import blacklist from "../utils/blacklist.js";
+import BlacklistToken from "../models/blacklistToken.js";
 
 export default async function VerifyToken(access_token) {
-  return new Promise((resolve, reject) => {
-    if (blacklist.has(access_token)) {
+  return new Promise(async (resolve, reject) => {
+    const blacklist = await BlacklistToken.findOne({ where: { token: access_token } })
+
+    if (blacklist) {
       const error = new Error("Token is blacklisted");
       error.code = 403;
       return reject(error);

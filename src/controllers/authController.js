@@ -4,7 +4,7 @@ const { sign } = jwt;
 import "dotenv/config";
 import Player from "../models/player.js";
 import VerifyToken from "../utils/verifyToken.js";
-import blacklist from "../utils/blacklist.js";
+import BlacklistToken from "../models/blacklistToken.js";
 
 export const login = async (req, res, next) => {
   const username = req?.body?.username;
@@ -61,17 +61,27 @@ export const login = async (req, res, next) => {
   }
 };
 
+
 export const logout = async (req, res, next) => {
   const { access_token } = req.body;
+
   if (!access_token)
-    res.status(400).json({ error: "Access token not provided" });
+    return res.status(400).json({ error: "Access token not provided" });
 
-  await VerifyToken(access_token).catch((error) => {
+  try {
+    await VerifyToken(access_token);
+
+    const existingToken = await BlacklistToken.findOne({ where: { token: access_token } });
+    if (existingToken) {
+      return res.status(200).json({ message: "User already logged out" });
+    }
+
+    await BlacklistToken.create({ token: access_token });
+
+    return res.status(200).json({ message: "User logged out successfully" });
+  } catch (error) {
     next(error);
-  });
-  blacklist.add(access_token);
-
-  return res.status(200).json({ message: "User logged out successfully" });
+  }
 };
 
 export const getPerfil = async (req, res, next) => {
