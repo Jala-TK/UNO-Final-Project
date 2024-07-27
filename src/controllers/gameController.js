@@ -233,17 +233,18 @@ export const leaveGame = async (req, res, next) => {
             "Player removed from game and creator transferred successfully",
         });
       } else {
-        const excluded = {
+        await GamePlayer.update({
           auditExcluded: true,
-        };
-        await GamePlayer.update(excluded, { where: { gameId: game_id } });
+        }, { where: { gameId: game_id } });
         await game.update(excluded);
         return res.json({
           message: "Game and all players removed successfully",
         });
       }
     } else {
-      await gamePlayer.update(excluded);
+      await gamePlayer.update({
+        auditExcluded: true,
+      });
       return res
         .status(200)
         .json({ message: "User left the game successfully" });
