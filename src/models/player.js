@@ -5,6 +5,7 @@ const Player = sequelize.define("Player", {
   username: {
     type: DataTypes.STRING,
     allowNull: false,
+    unique: true,
   },
   password: {
     type: DataTypes.STRING,
@@ -13,6 +14,7 @@ const Player = sequelize.define("Player", {
   email: {
     type: DataTypes.STRING,
     allowNull: false,
+    unique: true,
   },
   auditExcluded: {
     type: DataTypes.BOOLEAN,
