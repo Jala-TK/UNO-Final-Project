@@ -10,7 +10,7 @@ export const login = async (req, res, next) => {
   const password = req?.body?.password;
 
   if (!username || !password) {
-    return res.status(400).json({ error: "Invalid credentials" });
+    return res.status(401).json({ error: "Invalid credentials or User not found" });
   }
 
   try {
@@ -19,7 +19,7 @@ export const login = async (req, res, next) => {
     });
 
     if (!player) {
-      return res.status(404).json({ error: "Invalid credentials" });
+      return res.status(401).json({ error: "Invalid credentials or User not found" });
     }
 
     const salt = process.env.JWT_SALT;
