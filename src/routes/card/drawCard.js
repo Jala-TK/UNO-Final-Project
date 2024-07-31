@@ -1,27 +1,29 @@
-import Card from "../../models/card.js";
-import Game from "../../models/game.js";
-import GamePlayer from "../../models/gamePlayer.js";
-import { setNextPlayer } from "../../services/dealerService.js";
-import VerifyToken from "../../utils/verifyToken.js";
+import Card from '../../models/card.js';
+import Game from '../../models/game.js';
+import GamePlayer from '../../models/gamePlayer.js';
+import { setNextPlayer } from '../../services/dealerService.js';
+import VerifyToken from '../../utils/verifyToken.js';
+
+// Draw a card from the deck and give it to the current player.
 export const drawCard = async (req, res, next) => {
   try {
     const { game_id, access_token } = req.body;
 
     if (!game_id || !access_token) {
-      return res.status(400).json({ message: "Invalid params" });
+      return res.status(400).json({ message: 'Invalid params' });
     }
 
     const user = await VerifyToken(access_token);
 
     const game = await Game.findByPk(game_id);
     if (!game || game?.auditExcluded) {
-      return res.status(404).json({ message: "Game not found" });
+      return res.status(404).json({ message: 'Game not found' });
     }
 
     if (user.id !== game.currentPlayer)
       return res
         .status(400)
-        .json({ message: "It is not the players turn yet" });
+        .json({ message: 'It is not the players turn yet' });
 
     const card = await Card.findOne({
       where: { gameId: game_id, whoOwnerCard: null },
@@ -31,7 +33,7 @@ export const drawCard = async (req, res, next) => {
       //Update to create a new cards
       return res
         .status(400)
-        .json({ message: "No more cards available in the deck" });
+        .json({ message: 'No more cards available in the deck' });
     }
 
     await Card.update({ whoOwnerCard: user.id }, { where: { id: card.id } });
