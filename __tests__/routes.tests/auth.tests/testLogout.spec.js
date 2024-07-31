@@ -8,13 +8,13 @@ describe('POST /api/logout', () => {
 
   beforeAll(async () => {
     player = await Player.create({
-      username: 'testGetPerfil',
-      email: 'testGetPerfil@example.com',
+      username: 'testLogoutPerfil',
+      email: 'testLogoutPerfil@example.com',
       password: 'password123',
     });
 
     const response = await request(app).post('/api/login').send({
-      username: 'testGetPerfil',
+      username: 'testLogoutPerfil',
       password: 'password123',
     });
 
@@ -24,7 +24,7 @@ describe('POST /api/logout', () => {
   afterAll(async () => {
     await Player.destroy({
       where: {
-        username: 'testGetPerfil',
+        username: 'testLogoutPerfil',
       },
     });
   });
