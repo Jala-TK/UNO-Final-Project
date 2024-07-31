@@ -1,7 +1,6 @@
 import request from 'supertest';
 import app from '../../../src/index.js';
 import Player from '../../../src/models/player.js';
-import BlacklistToken from '../../../src/models/blacklistToken.js';
 
 describe('POST /api/logout', () => {
   let token;
