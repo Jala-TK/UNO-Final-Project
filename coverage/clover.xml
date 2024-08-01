@@ -1,0 +1,827 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1722487661147" clover="3.2.0">
+  <project timestamp="1722487661148" name="All files">
+    <metrics statements="635" coveredstatements="569" conditionals="352" coveredconditionals="313" methods="62" coveredmethods="59" elements="1049" coveredelements="941" complexity="0" loc="635" ncloc="635" packages="13" files="49" classes="49"/>
+    <package name="src">
+      <metrics statements="17" coveredstatements="7" conditionals="6" coveredconditionals="3" methods="3" coveredmethods="0"/>
+      <file name="index.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\index.js">
+        <metrics statements="17" coveredstatements="7" conditionals="6" coveredconditionals="3" methods="3" coveredmethods="0"/>
+        <line num="6" count="32" type="stmt"/>
+        <line num="7" count="32" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="32" type="stmt"/>
+        <line num="10" count="32" type="stmt"/>
+        <line num="11" count="32" type="stmt"/>
+        <line num="13" count="32" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="33" count="32" type="cond" truecount="1" falsecount="1"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="44" count="0" type="cond" truecount="0" falsecount="2"/>
+      </file>
+    </package>
+    <package name="src.config">
+      <metrics statements="3" coveredstatements="3" conditionals="14" coveredconditionals="7" methods="0" coveredmethods="0"/>
+      <file name="database.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\config\database.js">
+        <metrics statements="3" coveredstatements="3" conditionals="14" coveredconditionals="7" methods="0" coveredmethods="0"/>
+        <line num="4" count="37" type="stmt"/>
+        <line num="6" count="37" type="stmt"/>
+        <line num="8" count="37" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.controllers">
+      <metrics statements="37" coveredstatements="37" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="authController.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\controllers\authController.js">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="6" count="32" type="stmt"/>
+        <line num="8" count="32" type="stmt"/>
+        <line num="9" count="32" type="stmt"/>
+        <line num="10" count="32" type="stmt"/>
+      </file>
+      <file name="cardController.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\controllers\cardController.js">
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="9" count="32" type="stmt"/>
+        <line num="11" count="32" type="stmt"/>
+        <line num="12" count="32" type="stmt"/>
+        <line num="13" count="32" type="stmt"/>
+        <line num="14" count="32" type="stmt"/>
+        <line num="15" count="32" type="stmt"/>
+        <line num="16" count="32" type="stmt"/>
+      </file>
+      <file name="gameController.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\controllers\gameController.js">
+        <metrics statements="15" coveredstatements="15" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="17" count="32" type="stmt"/>
+        <line num="19" count="32" type="stmt"/>
+        <line num="20" count="32" type="stmt"/>
+        <line num="21" count="32" type="stmt"/>
+        <line num="22" count="32" type="stmt"/>
+        <line num="23" count="32" type="stmt"/>
+        <line num="24" count="32" type="stmt"/>
+        <line num="25" count="32" type="stmt"/>
+        <line num="26" count="32" type="stmt"/>
+        <line num="27" count="32" type="stmt"/>
+        <line num="28" count="32" type="stmt"/>
+        <line num="29" count="32" type="stmt"/>
+        <line num="30" count="32" type="stmt"/>
+        <line num="31" count="32" type="stmt"/>
+        <line num="32" count="32" type="stmt"/>
+      </file>
+      <file name="playerController.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\controllers\playerController.js">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="7" count="32" type="stmt"/>
+        <line num="9" count="32" type="stmt"/>
+        <line num="10" count="32" type="stmt"/>
+        <line num="11" count="32" type="stmt"/>
+        <line num="12" count="32" type="stmt"/>
+      </file>
+      <file name="scoreController.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\controllers\scoreController.js">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="8" count="32" type="stmt"/>
+        <line num="10" count="32" type="stmt"/>
+        <line num="11" count="32" type="stmt"/>
+        <line num="12" count="32" type="stmt"/>
+        <line num="13" count="32" type="stmt"/>
+        <line num="14" count="32" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.middleware">
+      <metrics statements="5" coveredstatements="5" conditionals="6" coveredconditionals="3" methods="1" coveredmethods="1"/>
+      <file name="errorHandler.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\middleware\errorHandler.js">
+        <metrics statements="5" coveredstatements="5" conditionals="6" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="1" count="32" type="stmt"/>
+        <line num="2" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="3" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="4" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="8" count="3" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.models">
+      <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="blacklistToken.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\models\blacklistToken.js">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="4" count="33" type="stmt"/>
+      </file>
+      <file name="card.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\models\card.js">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="6" count="33" type="stmt"/>
+      </file>
+      <file name="game.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\models\game.js">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="5" count="35" type="stmt"/>
+      </file>
+      <file name="gamePlayer.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\models\gamePlayer.js">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="6" count="33" type="stmt"/>
+      </file>
+      <file name="player.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\models\player.js">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="4" count="37" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.routes">
+      <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="index.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\index.js">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="8" count="32" type="stmt"/>
+        <line num="10" count="32" type="stmt"/>
+        <line num="11" count="32" type="stmt"/>
+        <line num="12" count="32" type="stmt"/>
+        <line num="13" count="32" type="stmt"/>
+        <line num="14" count="32" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.routes.auth">
+      <metrics statements="41" coveredstatements="34" conditionals="22" coveredconditionals="15" methods="3" coveredmethods="3"/>
+      <file name="getPerfil.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\auth\getPerfil.js">
+        <metrics statements="10" coveredstatements="8" conditionals="6" coveredconditionals="4" methods="1" coveredmethods="1"/>
+        <line num="3" count="32" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="6" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="7" count="0" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="13" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+      </file>
+      <file name="login.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\auth\login.js">
+        <metrics statements="19" coveredstatements="16" conditionals="12" coveredconditionals="9" methods="1" coveredmethods="1"/>
+        <line num="6" count="32" type="stmt"/>
+        <line num="8" count="32" type="stmt"/>
+        <line num="9" count="34" type="stmt"/>
+        <line num="10" count="34" type="stmt"/>
+        <line num="12" count="34" type="cond" truecount="3" falsecount="1"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="16" count="34" type="stmt"/>
+        <line num="17" count="34" type="stmt"/>
+        <line num="21" count="34" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="25" count="33" type="stmt"/>
+        <line num="27" count="33" type="stmt"/>
+        <line num="31" count="33" type="stmt"/>
+        <line num="32" count="33" type="stmt"/>
+        <line num="34" count="33" type="cond" truecount="1" falsecount="1"/>
+        <line num="40" count="33" type="stmt"/>
+        <line num="52" count="33" type="stmt"/>
+        <line num="56" count="0" type="stmt"/>
+        <line num="59" count="0" type="stmt"/>
+      </file>
+      <file name="logout.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\auth\logout.js">
+        <metrics statements="12" coveredstatements="10" conditionals="4" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="4" count="32" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="7" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="11" count="3" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="16" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.routes.card">
+      <metrics statements="87" coveredstatements="77" conditionals="63" coveredconditionals="59" methods="6" coveredmethods="6"/>
+      <file name="createCard.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\card\createCard.js">
+        <metrics statements="12" coveredstatements="11" conditionals="11" coveredconditionals="11" methods="1" coveredmethods="1"/>
+        <line num="4" count="32" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="7" count="3" type="cond" truecount="7" falsecount="0"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="12" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+      </file>
+      <file name="deleteCard.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\card\deleteCard.js">
+        <metrics statements="8" coveredstatements="7" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
+        <line num="3" count="32" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+      </file>
+      <file name="drawCard.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\card\drawCard.js">
+        <metrics statements="21" coveredstatements="18" conditionals="12" coveredconditionals="10" methods="1" coveredmethods="1"/>
+        <line num="8" count="32" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="12" count="3" type="cond" truecount="3" falsecount="1"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="16" count="3" type="stmt"/>
+        <line num="18" count="3" type="stmt"/>
+        <line num="19" count="3" type="cond" truecount="3" falsecount="1"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="23" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="28" count="2" type="stmt"/>
+        <line num="32" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="45" count="1" type="stmt"/>
+        <line num="46" count="1" type="stmt"/>
+        <line num="48" count="1" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
+      </file>
+      <file name="getCard.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\card\getCard.js">
+        <metrics statements="7" coveredstatements="6" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
+        <line num="3" count="32" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="6" count="3" type="cond" truecount="4" falsecount="0"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+      </file>
+      <file name="playCard.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\card\playCard.js">
+        <metrics statements="27" coveredstatements="24" conditionals="23" coveredconditionals="21" methods="1" coveredmethods="1"/>
+        <line num="7" count="32" type="stmt"/>
+        <line num="8" count="6" type="stmt"/>
+        <line num="9" count="6" type="stmt"/>
+        <line num="10" count="6" type="cond" truecount="4" falsecount="1"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="14" count="6" type="stmt"/>
+        <line num="16" count="6" type="stmt"/>
+        <line num="17" count="6" type="cond" truecount="4" falsecount="0"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="21" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="26" count="4" type="stmt"/>
+        <line num="27" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="30" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="33" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="38" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="44" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="45" count="1" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="48" count="1" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
+      </file>
+      <file name="updateCard.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\card\updateCard.js">
+        <metrics statements="12" coveredstatements="11" conditionals="9" coveredconditionals="9" methods="1" coveredmethods="1"/>
+        <line num="3" count="32" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="10" count="2" type="cond" truecount="5" falsecount="0"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.routes.game">
+      <metrics statements="220" coveredstatements="204" conditionals="134" coveredconditionals="129" methods="21" coveredmethods="21"/>
+      <file name="createGame.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\game\createGame.js">
+        <metrics statements="11" coveredstatements="10" conditionals="8" coveredconditionals="7" methods="1" coveredmethods="1"/>
+        <line num="5" count="32" type="stmt"/>
+        <line num="6" count="14" type="stmt"/>
+        <line num="7" count="14" type="stmt"/>
+        <line num="8" count="14" type="stmt"/>
+        <line num="10" count="14" type="cond" truecount="5" falsecount="1"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="13" type="stmt"/>
+        <line num="14" count="13" type="stmt"/>
+        <line num="21" count="13" type="stmt"/>
+        <line num="23" count="13" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+      </file>
+      <file name="deleteGame.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\game\deleteGame.js">
+        <metrics statements="14" coveredstatements="12" conditionals="8" coveredconditionals="7" methods="1" coveredmethods="1"/>
+        <line num="4" count="32" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="7" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="11" count="2" type="cond" truecount="3" falsecount="1"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="16" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+      </file>
+      <file name="endGame.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\game\endGame.js">
+        <metrics statements="15" coveredstatements="13" conditionals="10" coveredconditionals="9" methods="1" coveredmethods="1"/>
+        <line num="5" count="32" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="8" count="3" type="cond" truecount="4" falsecount="0"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="12" count="2" type="cond" truecount="3" falsecount="1"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="17" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="29" count="0" type="stmt"/>
+      </file>
+      <file name="getCurrentPlayer.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\game\getCurrentPlayer.js">
+        <metrics statements="14" coveredstatements="13" conditionals="8" coveredconditionals="7" methods="1" coveredmethods="1"/>
+        <line num="5" count="32" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="10" count="3" type="cond" truecount="4" falsecount="0"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="15" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="24" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="29" count="0" type="stmt"/>
+      </file>
+      <file name="getGame.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\game\getGame.js">
+        <metrics statements="10" coveredstatements="9" conditionals="6" coveredconditionals="5" methods="1" coveredmethods="1"/>
+        <line num="3" count="32" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+      </file>
+      <file name="getPlayerHands.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\game\getPlayerHands.js">
+        <metrics statements="22" coveredstatements="21" conditionals="6" coveredconditionals="6" methods="5" coveredmethods="5"/>
+        <line num="7" count="32" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="10" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="15" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="23" count="2" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
+        <line num="34" count="4" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="48" count="1" type="stmt"/>
+        <line num="49" count="1" type="stmt"/>
+        <line num="52" count="1" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
+        <line num="63" count="1" type="stmt"/>
+        <line num="65" count="0" type="stmt"/>
+      </file>
+      <file name="getPlayersInGame.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\game\getPlayersInGame.js">
+        <metrics statements="15" coveredstatements="14" conditionals="6" coveredconditionals="6" methods="3" coveredmethods="3"/>
+        <line num="5" count="32" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="8" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="12" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="18" count="3" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="29" count="0" type="stmt"/>
+      </file>
+      <file name="getReady.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\game\getReady.js">
+        <metrics statements="18" coveredstatements="17" conditionals="14" coveredconditionals="14" methods="1" coveredmethods="1"/>
+        <line num="5" count="32" type="stmt"/>
+        <line num="6" count="5" type="stmt"/>
+        <line num="7" count="5" type="stmt"/>
+        <line num="8" count="5" type="cond" truecount="4" falsecount="0"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="12" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="15" count="3" type="stmt"/>
+        <line num="17" count="3" type="stmt"/>
+        <line num="20" count="3" type="cond" truecount="4" falsecount="0"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="23" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+      </file>
+      <file name="getStatusGame.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\game\getStatusGame.js">
+        <metrics statements="9" coveredstatements="8" conditionals="6" coveredconditionals="6" methods="1" coveredmethods="1"/>
+        <line num="3" count="32" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="6" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+      </file>
+      <file name="getTopCard.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\game\getTopCard.js">
+        <metrics statements="14" coveredstatements="13" conditionals="8" coveredconditionals="8" methods="1" coveredmethods="1"/>
+        <line num="5" count="32" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="8" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="11" count="3" type="stmt"/>
+        <line num="12" count="3" type="cond" truecount="4" falsecount="0"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="24" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="31" count="0" type="stmt"/>
+      </file>
+      <file name="joinGame.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\game\joinGame.js">
+        <metrics statements="15" coveredstatements="14" conditionals="10" coveredconditionals="10" methods="1" coveredmethods="1"/>
+        <line num="5" count="32" type="stmt"/>
+        <line num="6" count="16" type="stmt"/>
+        <line num="7" count="16" type="stmt"/>
+        <line num="8" count="16" type="cond" truecount="4" falsecount="0"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="11" count="14" type="stmt"/>
+        <line num="12" count="14" type="cond" truecount="4" falsecount="0"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="15" count="13" type="stmt"/>
+        <line num="17" count="13" type="stmt"/>
+        <line num="20" count="13" type="cond" truecount="2" falsecount="0"/>
+        <line num="21" count="8" type="stmt"/>
+        <line num="22" count="5" type="stmt"/>
+        <line num="24" count="5" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+      </file>
+      <file name="leaveGame.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\game\leaveGame.js">
+        <metrics statements="22" coveredstatements="21" conditionals="14" coveredconditionals="14" methods="1" coveredmethods="1"/>
+        <line num="6" count="32" type="stmt"/>
+        <line num="7" count="8" type="stmt"/>
+        <line num="8" count="8" type="stmt"/>
+        <line num="9" count="8" type="cond" truecount="4" falsecount="0"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="12" count="6" type="stmt"/>
+        <line num="13" count="6" type="cond" truecount="4" falsecount="0"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="16" count="5" type="stmt"/>
+        <line num="18" count="5" type="stmt"/>
+        <line num="21" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="25" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="34" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="43" count="3" type="stmt"/>
+        <line num="44" count="3" type="stmt"/>
+        <line num="46" count="0" type="stmt"/>
+      </file>
+      <file name="startGame.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\game\startGame.js">
+        <metrics statements="25" coveredstatements="24" conditionals="16" coveredconditionals="16" methods="2" coveredmethods="2"/>
+        <line num="6" count="32" type="stmt"/>
+        <line num="7" count="9" type="stmt"/>
+        <line num="8" count="9" type="stmt"/>
+        <line num="9" count="9" type="cond" truecount="4" falsecount="0"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="12" count="7" type="stmt"/>
+        <line num="13" count="7" type="cond" truecount="4" falsecount="0"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="16" count="6" type="stmt"/>
+        <line num="18" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="22" count="5" type="stmt"/>
+        <line num="25" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="28" count="8" type="stmt"/>
+        <line num="29" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="32" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="33" count="2" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="42" count="0" type="stmt"/>
+      </file>
+      <file name="updateGame.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\game\updateGame.js">
+        <metrics statements="16" coveredstatements="15" conditionals="14" coveredconditionals="14" methods="1" coveredmethods="1"/>
+        <line num="4" count="32" type="stmt"/>
+        <line num="5" count="5" type="stmt"/>
+        <line num="6" count="5" type="stmt"/>
+        <line num="8" count="5" type="stmt"/>
+        <line num="9" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="11" count="5" type="cond" truecount="6" falsecount="0"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="15" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="18" count="3" type="stmt"/>
+        <line num="20" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="25" count="2" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.routes.player">
+      <metrics statements="57" coveredstatements="51" conditionals="39" coveredconditionals="36" methods="4" coveredmethods="4"/>
+      <file name="createPlayer.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\player\createPlayer.js">
+        <metrics statements="15" coveredstatements="14" conditionals="11" coveredconditionals="10" methods="1" coveredmethods="1"/>
+        <line num="5" count="32" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="9" count="4" type="cond" truecount="5" falsecount="0"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="12" count="3" type="stmt"/>
+        <line num="18" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="19" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="21" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="34" count="0" type="stmt"/>
+      </file>
+      <file name="deletePlayer.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\player\deletePlayer.js">
+        <metrics statements="15" coveredstatements="13" conditionals="8" coveredconditionals="7" methods="1" coveredmethods="1"/>
+        <line num="4" count="32" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="9" count="3" type="cond" truecount="3" falsecount="1"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="13" count="3" type="stmt"/>
+        <line num="14" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="19" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+      </file>
+      <file name="getPlayer.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\player\getPlayer.js">
+        <metrics statements="9" coveredstatements="8" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
+        <line num="3" count="32" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="8" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+      </file>
+      <file name="updatePlayer.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\player\updatePlayer.js">
+        <metrics statements="18" coveredstatements="16" conditionals="16" coveredconditionals="15" methods="1" coveredmethods="1"/>
+        <line num="5" count="32" type="stmt"/>
+        <line num="6" count="6" type="stmt"/>
+        <line num="7" count="6" type="stmt"/>
+        <line num="8" count="6" type="stmt"/>
+        <line num="9" count="6" type="cond" truecount="3" falsecount="1"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="12" count="6" type="stmt"/>
+        <line num="14" count="6" type="cond" truecount="6" falsecount="0"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="18" count="5" type="stmt"/>
+        <line num="19" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="23" count="4" type="stmt"/>
+        <line num="28" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="34" count="3" type="stmt"/>
+        <line num="35" count="3" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.routes.score">
+      <metrics statements="67" coveredstatements="62" conditionals="44" coveredconditionals="43" methods="7" coveredmethods="7"/>
+      <file name="createScore.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\score\createScore.js">
+        <metrics statements="15" coveredstatements="14" conditionals="13" coveredconditionals="13" methods="1" coveredmethods="1"/>
+        <line num="5" count="32" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="8" count="4" type="cond" truecount="5" falsecount="0"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="12" count="3" type="stmt"/>
+        <line num="13" count="3" type="cond" truecount="4" falsecount="0"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="18" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="33" count="0" type="stmt"/>
+      </file>
+      <file name="deleteScore.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\score\deleteScore.js">
+        <metrics statements="8" coveredstatements="7" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
+        <line num="3" count="32" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+      </file>
+      <file name="getPlayerScores.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\score\getPlayerScores.js">
+        <metrics statements="21" coveredstatements="20" conditionals="10" coveredconditionals="9" methods="3" coveredmethods="3"/>
+        <line num="5" count="32" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="9" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="13" count="3" type="stmt"/>
+        <line num="14" count="3" type="cond" truecount="4" falsecount="0"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="22" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="35" count="3" type="stmt"/>
+        <line num="36" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="37" count="2" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="46" count="1" type="stmt"/>
+        <line num="48" count="0" type="stmt"/>
+      </file>
+      <file name="getScore.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\score\getScore.js">
+        <metrics statements="7" coveredstatements="6" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
+        <line num="3" count="32" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+      </file>
+      <file name="updateScore.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\routes\score\updateScore.js">
+        <metrics statements="16" coveredstatements="15" conditionals="13" coveredconditionals="13" methods="1" coveredmethods="1"/>
+        <line num="3" count="32" type="stmt"/>
+        <line num="4" count="5" type="stmt"/>
+        <line num="5" count="5" type="stmt"/>
+        <line num="6" count="5" type="cond" truecount="4" falsecount="0"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="10" count="4" type="cond" truecount="5" falsecount="0"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="14" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="17" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="29" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.services">
+      <metrics statements="65" coveredstatements="54" conditionals="18" coveredconditionals="13" methods="11" coveredmethods="11"/>
+      <file name="dealerService.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\services\dealerService.js">
+        <metrics statements="65" coveredstatements="54" conditionals="18" coveredconditionals="13" methods="11" coveredmethods="11"/>
+        <line num="9" count="32" type="stmt"/>
+        <line num="10" count="32" type="stmt"/>
+        <line num="12" count="32" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="20" count="32" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="54" type="stmt"/>
+        <line num="33" count="54" type="stmt"/>
+        <line num="34" count="54" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="42" count="1" type="stmt"/>
+        <line num="44" count="0" type="stmt"/>
+        <line num="45" count="0" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="49" count="1" type="stmt"/>
+        <line num="52" count="1" type="stmt"/>
+        <line num="54" count="2" type="stmt"/>
+        <line num="55" count="3" type="stmt"/>
+        <line num="58" count="2" type="stmt"/>
+        <line num="59" count="14" type="stmt"/>
+        <line num="63" count="2" type="stmt"/>
+        <line num="67" count="2" type="stmt"/>
+        <line num="68" count="2" type="stmt"/>
+        <line num="70" count="2" type="stmt"/>
+        <line num="72" count="1" type="stmt"/>
+        <line num="73" count="1" type="stmt"/>
+        <line num="75" count="0" type="stmt"/>
+        <line num="76" count="0" type="stmt"/>
+        <line num="79" count="1" type="stmt"/>
+        <line num="82" count="32" type="stmt"/>
+        <line num="83" count="2" type="stmt"/>
+        <line num="84" count="2" type="stmt"/>
+        <line num="85" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="86" count="0" type="stmt"/>
+        <line num="89" count="2" type="stmt"/>
+        <line num="98" count="2" type="stmt"/>
+        <line num="99" count="2" type="stmt"/>
+        <line num="101" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="102" count="0" type="stmt"/>
+        <line num="105" count="2" type="stmt"/>
+        <line num="106" count="2" type="stmt"/>
+        <line num="108" count="0" type="stmt"/>
+        <line num="115" count="32" type="stmt"/>
+        <line num="116" count="1" type="stmt"/>
+        <line num="117" count="1" type="stmt"/>
+        <line num="118" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="119" count="0" type="stmt"/>
+        <line num="121" count="1" type="stmt"/>
+        <line num="122" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="123" count="0" type="stmt"/>
+        <line num="126" count="1" type="stmt"/>
+        <line num="127" count="1" type="stmt"/>
+        <line num="131" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="132" count="0" type="stmt"/>
+        <line num="135" count="1" type="stmt"/>
+        <line num="136" count="1" type="stmt"/>
+        <line num="138" count="0" type="stmt"/>
+        <line num="150" count="1" type="cond" truecount="2" falsecount="0"/>
+      </file>
+    </package>
+    <package name="src.utils">
+      <metrics statements="25" coveredstatements="24" conditionals="6" coveredconditionals="5" methods="6" coveredmethods="6"/>
+      <file name="cardUtils.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\utils\cardUtils.js">
+        <metrics statements="13" coveredstatements="12" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="3"/>
+        <line num="2" count="32" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="53" type="stmt"/>
+        <line num="5" count="53" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="11" count="32" type="stmt"/>
+        <line num="12" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="22" count="7" type="stmt"/>
+        <line num="23" count="14" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+      </file>
+      <file name="verifyToken.js" path="C:\Users\kaina\OneDrive\Documentos\Codes\PROG4-Lab\UNO-Final-Project\src\utils\verifyToken.js">
+        <metrics statements="12" coveredstatements="12" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="3"/>
+        <line num="5" count="68" type="stmt"/>
+        <line num="6" count="68" type="stmt"/>
+        <line num="8" count="68" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="14" count="67" type="stmt"/>
+        <line num="15" count="67" type="cond" truecount="2" falsecount="0"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="20" count="65" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
