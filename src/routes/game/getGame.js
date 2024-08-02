@@ -1,15 +1,22 @@
-import Game from "../../models/game.js";
+import Game from '../../models/game.js';
 
 export const getGame = async (req, res, next) => {
   try {
     const game_id = req.params.id;
-    if (!game_id) return res.status(400).json({ message: "Invalid params" });
+    if (!game_id) return res.status(400).json({ message: 'Invalid params' });
 
     const game = await Game.findByPk(game_id);
     if (!game || game?.auditExcluded) {
-      return res.status(404).json({ message: "Game not found" });
+      return res.status(404).json({ message: 'Game not found' });
     }
-    res.status(200).json(game);
+    const response = {
+      id: game.id,
+      title: game.title,
+      status: game.status,
+      maxPlayers: game.maxPlayers,
+    };
+
+    res.status(200).json(response);
   } catch (error) {
     next(error);
   }
