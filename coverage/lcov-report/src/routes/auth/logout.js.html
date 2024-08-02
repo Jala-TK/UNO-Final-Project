@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">8.33% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/12</span>
+                <span class='fraction'>10/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>2/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">8.33% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/12</span>
+                <span class='fraction'>10/12</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -92,53 +92,53 @@
 <a name='L27'></a><a href='#L27'>27</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import VerifyToken from '../../utils/verifyToken.js';
 import BlacklistToken from '../../models/blacklistToken.js';
 &nbsp;
-export const logout = <span class="fstat-no" title="function not covered" >as</span>ync (req, res, next) =&gt; {
-  const { access_token } = <span class="cstat-no" title="statement not covered" >req.body;</span>
+export const logout = async (req, res, next) =&gt; {
+  const { access_token } = req.body;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  if (!access_token)</span>
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (!access_token)
 <span class="cstat-no" title="statement not covered" >    return res.status(400).json({ error: 'Access token not provided' });</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  try {</span>
-<span class="cstat-no" title="statement not covered" >    await VerifyToken(access_token);</span>
+  try {
+    await VerifyToken(access_token);
 &nbsp;
-    const existingToken = <span class="cstat-no" title="statement not covered" >await BlacklistToken.findOne({</span>
+    const existingToken = await BlacklistToken.findOne({
       where: { token: access_token },
     });
-<span class="cstat-no" title="statement not covered" >    if (existingToken) {</span>
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (existingToken) {
 <span class="cstat-no" title="statement not covered" >      return res.status(200).json({ message: 'User already logged out' });</span>
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    await BlacklistToken.create({ token: access_token });</span>
+    await BlacklistToken.create({ token: access_token });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return res.status(200).json({ message: 'User logged out successfully' });</span>
+    return res.status(200).json({ message: 'User logged out successfully' });
   } catch (error) {
-<span class="cstat-no" title="statement not covered" >    next(error);</span>
+    next(error);
   }
 };
 &nbsp;</pre></td></tr></table></pre>
@@ -148,7 +148,7 @@ export const logout = <span class="fstat-no" title="function not covered" >as</s
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-08-02T00:30:51.035Z
+                at 2024-08-02T18:08:21.160Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
