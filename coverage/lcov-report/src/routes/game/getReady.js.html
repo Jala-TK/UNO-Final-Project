@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.44% </span>
+                <span class="strong">5.55% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>17/18</span>
+                <span class='fraction'>1/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>14/14</span>
+                <span class='fraction'>0/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.44% </span>
+                <span class="strong">5.55% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>17/18</span>
+                <span class='fraction'>1/18</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -99,30 +99,30 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">32x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -131,30 +131,30 @@
 import GamePlayer from "../../models/gamePlayer.js";
 import VerifyToken from "../../utils/verifyToken.js";
 &nbsp;
-export const getReady = async (req, res, next) =&gt; {
-  try {
-    const { game_id, access_token } = req.body;
-    if (!game_id || !access_token)
-      return res.status(400).json({ message: "Invalid params" });
+export const getReady = <span class="fstat-no" title="function not covered" >as</span>ync (req, res, next) =&gt; {
+<span class="cstat-no" title="statement not covered" >  try {</span>
+    const { game_id, access_token } = <span class="cstat-no" title="statement not covered" >req.body;</span>
+<span class="cstat-no" title="statement not covered" >    if (!game_id || !access_token)</span>
+<span class="cstat-no" title="statement not covered" >      return res.status(400).json({ message: "Invalid params" });</span>
 &nbsp;
-    const game = await Game.findByPk(game_id);
-    if (!game || game?.auditExcluded)
-      return res.status(404).json({ message: "Game not found" });
+    const game = <span class="cstat-no" title="statement not covered" >await Game.findByPk(game_id);</span>
+<span class="cstat-no" title="statement not covered" >    if (!game || game?.auditExcluded)</span>
+<span class="cstat-no" title="statement not covered" >      return res.status(404).json({ message: "Game not found" });</span>
 &nbsp;
-    const user = await VerifyToken(access_token);
+    const user = <span class="cstat-no" title="statement not covered" >await VerifyToken(access_token);</span>
 &nbsp;
-    const playerInGame = await GamePlayer.findOne({
+    const playerInGame = <span class="cstat-no" title="statement not covered" >await GamePlayer.findOne({</span>
       where: { gameId: game_id, playerId: user.id, auditExcluded: false },
     });
-    if (!playerInGame || playerInGame?.auditExcluded)
-      return res.status(400).json({ error: "The player is not in this game" });
+<span class="cstat-no" title="statement not covered" >    if (!playerInGame || playerInGame?.auditExcluded)</span>
+<span class="cstat-no" title="statement not covered" >      return res.status(400).json({ error: "The player is not in this game" });</span>
 &nbsp;
-    if (playerInGame.status == true)
-      return res.status(400).json({ error: "The player was ready" });
-    playerInGame.status = true;
-    await playerInGame.save();
+<span class="cstat-no" title="statement not covered" >    if (playerInGame.status == true)</span>
+<span class="cstat-no" title="statement not covered" >      return res.status(400).json({ error: "The player was ready" });</span>
+<span class="cstat-no" title="statement not covered" >    playerInGame.status = true;</span>
+<span class="cstat-no" title="statement not covered" >    await playerInGame.save();</span>
 &nbsp;
-    return res.status(200).json({ message: "The player is ready" });
+<span class="cstat-no" title="statement not covered" >    return res.status(200).json({ message: "The player is ready" });</span>
   } catch (err) {
 <span class="cstat-no" title="statement not covered" >    next(err);</span>
   }
@@ -166,7 +166,7 @@ export const getReady = async (req, res, next) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-08-01T04:47:40.894Z
+                at 2024-08-02T00:30:51.035Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
