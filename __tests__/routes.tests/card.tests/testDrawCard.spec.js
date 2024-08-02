@@ -79,9 +79,9 @@ describe('POST /api/cards/draw - Draw Card', () => {
 
     expect(response.status).toBe(200);
     expect(response.body.success).toBe(true);
-    expect(response.body.card).toBeDefined();
+    expect(response.body.response).toBeDefined();
 
-    const card = await Card.findByPk(response.body.card.id);
+    const card = await Card.findByPk(response.body.response.id);
     expect(card.whoOwnerCard).toBe(player.id);
 
     const gamePlayer = await GamePlayer.findOne({

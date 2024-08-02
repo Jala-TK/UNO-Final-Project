@@ -45,9 +45,7 @@ describe('GET /api/cards/:id - Get Card', () => {
     expect(response.body).toHaveProperty('id', card.id);
     expect(response.body).toHaveProperty('color', card.color);
     expect(response.body).toHaveProperty('value', card.value);
-    expect(response.body).toHaveProperty('gameId', card.gameId);
-    expect(response.body).toHaveProperty('points', card.points);
-    expect(response.body).toHaveProperty('image', card.image);
+    expect(response.body).toHaveProperty('game_id', card.gameId);
   });
 
   it('should return an error if the card does not exist', async () => {

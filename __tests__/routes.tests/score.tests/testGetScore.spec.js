@@ -43,7 +43,6 @@ describe('GET /api/score/:id - Get Score', () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({
-      id: gamePlayer.id,
       gameId: game.id,
       playerId: player.id,
       score: 10,

@@ -80,7 +80,7 @@ describe('POST /api/cards/play - Play Card', () => {
 
     expect(response.status).toBe(200);
     expect(response.body.message).toBe('Card played successfully');
-    expect(response.body.card).toBeDefined();
+    expect(response.body.response).toBeDefined();
 
     const updatedCard = await Card.findByPk(card.id);
     expect(updatedCard.orderDiscarded).toBeDefined();
