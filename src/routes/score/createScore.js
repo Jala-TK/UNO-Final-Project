@@ -24,6 +24,7 @@ export const createScore = async (req, res, next) => {
       score: score,
     });
     const response = {
+      id: newGamePlayer.id,
       playerId: newGamePlayer.playerId,
       gameId: newGamePlayer.gameId,
       score: newGamePlayer.score,

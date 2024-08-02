@@ -6,11 +6,11 @@ export const updateCard = async (req, res, next) => {
     if (!card || card?.auditExcluded) {
       return res.status(404).json({ message: 'Card not found' });
     }
-    const { color, value, gameId } = req.body;
-    if (!color || !value || !gameId) {
+    const { color, value } = req.body;
+    if (!color || !value) {
       return res.status(400).json({ message: 'Invalid params' });
     }
-    const updateCard = await card.update({ color, value, gameId });
+    const updateCard = await card.update({ color, value });
     const response = {
       card_id: updateCard.id,
       game_id: updateCard.gameId,

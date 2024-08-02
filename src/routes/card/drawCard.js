@@ -47,7 +47,17 @@ export const drawCard = async (req, res, next) => {
 
     await setNextPlayer(game_id, res);
 
-    res.status(200).json({ success: true, card });
+    const newCard = await Card.findByPk(card.id);
+    const response = {
+      id: newCard.id,
+      color: newCard.color,
+      value: newCard.value,
+      game_id: newCard.gameId,
+      whoOwnerCard: newCard.whoOwnerCard,
+      orderDiscarded: newCard.orderDiscarded,
+    };
+
+    res.status(200).json({ success: true, response });
   } catch (error) {
     next(error);
   }

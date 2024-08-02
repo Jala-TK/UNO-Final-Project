@@ -22,8 +22,16 @@ export const updateGame = async (req, res, next) => {
         .status(403)
         .json({ error: 'Only the creator can edit the game' });
     }
-    await game.update({ title, status, maxPlayers });
-    res.status(200).json(game);
+    const newGame = await game.update({ title, status, maxPlayers });
+
+    const response = {
+      id: newGame.id,
+      title: newGame.title,
+      status: newGame.status,
+      maxPlayers: newGame.maxPlayers,
+    };
+
+    res.status(200).json(response);
   } catch (error) {
     next(error);
   }
