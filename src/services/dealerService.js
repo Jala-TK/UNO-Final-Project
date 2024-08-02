@@ -4,7 +4,7 @@ import { fileURLToPath } from "url";
 import Card from "../models/card.js";
 import GamePlayer from "../models/gamePlayer.js";
 import Game from "../models/game.js";
-import { shuffle, dealCards } from "../utils/cardUtils.js";
+import { DeckMonad } from "../utils/deckMonad.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -19,7 +19,7 @@ const loadCardsFromFile = () => {
 // Initializes the deck and deals cards to players
 export const initializeGame = async (gameId) => {
   const cards = loadCardsFromFile();
-  const shuffledDeck = shuffle(cards);
+  const deckMonad = DeckMonad.of(cards).shuffle();
 
   const players = await GamePlayer.findAll({
     where: { gameId, auditExcluded: false },
@@ -28,7 +28,7 @@ export const initializeGame = async (gameId) => {
   const handSize = 7;
 
   // Creates cards in the database
-  const cardPromises = shuffledDeck.map((card, index) => {
+  const cardPromises = deckMonad.deck.map((card, index) => {
     const playerIndex = Math.floor(index / handSize);
     const player = players[playerIndex];
     return Card.create({
@@ -44,7 +44,8 @@ export const initializeGame = async (gameId) => {
     console.error("Error creating cards:", error);
     throw error;
   }
-  const hands = dealCards(shuffledDeck, players, handSize);
+
+  const hands = deckMonad.deal(players, handSize);
 
   console.log(hands);
 
@@ -76,7 +77,7 @@ export const initializeGame = async (gameId) => {
     throw error;
   }
 
-  return { shuffledDeck, hands };
+  return { shuffledDeck: deckMonad.deck, hands };
 };
 
 export const setNextPlayer = async (game_id, res) => {
