@@ -1,37 +1,41 @@
-import Game from '../../models/game.js';
-import VerifyToken from '../../utils/verifyToken.js';
+import { validateParams } from '../../utils/validation.js';
+import {
+  findGameById,
+  updateGame as updateGameService,
+} from '../../services/gameService.js';
 
 export const updateGame = async (req, res, next) => {
   try {
-    let { title, status, maxPlayers } = req.body;
+    let { title } = req.body;
+    const { name, status, maxPlayers } = req.body;
+    const game_id = req.params.id;
+    const user = req.user;
 
-    const { name, access_token } = req.body;
     if (name != null) title = name;
+    validateParams({ title, status, maxPlayers }, res);
 
-    if (!title || !access_token || !maxPlayers || !status)
-      return res.status(400).json({ message: 'Invalid params' });
-
-    const game = await Game.findByPk(req.params.id);
+    const game = await findGameById(game_id);
     if (!game || game?.auditExcluded) {
       return res.status(404).json({ message: 'Game not found' });
     }
-    const user = await VerifyToken(access_token);
 
     if (game.creatorId !== user.id) {
       return res
         .status(403)
         .json({ error: 'Only the creator can edit the game' });
     }
-    const newGame = await game.update({ title, status, maxPlayers });
 
-    const response = {
-      id: newGame.id,
-      title: newGame.title,
-      status: newGame.status,
-      maxPlayers: newGame.maxPlayers,
-    };
-
-    res.status(200).json(response);
+    const updatedGame = await updateGameService(game, {
+      title: name || title,
+      status,
+      maxPlayers,
+    });
+    res.status(200).json({
+      id: updatedGame.id,
+      title: updatedGame.title,
+      status: updatedGame.status,
+      maxPlayers: updatedGame.maxPlayers,
+    });
   } catch (error) {
     next(error);
   }

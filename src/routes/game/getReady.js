@@ -1,31 +1,29 @@
-import Game from "../../models/game.js";
-import GamePlayer from "../../models/gamePlayer.js";
-import VerifyToken from "../../utils/verifyToken.js";
+import { findGameById } from '../../services/gameService.js';
+import { getPlayerInGame } from '../../services/gamePlayerService.js';
+import { updatePlayerStatus } from '../../services/gamePlayerService.js';
+import { validateParams } from '../../utils/validation.js';
 
 export const getReady = async (req, res, next) => {
   try {
-    const { game_id, access_token } = req.body;
-    if (!game_id || !access_token)
-      return res.status(400).json({ message: "Invalid params" });
+    const { game_id } = req.body;
+    validateParams({ game_id }, res);
 
-    const game = await Game.findByPk(game_id);
+    const game = await findGameById(game_id);
     if (!game || game?.auditExcluded)
-      return res.status(404).json({ message: "Game not found" });
+      return res.status(404).json({ message: 'Game not found' });
 
-    const user = await VerifyToken(access_token);
+    const user = req.user;
 
-    const playerInGame = await GamePlayer.findOne({
-      where: { gameId: game_id, playerId: user.id, auditExcluded: false },
-    });
+    const playerInGame = await getPlayerInGame(game_id, user.id);
     if (!playerInGame || playerInGame?.auditExcluded)
-      return res.status(400).json({ error: "The player is not in this game" });
+      return res.status(400).json({ error: 'The player is not in this game' });
 
-    if (playerInGame.status == true)
-      return res.status(400).json({ error: "The player was ready" });
-    playerInGame.status = true;
-    await playerInGame.save();
+    if (playerInGame.status)
+      return res.status(400).json({ error: 'The player was ready' });
 
-    return res.status(200).json({ message: "The player is ready" });
+    await updatePlayerStatus(playerInGame, true);
+
+    return res.status(200).json({ message: 'The player is ready' });
   } catch (err) {
     next(err);
   }

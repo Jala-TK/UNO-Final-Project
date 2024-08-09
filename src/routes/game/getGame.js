@@ -1,22 +1,22 @@
-import Game from '../../models/game.js';
+import { findGameById } from '../../services/gameService.js';
+import { validateParams } from '../../utils/validation.js';
 
 export const getGame = async (req, res, next) => {
   try {
     const game_id = req.params.id;
-    if (!game_id) return res.status(400).json({ message: 'Invalid params' });
+    validateParams({ game_id }, res);
 
-    const game = await Game.findByPk(game_id);
+    const game = await findGameById(game_id);
     if (!game || game?.auditExcluded) {
       return res.status(404).json({ message: 'Game not found' });
     }
-    const response = {
+
+    res.status(200).json({
       id: game.id,
       title: game.title,
       status: game.status,
       maxPlayers: game.maxPlayers,
-    };
-
-    res.status(200).json(response);
+    });
   } catch (error) {
     next(error);
   }

@@ -1,16 +1,18 @@
-import GamePlayer from '../../models/gamePlayer.js';
+import { validateParams } from '../../utils/validation.js';
+import {
+  findScoreById,
+  updateScore as updateScoreService,
+} from '../../services/scoreService.js';
 
 export const updateScore = async (req, res, next) => {
   try {
-    const gamePlayer = await GamePlayer.findByPk(req.params.id);
+    const gamePlayer = await findScoreById(req.params.id);
     if (!gamePlayer || gamePlayer.auditExcluded) {
       return res.status(404).json({ message: 'Score not found' });
     }
-    const { playerId, gameId, score } = req.body;
-    if (!playerId || !gameId || !score) {
-      return res.status(400).json({ message: 'Invalid params' });
-    }
 
+    const { playerId, gameId, score } = req.body;
+    validateParams({ playerId, gameId, score }, res);
     if (gamePlayer.playerId != playerId) {
       return res.status(404).json({ message: 'Score with playerId not found' });
     }
@@ -18,7 +20,7 @@ export const updateScore = async (req, res, next) => {
       return res.status(404).json({ message: 'Score with gameId not found' });
     }
 
-    await gamePlayer.update({ score });
+    await updateScoreService(gamePlayer, score);
     const response = {
       playerId: gamePlayer.playerId,
       gameId: gamePlayer.gameId,

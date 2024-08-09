@@ -1,31 +1,33 @@
-import Game from "../../models/game.js";
-import GamePlayer from "../../models/gamePlayer.js";
-import VerifyToken from "../../utils/verifyToken.js";
+import {
+  findGameById,
+  endGame as endGameService,
+} from '../../services/gameService.js';
+import { removeGamePlayers } from '../../services/gamePlayerService.js';
+import { validateParams } from '../../utils/validation.js';
 
 export const endGame = async (req, res, next) => {
   try {
-    const { game_id, access_token } = req.body;
-    if (!game_id || !access_token)
-      return res.status(400).json({ message: "Invalid params" });
+    const { game_id } = req.body;
+    validateParams({ game_id }, res);
 
-    const game = await Game.findByPk(game_id);
-    if (!game || game?.auditExcluded)
-      return res.status(404).json({ message: "Game not found" });
-
-    const user = await VerifyToken(access_token);
-
-    if (game.creatorId !== user.id) {
-      return res.status(403).json({ error: "Only the creator can end the game" });
+    const game = await findGameById(game_id);
+    if (!game || game?.auditExcluded) {
+      return res.status(404).json({ message: 'Game not found' });
     }
 
-    await GamePlayer.update(
-      { auditExcluded: true },
-      { where: { gameId: game_id } }
-    );
+    const user = req.user;
 
-    await game.update({ status: "Finished", auditExcluded: true });
-    res.status(200).json({ message: "Game ended successfully" });
-  } catch (err) {
-    next(err);
+    if (game.creatorId !== user.id) {
+      return res
+        .status(403)
+        .json({ error: 'Only the creator can end the game' });
+    }
+
+    await removeGamePlayers(game_id);
+    await endGameService(game_id);
+
+    res.status(200).json({ message: 'Game ended successfully' });
+  } catch (error) {
+    next(error);
   }
 };

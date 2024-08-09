@@ -1,26 +1,19 @@
-import Player from '../../models/player.js';
-import VerifyToken from '../../utils/verifyToken.js';
+import { deletePlayer as deletePlayerService } from '../../services/playerService.js';
+import { findPlayerById } from '../../services/playerService.js';
 
 export const deletePlayer = async (req, res, next) => {
   try {
-    const id = req.params.id;
-    const player = await Player.findByPk(id);
-
+    const player = await findPlayerById(req.params.id);
     if (!player || player?.auditExcluded) {
       return res.status(404).json({ message: 'Player not found' });
     }
 
-    const { access_token } = req.body;
-    if (!access_token) {
-      return res.status(400).json({ error: 'Invalid params' });
-    }
-
-    const user = await VerifyToken(access_token);
-    if (user?.id != id) {
+    const user = req.user;
+    if (user?.id != req.params.id) {
       return res.status(401).json({ error: 'Unauthorized delete this user' });
     }
 
-    await player.update({ auditExcluded: true });
+    await deletePlayerService(player);
     res.status(204).send();
   } catch (error) {
     next(error);

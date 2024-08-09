@@ -1,9 +1,9 @@
-import Card from '../../models/card.js';
+import { findCardById } from '../../services/cardService.js';
 
 export const getCard = async (req, res, next) => {
   try {
-    const card = await Card.findByPk(req.params.id);
-    if (!card || card?.auditExcluded) {
+    const card = await findCardById(req.params.id);
+    if (!card || card.auditExcluded) {
       return res.status(404).json({ message: 'Card not found' });
     }
     const response = {

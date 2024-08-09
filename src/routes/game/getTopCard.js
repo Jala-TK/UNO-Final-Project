@@ -1,31 +1,27 @@
-import Game from '../../models/game.js';
-import Card from '../../models/card.js';
-import { Op } from 'sequelize';
+import { findGameById } from '../../services/gameService.js';
+import { validateParams } from '../../utils/validation.js';
+import { getTopDiscardedCard } from '../../services/gamePlayerService.js';
 
 export const getTopCard = async (req, res, next) => {
   try {
     const { game_id } = req.body;
-    if (!game_id) {
-      return res.status(400).json({ message: 'Invalid Params' });
-    }
-    const game = await Game.findByPk(game_id);
-    if (!game || game?.auditExcluded) {
+    validateParams({ game_id }, res);
+
+    const game = await findGameById(game_id);
+    if (!game) {
       return res.status(404).json({ message: 'Game not found' });
     }
 
-    const topCard = await Card.findOne({
-      where: {
-        gameId: game_id,
-        orderDiscarded: { [Op.ne]: null },
-      },
-      order: [['orderDiscarded', 'DESC']],
-    });
-
+    const topCard = await getTopDiscardedCard(game_id);
     if (!topCard) {
       return res.status(404).json({ message: 'Card not found' });
     }
 
-    const response = { game_id: game.id, top_card: topCard.value };
+    const response = {
+      game_id: game.id,
+      top_card: topCard.value,
+      color: topCard.color,
+    };
     res.status(200).json(response);
   } catch (error) {
     next(error);

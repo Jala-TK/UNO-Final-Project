@@ -1,61 +1,19 @@
-import jwt from "jsonwebtoken";
-import { createHash } from "crypto";
-import "dotenv/config";
-import Player from "../../models/player.js";
-
-const { sign } = jwt;
+import {
+  authenticateLogin,
+  generateToken,
+} from '../../services/authService.js';
+import { validateParams } from '../../utils/validation.js';
 
 export const login = async (req, res, next) => {
-  const username = req?.body?.username;
-  const password = req?.body?.password;
-
-  if (!username || !password) {
-    return res.status(401).json({ error: "Invalid credentials or User not found" });
-  }
+  const { username, password } = req.body;
+  validateParams({ username, password }, res);
 
   try {
-    const player = await Player.findOne({
-      where: { username: username },
-    });
+    const player = await authenticateLogin(username, password);
+    const access_token = generateToken(player);
 
-    if (!player) {
-      return res.status(401).json({ error: "Invalid credentials or User not found" });
-    }
-
-    const salt = process.env.JWT_SALT;
-
-    const hashedPassword = createHash("sha256")
-      .update(password)
-      .digest("hex")
-      .toLowerCase();
-    const serverPasswordNotHashed = player.password;
-    const serverPasswordHashed = player.password.toLowerCase();
-
-    if (
-      serverPasswordHashed === hashedPassword ||
-      serverPasswordNotHashed === hashedPassword ||
-      serverPasswordHashed === password ||
-      serverPasswordNotHashed === password
-    ) {
-      const access_token = sign(
-        {
-          id: player.id,
-          username: player.username,
-          email: player.email,
-        },
-        salt,
-        {
-          expiresIn: "7d",
-        }
-      );
-
-      return res.status(200).json({
-        access_token,
-      });
-    } else {
-      return res.status(401).json({ error: "Invalid credentials" });
-    }
+    return res.status(200).json({ access_token });
   } catch (error) {
-    next(error);
+    return res.status(401).json({ error: error.message });
   }
 };
