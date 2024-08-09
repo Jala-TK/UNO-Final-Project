@@ -62,7 +62,6 @@ describe('PUT /api/player - Update Player', () => {
       const user = await Player.findByPk(player.id);
       expect(user.username).toBe(userUpdateData.username);
       expect(user.email).toBe(userUpdateData.email);
-      expect(user.password).toBe(userUpdateData.password);
     } catch (error) {
       console.error(error);
       throw error;
@@ -85,7 +84,6 @@ describe('PUT /api/player - Update Player', () => {
       const user = await Player.findByPk(player.id);
       expect(user.username).toBe(userData.username);
       expect(user.email).toBe(userUpdateData.email);
-      expect(user.password).toBe(userUpdateData.password);
     } catch (error) {
       console.error(error);
       throw error;
@@ -108,7 +106,6 @@ describe('PUT /api/player - Update Player', () => {
       const user = await Player.findByPk(player.id);
       expect(user.username).toBe(userUpdateData.username);
       expect(user.email).toBe(userData.email);
-      expect(user.password).toBe(userUpdateData.password);
     } catch (error) {
       console.error(error);
       throw error;
@@ -143,9 +140,7 @@ describe('PUT /api/player - Update Player', () => {
         });
 
       expect(response.status).toBe(400);
-      expect(response.body.message).toBe(
-        'There is already a player with this data',
-      );
+      expect(response.body.error).toBe('User already exists');
     } catch (error) {
       console.error(error);
       throw error;

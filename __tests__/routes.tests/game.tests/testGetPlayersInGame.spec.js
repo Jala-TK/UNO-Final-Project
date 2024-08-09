@@ -90,7 +90,7 @@ describe('GET /api/game/players - Get Players in Game', () => {
     const response = await request(app).get('/api/game/players').send({});
 
     expect(response.status).toBe(400);
-    expect(response.body.message).toBe('Invalid Params');
+    expect(response.body.message).toBe('Invalid params');
   });
 
   it('should return an error because the game does not exist', async () => {

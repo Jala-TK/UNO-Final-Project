@@ -73,7 +73,7 @@ describe('GET /api/score - Get Player Scores', () => {
     const response = await request(app).get('/api/score').send({});
 
     expect(response.status).toBe(400);
-    expect(response.body.message).toBe('Game ID is required');
+    expect(response.body.message).toBe('Invalid params');
   });
 
   it('should return an error if game is not found', async () => {

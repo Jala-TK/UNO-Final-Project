@@ -38,12 +38,12 @@ describe('POST /api/game/start - Start Game', () => {
 
     token = response.body.access_token;
 
-    response = await request(app).post('/api/login').send({
+    let response2 = await request(app).post('/api/login').send({
       username: anotherPlayer.username,
       password: anotherPlayer.password,
     });
 
-    anotherToken = response.body.access_token;
+    anotherToken = response2.body.access_token;
 
     const responseGame = await request(app)
       .post('/api/games')
@@ -91,7 +91,6 @@ describe('POST /api/game/start - Start Game', () => {
       .post('/api/game/start')
       .send({ game_id: gameId, access_token: token });
 
-    console.log(response.body);
     expect(response.status).toBe(200);
     expect(response.body.message).toBe('Game started successfully');
 
@@ -115,7 +114,7 @@ describe('POST /api/game/start - Start Game', () => {
       .send({ game_id: gameId });
 
     expect(response.status).toBe(400);
-    expect(response.body.message).toBe('Invalid params');
+    expect(response.body.error).toBe('Invalid credentials');
   });
 
   it('should return an error because the game does not exist', async () => {

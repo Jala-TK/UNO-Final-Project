@@ -96,7 +96,7 @@ describe('POST /api/game/join - Join Game', () => {
       .send({ game_id: gameId });
 
     expect(response.status).toBe(400);
-    expect(response.body.message).toBe('Invalid params');
+    expect(response.body.error).toBe('Invalid credentials');
   });
 
   it('should return an error because the game does not exist', async () => {

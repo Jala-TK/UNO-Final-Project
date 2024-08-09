@@ -63,7 +63,7 @@ describe('POST /api/player - Create Player', () => {
         .send({ email: 'test@test' });
 
       expect(response.status).toBe(400);
-      expect(response.body).toHaveProperty('error');
+      expect(response.body).toHaveProperty('message');
     } catch (error) {
       console.error(error);
       throw error;

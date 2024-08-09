@@ -45,7 +45,7 @@ describe('PUT /api/score/:id - Update Score', () => {
         gameId: game.id,
         score: newScore,
       });
-
+    console.log(response.body);
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({
       playerId: player.id,

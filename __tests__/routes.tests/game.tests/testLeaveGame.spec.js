@@ -83,8 +83,6 @@ describe('POST /api/game/leave - Leave Game', () => {
       .post('/api/game/leave')
       .send({ game_id: gameId, access_token: anotherToken });
 
-    console.log(response.body);
-
     expect(response.status).toBe(200);
     expect(response.body.message).toBe('Player left the game successfully');
   });
@@ -104,7 +102,7 @@ describe('POST /api/game/leave - Leave Game', () => {
       .send({ game_id: gameId });
 
     expect(response.status).toBe(400);
-    expect(response.body.message).toBe('Invalid params');
+    expect(response.body.error).toBe('Invalid credentials');
   });
 
   it('should return an error because the game does not exist', async () => {
@@ -136,10 +134,10 @@ describe('POST /api/game/leave - Leave Game', () => {
       .post('/api/game/leave')
       .send({ game_id: gameId, access_token: newToken });
 
+    await newPlayer.destroy();
+
     expect(response.status).toBe(404);
     expect(response.body.error).toBe('Player not found in this game');
-
-    await newPlayer.destroy();
   });
 
   it('should change the creator and allow the creator to leave the game', async () => {

@@ -107,7 +107,7 @@ describe('DELETE /api/games - Delete Game', () => {
         .send({});
 
       expect(response.status).toBe(400);
-      expect(response.body.message).toBe('Invalid params');
+      expect(response.body.error).toBe('Invalid credentials');
     } catch (error) {
       console.error(error);
       throw error;

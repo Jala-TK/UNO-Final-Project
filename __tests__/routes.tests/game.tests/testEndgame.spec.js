@@ -104,7 +104,9 @@ describe('POST /api/games/end - Finalize Game', () => {
 
   it('should return an error because not all the required arguments are present', async () => {
     try {
-      const response = await request(app).post('/api/game/end').send({});
+      const response = await request(app)
+        .post('/api/game/end')
+        .send({ access_token: token });
 
       expect(response.status).toBe(400);
       expect(response.body.message).toBe('Invalid params');

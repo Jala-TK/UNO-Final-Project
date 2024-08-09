@@ -60,6 +60,8 @@ describe('POST /api/scores - Create Score', () => {
       .post('/api/score')
       .send({ playerId: 9999, gameId: game.id, score: 100 });
 
+    console.log(response.body);
+
     expect(response.status).toBe(404);
     expect(response.body.message).toBe('Player not found');
   });
@@ -68,6 +70,8 @@ describe('POST /api/scores - Create Score', () => {
     const response = await request(app)
       .post('/api/score')
       .send({ playerId: player.id, gameId: 9999, score: 100 });
+
+    console.log(response.body);
 
     expect(response.status).toBe(404);
     expect(response.body.message).toBe('Game not found');

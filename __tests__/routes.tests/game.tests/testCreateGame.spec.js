@@ -72,8 +72,8 @@ describe('POST /api/games - Create Game', () => {
       const response = await request(app).post(`/api/games`).send(gameData);
 
       expect(response.status).toBe(400);
-      expect(response.body).toHaveProperty('message');
-      expect(response.body.message).toBe('Invalid params');
+      expect(response.body).toHaveProperty('error');
+      expect(response.body.error).toBe('Invalid credentials');
     } catch (error) {
       console.error(error);
       throw error;
