@@ -1,17 +1,19 @@
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
-import Card from "../models/card.js";
-import GamePlayer from "../models/gamePlayer.js";
-import Game from "../models/game.js";
-import { DeckMonad } from "../utils/deckMonad.js";
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import Card from '../models/card.js';
+import GamePlayer from '../models/gamePlayer.js';
+import Game from '../models/game.js';
+import { DeckMonad } from '../utils/deckMonad.js';
+import { updateCardOrder } from './cardService.js';
+import { log } from 'console';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const loadCardsFromFile = () => {
-  const filePath = path.join(__dirname, "../utils/cards.json");
-  const rawData = fs.readFileSync(filePath, "utf8");
+  const filePath = path.join(__dirname, '../utils/cards.json');
+  const rawData = fs.readFileSync(filePath, 'utf8');
   const { unoCards } = JSON.parse(rawData);
   return unoCards;
 };
@@ -41,24 +43,29 @@ export const initializeGame = async (gameId) => {
   try {
     await Promise.all(cardPromises);
   } catch (error) {
-    console.error("Error creating cards:", error);
+    console.error('Error creating cards:', error);
     throw error;
   }
 
   const hands = deckMonad.deal(players, handSize);
 
-  console.log(hands);
+  const topCard = await Card.findOne({
+    where: { whoOwnerCard: null, gameId: gameId, auditExcluded: false },
+  });
+  log('Top card:', topCard);
+
+  await updateCardOrder(topCard, 1);
 
   // Calculate and update the player points
   const playerPoints = players
     .map(async (player) => {
       const playerHand = hands.find(
-        (hand) => hand.playerId === player.playerId
+        (hand) => hand.playerId === player.playerId,
       );
 
       const points = playerHand.cards.reduce(
         (total, card) => total + card.points,
-        0
+        0,
       );
 
       const gamePlayer = await GamePlayer.findOne({
@@ -73,7 +80,7 @@ export const initializeGame = async (gameId) => {
   try {
     await Promise.all(playerPoints);
   } catch (error) {
-    console.error("Error updating player points:", error);
+    console.error('Error updating player points:', error);
     throw error;
   }
 
@@ -84,7 +91,7 @@ export const setNextPlayer = async (game_id, res) => {
   try {
     const game = await Game.findByPk(game_id);
     if (!game) {
-      return res.status(404).json({ message: "Game not found" });
+      return res.status(404).json({ message: 'Game not found' });
     }
 
     const playersInGame = await GamePlayer.findAll({
@@ -92,12 +99,12 @@ export const setNextPlayer = async (game_id, res) => {
         gameId: game_id,
         auditExcluded: false,
       },
-      order: [["createdAt", "ASC"]],
+      order: [['createdAt', 'ASC']],
     });
 
     let nextPlayerIndex =
       playersInGame.findIndex(
-        (player) => player.playerId === game.currentPlayer
+        (player) => player.playerId === game.currentPlayer,
       ) + 1;
     if (nextPlayerIndex >= playersInGame.length) {
       nextPlayerIndex = 0;
@@ -107,7 +114,7 @@ export const setNextPlayer = async (game_id, res) => {
     await game.save();
   } catch (error) {
     return res.status(500).json({
-      message: "An error occurred while setting the next player",
+      message: 'An error occurred while setting the next player',
       error: error.message,
     });
   }
@@ -117,11 +124,11 @@ export const setNewPoints = async (card_id, game_id, user, res) => {
   try {
     const card = await Card.findByPk(card_id);
     if (!card || card?.auditExcluded)
-      return res.status(404).json({ message: "Card not found" });
+      return res.status(404).json({ message: 'Card not found' });
 
     const game = await Game.findByPk(game_id);
     if (!game || game?.auditExcluded) {
-      return res.status(404).json({ message: "Game not found" });
+      return res.status(404).json({ message: 'Game not found' });
     }
 
     const cardPoints = card.points;
@@ -130,14 +137,14 @@ export const setNewPoints = async (card_id, game_id, user, res) => {
     });
 
     if (!gamePlayer) {
-      return res.status(404).json({ message: "Player not found in game" });
+      return res.status(404).json({ message: 'Player not found in game' });
     }
 
     gamePlayer.score -= cardPoints;
     await gamePlayer.save();
   } catch (error) {
     return res.status(500).json({
-      message: "An error occurred while setting the points of player",
+      message: 'An error occurred while setting the points of player',
       error: error.message,
     });
   }
