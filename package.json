@@ -1,5 +1,5 @@
 {
-  "name": "lab1-taua",
+  "name": "uno-capstone",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
@@ -16,7 +16,7 @@
     "test:coverage": "cross-env NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
   },
   "keywords": [],
-  "author": "",
+  "author": "Tauã, Kainan",
   "license": "ISC",
   "description": "",
   "dependencies": {
@@ -27,7 +27,8 @@
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "sequelize": "^6.37.3",
-    "tedious": "^18.2.1"
+    "tedious": "^18.2.1",
+    "winston": "^3.14.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.3.0",
