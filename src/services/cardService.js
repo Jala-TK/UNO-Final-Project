@@ -1,6 +1,8 @@
 import Card from '../models/card.js';
 import { Op } from 'sequelize';
 
+const VALID_COLORS = ['yellow', 'green', 'red', 'blue'];
+
 export const createNewCard = async ({
   color,
   value,
@@ -56,4 +58,16 @@ export const isCardPlayable = (drawnCard, currentCard) => {
     drawnCard.value === 'wild' ||
     drawnCard.value === 'wild_draw4'
   );
+};
+
+export const discardCard = async (gameId, card) => {
+  if (!VALID_COLORS.includes(card.color)) {
+    return res.status(400).json({
+      message: `Invalid card color: ${card.color}`,
+    });
+  }
+
+  const highestOrder = await getHighestDiscardOrder(gameId);
+
+  await updateCardOrder(card, (highestOrder.orderDiscarded || 0) + 1);
 };

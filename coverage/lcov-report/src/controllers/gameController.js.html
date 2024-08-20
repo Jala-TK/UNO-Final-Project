@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>21/21</span>
+                <span class='fraction'>22/22</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>21/21</span>
+                <span class='fraction'>22/22</span>
             </div>
         
             
@@ -109,7 +109,10 @@
 <a name='L44'></a><a href='#L44'>44</a>
 <a name='L45'></a><a href='#L45'>45</a>
 <a name='L46'></a><a href='#L46'>46</a>
-<a name='L47'></a><a href='#L47'>47</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -131,28 +134,31 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">33x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">33x</span>
-<span class="cline-any cline-yes">33x</span>
-<span class="cline-any cline-yes">33x</span>
-<span class="cline-any cline-yes">33x</span>
-<span class="cline-any cline-yes">33x</span>
-<span class="cline-any cline-yes">33x</span>
-<span class="cline-any cline-yes">33x</span>
-<span class="cline-any cline-yes">33x</span>
-<span class="cline-any cline-yes">33x</span>
-<span class="cline-any cline-yes">33x</span>
-<span class="cline-any cline-yes">33x</span>
-<span class="cline-any cline-yes">33x</span>
-<span class="cline-any cline-yes">33x</span>
-<span class="cline-any cline-yes">33x</span>
-<span class="cline-any cline-yes">33x</span>
-<span class="cline-any cline-yes">33x</span>
-<span class="cline-any cline-yes">33x</span>
-<span class="cline-any cline-yes">33x</span>
-<span class="cline-any cline-yes">33x</span>
-<span class="cline-any cline-yes">33x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-yes">36x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Router } from 'express';
@@ -177,6 +183,8 @@ import { challengePlayer } from '../routes/game/challengePlayer.js';
 import { getGeneralStatus } from '../routes/game/getGeneralStatus.js';
 import { getHistory } from '../routes/game/getHistory.js';
 import { getPlayerHand } from '../routes/game/getPlayerHand.js';
+import { checkHand } from '../routes/game/checkHand.js';
+&nbsp;
 const router = Router();
 &nbsp;
 router.post('/games/', authMiddleware, createGame);
@@ -188,7 +196,7 @@ router.post('/game/ready', authMiddleware, getReady);
 router.post('/game/start', authMiddleware, startGame);
 router.post('/game/leave', authMiddleware, leaveGame);
 router.post('/game/end', authMiddleware, endGame);
-router.post('/game/dealCards/:id', dealCards);
+router.post('/game/dealCards/:id', authMiddleware, dealCards);
 router.post('/game/uno', authMiddleware, sayUNO);
 router.post('/game/challengeUno', authMiddleware, challengePlayer);
 router.get('/game/status/', getStatusGame);
@@ -199,6 +207,7 @@ router.get('/game/playerHands', getPlayerHands);
 router.get('/game/statusGeral', getGeneralStatus);
 router.get('/game/history', getHistory);
 router.get('/game/hand/', authMiddleware, getPlayerHand);
+router.get('/game/checkHand/', authMiddleware, checkHand);
 &nbsp;
 export default router;
 &nbsp;</pre></td></tr></table></pre>
@@ -208,7 +217,7 @@ export default router;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-08-16T00:50:05.921Z
+                at 2024-08-20T10:50:50.606Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

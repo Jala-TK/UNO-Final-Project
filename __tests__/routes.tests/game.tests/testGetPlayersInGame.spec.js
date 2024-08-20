@@ -16,14 +16,14 @@ describe('GET /api/game/players - Get Players in Game', () => {
 
   beforeAll(async () => {
     player1 = await Player.create({
-      username: 'player1',
-      email: 'player1@gmail.com',
+      username: 'testGetPlayersInGame1',
+      email: 'testGetPlayersInGame1@gmail.com',
       password: 'password123',
     });
 
     player2 = await Player.create({
-      username: 'player2',
-      email: 'player2@gmail.com',
+      username: 'testGetPlayersInGame2',
+      email: 'testGetPlayersInGame2@gmail.com',
       password: 'password123',
     });
 
