@@ -1,6 +1,7 @@
 import Game from '../../src/models/game.js';
 import GamePlayer from '../../src/models/gamePlayer.js';
 import Player from '../../src/models/player.js';
+import History from '../../src/models/history.js';
 import { Op } from 'sequelize';
 
 describe('Game Player Model', () => {
@@ -46,6 +47,8 @@ describe('Game Player Model', () => {
   });
 
   afterAll(async () => {
+    await History.destroy({ where: { gameId: game.id } });
+
     await Game.destroy({
       where: {
         title: 'Testing Game Player',

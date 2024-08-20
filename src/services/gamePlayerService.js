@@ -17,7 +17,7 @@ export const addPlayerToGame = async (game_id, user_id) => {
 
 export const findGamePlayer = async (gameId, playerId) => {
   const gamePlayer = await GamePlayer.findOne({
-    where: { gameId, playerId },
+    where: { gameId: gameId, playerId: playerId },
   });
   return gamePlayer;
 };
@@ -54,6 +54,13 @@ export const updateGamePlayerScore = async (gamePlayer, points) => {
 export const updatePlayerStatus = async (playerInGame, status) => {
   playerInGame.status = status;
   await playerInGame.save();
+};
+
+export const updatePlayerUNO = async (gameId, playerInGame, uno) => {
+  await GamePlayer.update(
+    { uno: uno },
+    { where: { gameId, playerId: playerInGame } },
+  );
 };
 
 export const removeGamePlayers = async (gameId) => {

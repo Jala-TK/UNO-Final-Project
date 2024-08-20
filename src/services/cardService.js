@@ -18,8 +18,9 @@ export const findCardById = async (id) => {
 };
 
 export const getHighestDiscardOrder = async (gameId) => {
-  return await Card.max('orderDiscarded', {
-    where: { gameId, orderDiscarded: { [Op.ne]: null } },
+  return await Card.findOne({
+    where: { gameId: gameId, orderDiscarded: { [Op.ne]: null } },
+    order: [['orderDiscarded', 'DESC']],
   });
 };
 
@@ -46,4 +47,13 @@ export const findAvailableCard = async (gameId) => {
 
 export const assignCardToPlayer = async (cardId, playerId) => {
   await Card.update({ whoOwnerCard: playerId }, { where: { id: cardId } });
+};
+
+export const isCardPlayable = (drawnCard, currentCard) => {
+  return (
+    drawnCard.color === currentCard.color ||
+    drawnCard.value === currentCard.value ||
+    drawnCard.value === 'wild' ||
+    drawnCard.value === 'wild_draw4'
+  );
 };

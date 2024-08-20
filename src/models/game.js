@@ -1,8 +1,8 @@
-import { DataTypes } from "sequelize";
-import sequelize from "../config/database.js";
-import Player from "./player.js";
+import { DataTypes } from 'sequelize';
+import sequelize from '../config/database.js';
+import Player from './player.js';
 
-const Game = sequelize.define("Game", {
+const Game = sequelize.define('Game', {
   title: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -20,15 +20,25 @@ const Game = sequelize.define("Game", {
     allowNull: false,
     references: {
       model: Player,
-      key: "id",
+      key: 'id',
     },
+  },
+  clockwise: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true,
+    allowNull: false,
+  },
+  cardsToBuy: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+    allowNull: false,
   },
   currentPlayer: {
     type: DataTypes.INTEGER,
     allowNull: true,
     references: {
       model: Player,
-      key: "id",
+      key: 'id',
     },
   },
   auditExcluded: {

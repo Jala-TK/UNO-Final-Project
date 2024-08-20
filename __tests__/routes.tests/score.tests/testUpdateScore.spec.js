@@ -3,6 +3,7 @@ import app from '../../../src/index.js';
 import GamePlayer from '../../../src/models/gamePlayer.js';
 import Game from '../../../src/models/game.js';
 import Player from '../../../src/models/player.js';
+import History from '../../../src/models/history.js';
 
 describe('PUT /api/score/:id - Update Score', () => {
   let game;
@@ -11,7 +12,7 @@ describe('PUT /api/score/:id - Update Score', () => {
 
   beforeAll(async () => {
     player = await Player.create({
-      username: 'testPlayer',
+      username: 'testPlayerUpdateScore',
       email: 'testPlayer@gmail.com',
       password: 'password123',
     });
@@ -32,6 +33,7 @@ describe('PUT /api/score/:id - Update Score', () => {
 
   afterAll(async () => {
     await gamePlayer.destroy();
+    await History.destroy({ where: { gameId: game.id } });
     await game.destroy();
     await player.destroy();
   });
@@ -45,7 +47,6 @@ describe('PUT /api/score/:id - Update Score', () => {
         gameId: game.id,
         score: newScore,
       });
-    console.log(response.body);
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({
       playerId: player.id,

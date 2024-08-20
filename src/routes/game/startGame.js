@@ -1,7 +1,7 @@
 import { validateParams } from '../../utils/validation.js';
 import { findGameById, updateGame } from '../../services/gameService.js';
 import { verifyPlayersReady } from '../../services/gamePlayerService.js';
-import { initializeGame } from '../../services/dealerService.js';
+import { initializeDeck, setTopCard } from '../../services/dealerService.js';
 
 export const startGame = async (req, res, next) => {
   try {
@@ -22,7 +22,6 @@ export const startGame = async (req, res, next) => {
     const players = await verifyPlayersReady(game_id);
     if (players.length <= 1)
       return res.status(400).json({ message: 'Only one player in the room' });
-    console.log(players);
     const allReady = players.every((player) => player.status === true);
     if (!allReady)
       return res.status(400).json({ message: 'Some players are not ready' });
@@ -30,7 +29,8 @@ export const startGame = async (req, res, next) => {
     if (game.status == 'In progress')
       return res.status(400).json({ message: 'The game has already started' });
 
-    await initializeGame(game_id);
+    await initializeDeck(game_id);
+    await setTopCard(game_id);
     await updateGame(game, {
       status: 'In progress',
       currentPlayer: user.id,

@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.75% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>15/16</span>
+                <span class='fraction'>15/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>13/13</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.75% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>15/16</span>
+                <span class='fraction'>15/15</span>
             </div>
         
             
@@ -94,50 +94,56 @@
 <a name='L29'></a><a href='#L29'>29</a>
 <a name='L30'></a><a href='#L30'>30</a>
 <a name='L31'></a><a href='#L31'>31</a>
-<a name='L32'></a><a href='#L32'>32</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">32x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import GamePlayer from '../../models/gamePlayer.js';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { validateParams } from '../../utils/validation.js';
+import {
+  findScoreById,
+  updateScore as updateScoreService,
+} from '../../services/scoreService.js';
 &nbsp;
 export const updateScore = async (req, res, next) =&gt; {
   try {
-    const gamePlayer = await GamePlayer.findByPk(req.params.id);
+    const gamePlayer = await findScoreById(req.params.id);
     if (!gamePlayer || gamePlayer.auditExcluded) {
       return res.status(404).json({ message: 'Score not found' });
     }
-    const { playerId, gameId, score } = req.body;
-    if (!playerId || !gameId || !score) {
-      return res.status(400).json({ message: 'Invalid params' });
-    }
 &nbsp;
+    const { playerId, gameId, score } = req.body;
+    validateParams({ playerId, gameId, score }, res);
     if (gamePlayer.playerId != playerId) {
       return res.status(404).json({ message: 'Score with playerId not found' });
     }
@@ -145,7 +151,7 @@ export const updateScore = async (req, res, next) =&gt; {
       return res.status(404).json({ message: 'Score with gameId not found' });
     }
 &nbsp;
-    await gamePlayer.update({ score });
+    await updateScoreService(gamePlayer, score);
     const response = {
       playerId: gamePlayer.playerId,
       gameId: gamePlayer.gameId,
@@ -153,7 +159,7 @@ export const updateScore = async (req, res, next) =&gt; {
     };
     res.status(200).json(response);
   } catch (error) {
-<span class="cstat-no" title="statement not covered" >    next(error);</span>
+    next(error);
   }
 };
 &nbsp;</pre></td></tr></table></pre>
@@ -163,7 +169,7 @@ export const updateScore = async (req, res, next) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-08-02T18:08:21.160Z
+                at 2024-08-16T00:50:05.921Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

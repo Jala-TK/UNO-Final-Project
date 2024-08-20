@@ -1,0 +1,148 @@
+{
+  "unoCards": [
+    {
+      "color": "red",
+      "value": "draw2",
+      "points": 20,
+      "image": "https://imgur.com/ObJ4uwc.png"
+    },
+    {
+      "color": "yellow",
+      "value": "draw2",
+      "points": 20,
+      "image": "https://imgur.com/dpOvEci.png"
+    },
+    {
+      "color": "green",
+      "value": "draw2",
+      "points": 20,
+      "image": "https://imgur.com/A932rFR.png"
+    },
+    {
+      "color": "blue",
+      "value": "draw2",
+      "points": 20,
+      "image": "https://imgur.com/PER2WHn.png"
+    },
+    {
+      "color": "wild",
+      "value": "wild_draw4",
+      "points": 50,
+      "image": "https://imgur.com/Enw6iCf.png"
+    },
+    {
+      "color": "wild",
+      "value": "wild_draw4",
+      "points": 50,
+      "image": "https://imgur.com/Enw6iCf.png"
+    },
+    {
+      "color": "wild",
+      "value": "wild_draw4",
+      "points": 50,
+      "image": "https://imgur.com/Enw6iCf.png"
+    },
+    {
+      "color": "wild",
+      "value": "wild_draw4",
+      "points": 50,
+      "image": "https://imgur.com/Enw6iCf.png"
+    },
+    {
+      "color": "red",
+      "value": 0,
+      "points": 10,
+      "image": "https://imgur.com/k8aRoDI.png"
+    },
+    {
+      "color": "yellow",
+      "value": 0,
+      "points": 10,
+      "image": "https://imgur.com/BJaWUAx.png"
+    },
+    {
+      "color": "green",
+      "value": 0,
+      "points": 10,
+      "image": "https://imgur.com/20zcWp6.png"
+    },
+    {
+      "color": "blue",
+      "value": 0,
+      "points": 10,
+      "image": "https://imgur.com/nSN7jjN.png"
+    },
+    {
+      "color": "red",
+      "value": "skip",
+      "points": 20,
+      "image": "https://imgur.com/15rzk6M.png"
+    },
+    {
+      "color": "yellow",
+      "value": "skip",
+      "points": 20,
+      "image": "https://imgur.com/a9ThyYq.png"
+    },
+    {
+      "color": "green",
+      "value": "skip",
+      "points": 20,
+      "image": "https://imgur.com/XEyV17c.png"
+    },
+    {
+      "color": "blue",
+      "value": "skip",
+      "points": 20,
+      "image": "https://imgur.com/HS0pfpn.png"
+    },
+    {
+      "color": "red",
+      "value": "reverse",
+      "points": 20,
+      "image": "https://imgur.com/COkaNJO.png"
+    },
+    {
+      "color": "yellow",
+      "value": "reverse",
+      "points": 20,
+      "image": "https://imgur.com/mUvxurY.png"
+    },
+    {
+      "color": "green",
+      "value": "reverse",
+      "points": 20,
+      "image": "https://imgur.com/L5GaKtR.png"
+    },
+    {
+      "color": "blue",
+      "value": "reverse",
+      "points": 20,
+      "image": "https://imgur.com/AnAQN5s.png"
+    },
+    {
+      "color": "wild",
+      "value": "wild",
+      "points": 50,
+      "image": "https://imgur.com/gPucTF9.png"
+    },
+    {
+      "color": "wild",
+      "value": "wild",
+      "points": 50,
+      "image": "https://imgur.com/gPucTF9.png"
+    },
+    {
+      "color": "wild",
+      "value": "wild",
+      "points": 50,
+      "image": "https://imgur.com/gPucTF9.png"
+    },
+    {
+      "color": "wild",
+      "value": "wild",
+      "points": 50,
+      "image": "https://imgur.com/gPucTF9.png"
+    }
+  ]
+}

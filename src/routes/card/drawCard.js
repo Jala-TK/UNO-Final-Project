@@ -1,15 +1,13 @@
-import {
-  findAvailableCard,
-  assignCardToPlayer,
-  findCardById,
-} from '../../services/cardService.js';
+import { findCardById } from '../../services/cardService.js';
 import { findGameById, isCurrentPlayer } from '../../services/gameService.js';
 import {
   findGamePlayer,
   updateGamePlayerScore,
 } from '../../services/gamePlayerService.js';
-import { setNextPlayer } from '../../services/dealerService.js';
+import { setNextPlayer, drawCards } from '../../services/dealerService.js';
 import { validateParams } from '../../utils/validation.js';
+import { addActionToHistory } from '../../services/historyService.js';
+import { updatePlayerUNO } from '../../services/gamePlayerService.js';
 
 export const drawCard = async (req, res, next) => {
   try {
@@ -29,31 +27,27 @@ export const drawCard = async (req, res, next) => {
         .json({ message: 'It is not the players turn yet' });
     }
 
-    const card = await findAvailableCard(game_id);
-
-    if (!card) {
-      return res
-        .status(400)
-        .json({ message: 'No more cards available in the deck' });
-    }
-
-    await assignCardToPlayer(card.id, user.id);
-
+    let card = await drawCards(game_id, 1, user.id);
+    card = card[0];
     const gamePlayer = await findGamePlayer(game_id, user.id);
     await updateGamePlayerScore(gamePlayer, card.points);
-    await setNextPlayer(game_id, res);
+    await setNextPlayer(game_id, 1, res);
 
     const newCard = await findCardById(card.id);
-    const response = {
-      id: newCard.id,
-      color: newCard.color,
-      value: newCard.value,
-      game_id: newCard.gameId,
-      whoOwnerCard: newCard.whoOwnerCard,
-      orderDiscarded: newCard.orderDiscarded,
-    };
+    if (gamePlayer.uno === true) {
+      await updatePlayerUNO(game_id, user.id, false);
+    }
 
-    res.status(200).json({ success: true, response });
+    await addActionToHistory(
+      game_id,
+      `Drew a card ${card.color} ${card.value}`,
+      user.username,
+    );
+
+    res.status(200).json({
+      message: `${user.username} drew a card from the deck`,
+      cardDrawn: `${newCard.color} ${newCard.value}`,
+    });
   } catch (error) {
     next(error);
   }

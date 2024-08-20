@@ -1,5 +1,6 @@
 import GamePlayer from '../models/gamePlayer.js';
 import Player from '../models/player.js';
+import Card from '../models/card.js';
 
 export const createScore = async (gameId, playerId, score) => {
   return await GamePlayer.create({
@@ -31,6 +32,26 @@ export const getPlayerScores = async (gamePlayers) => {
   }
 
   return scores;
+};
+
+export const updateScoreAutomatic = async (game_id, player) => {
+  const cards = await Card.findAll({
+    where: {
+      gameId: game_id,
+      whoOwnerCard: player.id,
+      orderDiscarded: null,
+    },
+  });
+
+  let totalPoints = 0;
+  for (const card of cards) {
+    totalPoints += card.points;
+  }
+  const gamePlayer = await GamePlayer.findOne({
+    where: { gameId: game_id, playerId: player.id },
+  });
+
+  return await updateScore(gamePlayer, totalPoints);
 };
 
 export const updateScore = async (gamePlayer, score) => {

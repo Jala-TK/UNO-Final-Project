@@ -4,6 +4,7 @@ import Card from '../../../src/models/card.js';
 import Game from '../../../src/models/game.js';
 import GamePlayer from '../../../src/models/gamePlayer.js';
 import Player from '../../../src/models/player.js';
+import History from '../../../src/models/history.js';
 
 describe('POST /api/cards/draw - Draw Card', () => {
   let game;
@@ -53,7 +54,6 @@ describe('POST /api/cards/draw - Draw Card', () => {
       score: 0,
     });
 
-    // Add a card to the deck
     await Card.create({
       color: 'red',
       value: '5',
@@ -67,7 +67,8 @@ describe('POST /api/cards/draw - Draw Card', () => {
   afterAll(async () => {
     await Card.destroy({ where: { gameId: game.id } });
     await GamePlayer.destroy({ where: { gameId: game.id } });
-    await game.destroy();
+    await History.destroy({ where: { gameId: game.id } });
+    await Game.destroy({ where: { id: game.id } });
     await player.destroy();
     await playerOther.destroy();
   });
@@ -78,16 +79,20 @@ describe('POST /api/cards/draw - Draw Card', () => {
       .send({ game_id: game.id, access_token: token });
 
     expect(response.status).toBe(200);
-    expect(response.body.success).toBe(true);
-    expect(response.body.response).toBeDefined();
-
-    const card = await Card.findByPk(response.body.response.id);
-    expect(card.whoOwnerCard).toBe(player.id);
+    expect(response.body.message).toBe(
+      `${player.username} drew a card from the deck`,
+    );
+    expect(response.body.cardDrawn).toBe('red 5');
 
     const gamePlayer = await GamePlayer.findOne({
       where: { gameId: game.id, playerId: player.id },
     });
     expect(gamePlayer.score).toBe(5);
+
+    const history = await History.findOne({
+      where: { gameId: game.id, player: player.username },
+    });
+    expect(history.action).toBe('Drew a card red 5');
   });
 
   it("should return an error if it is not the player's turn", async () => {
@@ -99,14 +104,15 @@ describe('POST /api/cards/draw - Draw Card', () => {
     expect(response.body.message).toBe('It is not the players turn yet');
   });
 
-  it('should return an error if no cards are available in the deck', async () => {
-    await Card.destroy({ where: { gameId: game.id } }); // Ensure no cards are left
-
-    const response = await request(app)
+  it('should log the action to the history when a card is drawn', async () => {
+    await request(app)
       .post('/api/cards/draw')
-      .send({ game_id: game.id, access_token: tokenOtherUser });
+      .send({ game_id: game.id, access_token: token });
 
-    expect(response.status).toBe(400);
-    expect(response.body.message).toBe('No more cards available in the deck');
+    const history = await History.findOne({
+      where: { gameId: game.id, player: player.username },
+    });
+    expect(history).not.toBeNull();
+    expect(history.action).toBe('Drew a card red 5');
   });
 });

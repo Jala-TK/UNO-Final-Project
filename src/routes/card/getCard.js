@@ -11,8 +11,6 @@ export const getCard = async (req, res, next) => {
       color: card.color,
       value: card.value,
       game_id: card.gameId,
-      whoOwnerCard: card.whoOwnerCard,
-      orderDiscarded: card.orderDiscarded,
     };
     res.status(200).json(response);
   } catch (error) {

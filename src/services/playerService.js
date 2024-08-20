@@ -19,6 +19,12 @@ export const findExistPlayerById = async (playerId) => {
   });
 };
 
+export const findExistPlayerByUsername = async (username) => {
+  return await Player.findOne({
+    where: { username: username, auditExcluded: false },
+  });
+};
+
 export const findExistingPlayer = async (username, email) => {
   const player = await Player.findOne({
     where: {
@@ -53,6 +59,16 @@ export const findExistingPlayerUpdate = async (user, username, email) => {
   return null;
 };
 
+export const getPlayerHand = async (game_id, player) => {
+  return await Card.findAll({
+    where: {
+      gameId: game_id,
+      whoOwnerCard: player.id,
+      orderDiscarded: null,
+    },
+  });
+};
+
 export const getPlayerHands = async (game_id, playersInGame) => {
   const playerIds = playersInGame.map((player) => player.playerId);
 
@@ -69,6 +85,36 @@ export const getPlayerHands = async (game_id, playersInGame) => {
       id: card.id,
       points: card.points,
       description: card.value,
+    }));
+  }
+  return playerHands;
+};
+
+export const getPlayerHandsInGame = async (game_id) => {
+  const playersInGame = await GamePlayer.findAll({
+    where: { gameId: game_id },
+  });
+  const playerIds = playersInGame.map((player) => player.playerId);
+
+  const players = await Player.findAll({
+    where: {
+      id: playerIds,
+    },
+  });
+
+  const playerHands = {};
+  for (const player of players) {
+    const cards = await Card.findAll({
+      where: {
+        gameId: game_id,
+        whoOwnerCard: player.id,
+        orderDiscarded: null,
+      },
+    });
+    playerHands[player.username] = cards.map((card) => ({
+      id: card.id,
+      points: card.points,
+      description: `${card.color} ${card.value}`,
     }));
   }
   return playerHands;
@@ -100,6 +146,41 @@ export const getPlayersInGameData = async (gamePlayers) => {
   const usernames = users.map((user) => user.username);
 
   return { userIds, usernames };
+};
+
+export const validatePlayers = async (usernames) => {
+  try {
+    if (!Array.isArray(usernames)) {
+      usernames = [usernames];
+    }
+
+    const players = await Player.findAll({
+      where: {
+        username: usernames,
+      },
+    });
+
+    // Verifica se todos os usernames foram encontrados
+    const foundUsernames = players.map((player) => player.username);
+    const notFoundUsernames = usernames.filter(
+      (username) => !foundUsernames.includes(username),
+    );
+    if (notFoundUsernames.length > 0) {
+      return {
+        valid: false,
+        message: `The following players were not found: ${notFoundUsernames.join(', ')}`,
+        players: [],
+      };
+    }
+
+    return {
+      valid: true,
+      players,
+    };
+  } catch (error) {
+    console.error('Error validating players:', error);
+    throw error;
+  }
 };
 
 export const verifyPlayerInGame = async (user, game_id) => {

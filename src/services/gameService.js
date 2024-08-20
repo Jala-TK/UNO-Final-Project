@@ -1,5 +1,4 @@
 import Game from '../models/game.js';
-import GamePlayer from '../models/gamePlayer.js';
 
 export const createGame = async (title, maxPlayers, creatorId) => {
   const newGame = await Game.create({

@@ -27,7 +27,6 @@ describe('Blacklist Token Model', () => {
         expiresIn: '7d',
       },
     );
-    console.log(access_token);
   });
 
   afterEach(async () => {

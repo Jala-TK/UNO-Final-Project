@@ -4,6 +4,7 @@ import Card from '../../../src/models/card.js';
 import Game from '../../../src/models/game.js';
 import GamePlayer from '../../../src/models/gamePlayer.js';
 import Player from '../../../src/models/player.js';
+import History from '../../../src/models/history.js';
 
 describe('POST /api/cards/play - Play Card', () => {
   let game;
@@ -54,20 +55,41 @@ describe('POST /api/cards/play - Play Card', () => {
       score: 0,
     });
 
+    await Card.create({
+      color: 'red',
+      value: '4',
+      gameId: game.id,
+      points: 4,
+      image: 'card.png',
+      whoOwnerCard: null,
+      orderDiscarded: 1,
+    });
+
+    await Card.create({
+      color: 'red',
+      value: '2',
+      gameId: game.id,
+      points: 2,
+      image: 'card.png',
+      whoOwnerCard: player.id,
+      orderDiscarded: null,
+    });
+
     card = await Card.create({
       color: 'red',
       value: '5',
       gameId: game.id,
       points: 5,
       image: 'card.png',
-      whoOwnerCard: player.id, // Card owned by the player
-      orderDiscarded: null, // Card not discarded
+      whoOwnerCard: player.id,
+      orderDiscarded: null,
     });
   });
 
   afterAll(async () => {
     await Card.destroy({ where: { gameId: game.id } });
     await GamePlayer.destroy({ where: { gameId: game.id } });
+    await History.destroy({ where: { gameId: game.id } });
     await Game.destroy({ where: { id: game.id } });
     await Player.destroy({ where: { id: player.id } });
     await Player.destroy({ where: { id: playerOther.id } });
@@ -80,7 +102,7 @@ describe('POST /api/cards/play - Play Card', () => {
 
     expect(response.status).toBe(200);
     expect(response.body.message).toBe('Card played successfully');
-    expect(response.body.response).toBeDefined();
+    expect(response.body.nextPlayer).toBeDefined();
 
     const updatedCard = await Card.findByPk(card.id);
     expect(updatedCard.orderDiscarded).toBeDefined();
@@ -88,7 +110,7 @@ describe('POST /api/cards/play - Play Card', () => {
   });
 
   it("should return an error if it is not the player's turn", async () => {
-    await game.update({ currentPlayer: playerOther.id }); // Simulating another player's turn
+    await game.update({ currentPlayer: playerOther.id });
 
     const response = await request(app)
       .post('/api/cards/play')
@@ -99,7 +121,7 @@ describe('POST /api/cards/play - Play Card', () => {
   });
 
   it('should return an error if the card does not belong to the player', async () => {
-    await game.update({ currentPlayer: player.id }); // Simulating another player's turn
+    await game.update({ currentPlayer: player.id });
 
     const cardForOtherPlayer = await Card.create({
       color: 'blue',
@@ -107,7 +129,7 @@ describe('POST /api/cards/play - Play Card', () => {
       gameId: game.id,
       points: 7,
       image: 'other_card.png',
-      whoOwnerCard: playerOther.id, // Different owner
+      whoOwnerCard: playerOther.id,
     });
 
     const response = await request(app).post('/api/cards/play').send({
@@ -123,7 +145,7 @@ describe('POST /api/cards/play - Play Card', () => {
   });
 
   it('should return an error if the card has already been discarded', async () => {
-    await game.update({ currentPlayer: player.id }); // Simulating another player's turn
+    await game.update({ currentPlayer: player.id });
 
     await card.update({ orderDiscarded: 1 });
 

@@ -14,6 +14,13 @@ import { getCurrentPlayer } from '../routes/game/getCurrentPlayer.js';
 import { getTopCard } from '../routes/game/getTopCard.js';
 import { getPlayerHands } from '../routes/game/getPlayerHands.js';
 import { authMiddleware } from '../middleware/authenticate.js';
+import { dealCards } from '../routes/game/dealCards.js';
+import { sayUNO } from '../routes/game/sayUno.js';
+import { challengePlayer } from '../routes/game/challengePlayer.js';
+import { getGeneralStatus } from '../routes/game/getGeneralStatus.js';
+import { getHistory } from '../routes/game/getHistory.js';
+import { getPlayerHand } from '../routes/game/getPlayerHand.js';
+import { checkHand } from '../routes/game/checkHand.js';
 
 const router = Router();
 
@@ -26,10 +33,17 @@ router.post('/game/ready', authMiddleware, getReady);
 router.post('/game/start', authMiddleware, startGame);
 router.post('/game/leave', authMiddleware, leaveGame);
 router.post('/game/end', authMiddleware, endGame);
+router.post('/game/dealCards/:id', authMiddleware, dealCards);
+router.post('/game/uno', authMiddleware, sayUNO);
+router.post('/game/challengeUno', authMiddleware, challengePlayer);
 router.get('/game/status/', getStatusGame);
 router.get('/game/players', getPlayersInGame);
 router.get('/game/currentPlayer', getCurrentPlayer);
 router.get('/game/topCard', getTopCard);
 router.get('/game/playerHands', getPlayerHands);
+router.get('/game/statusGeral', getGeneralStatus);
+router.get('/game/history', getHistory);
+router.get('/game/hand/', authMiddleware, getPlayerHand);
+router.get('/game/checkHand/', authMiddleware, checkHand);
 
 export default router;
