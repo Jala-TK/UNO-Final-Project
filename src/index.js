@@ -2,9 +2,17 @@ import express from 'express';
 import sequelize from './config/database.js';
 import routes from './routes/index.js';
 import errorHandler from './middleware/errorHandler.js';
+import CacheMiddleware from './middleware/cacheMiddleware.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+const cacheOptions = {
+  max: 50,
+  maxAge: 2000,
+};
+const cacheMiddleware = new CacheMiddleware(cacheOptions);
+app.use(cacheMiddleware.handleCache.bind(cacheMiddleware));
 
 app.use(express.json());
 app.use('/api', routes);
