@@ -65,6 +65,7 @@ export const getPlayerHandsService = (game_id) => {
               gameId: game_id,
               whoOwnerCard: playerId,
               orderDiscarded: null,
+              auditExcluded: false
             },
           }).then((cards) => ({
             [playerId]: cards.map((card) => ({
@@ -81,7 +82,7 @@ export const getPlayerHandsService = (game_id) => {
 
   const fetchPlayerNames = (playerIds) =>
     new Monad(
-      Player.findAll({ where: { id: playerIds } }).then((players) =>
+      Player.findAll({ where: { id: playerIds, auditExcluded: false } }).then((players) =>
         players.reduce((acc, player) => {
           acc[player.id] = player.username;
           return acc;

@@ -9,7 +9,7 @@ export const authenticateLogin = async (username, password) => {
     throw new Error('Invalid credentials or User not found');
   }
 
-  const player = await Player.findOne({ where: { username: username } });
+  const player = await Player.findOne({ where: { username: username, auditExcluded: false } });
 
   if (!player) {
     throw new Error('Invalid credentials or User not found');

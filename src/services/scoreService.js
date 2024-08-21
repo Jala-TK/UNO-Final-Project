@@ -20,6 +20,7 @@ export const getPlayerScores = async (gamePlayers) => {
   const players = await Player.findAll({
     where: {
       id: playerIds,
+      auditExcluded: false
     },
   });
 
@@ -40,6 +41,7 @@ export const updateScoreAutomatic = async (game_id, player) => {
       gameId: game_id,
       whoOwnerCard: player.id,
       orderDiscarded: null,
+      auditExcluded: false
     },
   });
 
@@ -48,7 +50,7 @@ export const updateScoreAutomatic = async (game_id, player) => {
     totalPoints += card.points;
   }
   const gamePlayer = await GamePlayer.findOne({
-    where: { gameId: game_id, playerId: player.id },
+    where: { gameId: game_id, playerId: player.id, auditExcluded: false },
   });
 
   return await updateScore(gamePlayer, totalPoints);

@@ -52,7 +52,7 @@ export const setTopCard = async (gameId) => {
 
 export const deliverCards = async (gameId, handSize, players) => {
   const deck = await Card.findAll({
-    where: { gameId: gameId, whoOwnerCard: null, orderDiscarded: null },
+    where: { gameId: gameId, whoOwnerCard: null, orderDiscarded: null, auditExcluded: false },
   });
 
   const hands = {};
@@ -88,7 +88,7 @@ export const dealCards = async (gameId, handSize, players) => {
       const points = playerHand.reduce((total, card) => total + card.points, 0);
 
       const gamePlayer = await GamePlayer.findOne({
-        where: { gameId: gameId, playerId: player.id },
+        where: { gameId: gameId, playerId: player.id, auditExcluded: false },
       });
 
       gamePlayer.score += points;
@@ -163,7 +163,7 @@ export const setNewPoints = async (card_id, game_id, user, res) => {
 
     const cardPoints = card.points;
     const gamePlayer = await GamePlayer.findOne({
-      where: { gameId: game_id, playerId: user.id },
+      where: { gameId: game_id, playerId: user.id, auditExcluded: false },
     });
 
     if (!gamePlayer) {
@@ -185,7 +185,7 @@ export const drawCards = async (gameId, quantity, playerId) => {
 
   for (let i = 0; i < quantity; i++) {
     let deck = await Card.findAll({
-      where: { gameId: gameId, whoOwnerCard: null, orderDiscarded: null },
+      where: { gameId: gameId, whoOwnerCard: null, orderDiscarded: null, auditExcluded: false },
       order: [['createdAt', 'ASC']],
     });
 
@@ -193,7 +193,7 @@ export const drawCards = async (gameId, quantity, playerId) => {
       await initializeDeck(gameId);
 
       deck = await Card.findAll({
-        where: { gameId: gameId, whoOwnerCard: null, orderDiscarded: null },
+        where: { gameId: gameId, whoOwnerCard: null, orderDiscarded: null, auditExcluded: false },
         order: [['createdAt', 'ASC']],
       });
     }

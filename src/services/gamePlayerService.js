@@ -17,14 +17,14 @@ export const addPlayerToGame = async (game_id, user_id) => {
 
 export const findGamePlayer = async (gameId, playerId) => {
   const gamePlayer = await GamePlayer.findOne({
-    where: { gameId: gameId, playerId: playerId },
+    where: { gameId: gameId, playerId: playerId, auditExcluded: false },
   });
   return gamePlayer;
 };
 
 export const getPlayersInGame = async (game_id) => {
   return await GamePlayer.findAll({
-    where: { gameId: game_id, auditExcluded: false },
+    where: { gameId: game_id, auditExcluded: false, auditExcluded: false },
   });
 };
 
@@ -39,6 +39,7 @@ export const getTopDiscardedCard = async (game_id) => {
     where: {
       gameId: game_id,
       orderDiscarded: { [Op.ne]: null },
+      auditExcluded: false
     },
     order: [['orderDiscarded', 'DESC']],
   });
@@ -59,7 +60,7 @@ export const updatePlayerStatus = async (playerInGame, status) => {
 export const updatePlayerUNO = async (gameId, playerInGame, uno) => {
   await GamePlayer.update(
     { uno: uno },
-    { where: { gameId, playerId: playerInGame } },
+    { where: { gameId, playerId: playerInGame, auditExcluded: false } },
   );
 };
 

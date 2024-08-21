@@ -10,7 +10,7 @@ export const addActionToHistory = async (gameId, action, player) => {
 export const getGameHistory = async (gameId) => {
   const history = await History.findAll({
     where: {
-      gameId: gameId,
+      gameId: gameId, auditExcluded: false
     },
     order: [['createdAt', 'ASC']],
   });

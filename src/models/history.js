@@ -23,5 +23,10 @@ const History = sequelize.define('History', {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
   },
+  auditExcluded: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: false,
+  },
 });
 export default History;
