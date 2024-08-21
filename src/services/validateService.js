@@ -1,5 +1,6 @@
 import { findGameById, isCurrentPlayer } from '../services/gameService.js';
 import { findCardById, isCardPlayable } from '../services/cardService.js';
+import { getPlayerInGame } from '../services/gamePlayerService.js';
 
 export const validateGameExists = async (game_id, res) => {
   const game = await findGameById(game_id);
@@ -8,6 +9,15 @@ export const validateGameExists = async (game_id, res) => {
     return null;
   }
   return game;
+};
+
+export const validatePlayerInGame = async (game, user, res) => {
+  const inGame = await getPlayerInGame(game.id, user.id);
+  if (!inGame) {
+    res.status(404).json({ message: 'Player not found in this game' });
+    return false;
+  }
+  return true;
 };
 
 export const validatePlayerTurn = async (game, user, res) => {

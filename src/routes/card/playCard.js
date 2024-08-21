@@ -51,7 +51,7 @@ export const playCard = async (req, res, next) => {
         await handleWildDrawFour(game, card, color, user, res);
       } else {
         // Jogador não pode jogar outra carta, deve comprar as cartas acumuladas
-        await drawCardsAndUpdateState(game, user, res);
+        await drawCardsAndUpdateState(game, user, res, next);
         return;
       }
     } else {

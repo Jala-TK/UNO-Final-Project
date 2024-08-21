@@ -69,8 +69,8 @@ describe('POST /api/cards/draw - Draw Card', () => {
     await GamePlayer.destroy({ where: { gameId: game.id } });
     await History.destroy({ where: { gameId: game.id } });
     await Game.destroy({ where: { id: game.id } });
-    await player.destroy();
-    await playerOther.destroy();
+    await Player.destroy({ where: { id: player.id } });
+    await Player.destroy({ where: { id: playerOther.id } });
   });
 
   it('should draw a card successfully', async () => {

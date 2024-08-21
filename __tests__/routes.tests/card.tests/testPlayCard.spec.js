@@ -101,7 +101,7 @@ describe('POST /api/cards/play - Play Card', () => {
       .send({ game_id: game.id, card_id: card.id, access_token: token });
 
     expect(response.status).toBe(200);
-    expect(response.body.message).toBe('Card played successfully');
+    expect(response.body.message).toBe('testPlayerPlayCard played red 5');
     expect(response.body.nextPlayer).toBeDefined();
 
     const updatedCard = await Card.findByPk(card.id);
@@ -117,7 +117,7 @@ describe('POST /api/cards/play - Play Card', () => {
       .send({ game_id: game.id, card_id: card.id, access_token: token });
 
     expect(response.status).toBe(400);
-    expect(response.body.message).toBe('It is not the players turn yet');
+    expect(response.body.message).toBe(`It is not the player's turn yet`);
   });
 
   it('should return an error if the card does not belong to the player', async () => {

@@ -11,8 +11,8 @@ describe('GET /api/score/:id - Get Score', () => {
 
   beforeAll(async () => {
     player = await Player.create({
-      username: 'testPlayer',
-      email: 'testPlayer@gmail.com',
+      username: 'testGetScore',
+      email: 'testGetScore@gmail.com',
       password: 'password123',
     });
 

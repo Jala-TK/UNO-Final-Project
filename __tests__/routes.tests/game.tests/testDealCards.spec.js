@@ -79,7 +79,6 @@ describe('POST /api/game/dealCards/:id - Deal Cards', () => {
         player2.username.toString(),
       ]),
     );
-    console.log(response.body.players);
     for (const cards of Object.values(response.body.players)) {
       expect(cards.length).toBe(7);
     }

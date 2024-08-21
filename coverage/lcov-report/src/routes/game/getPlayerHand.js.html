@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">10% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/10</span>
+                <span class='fraction'>11/11</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">10% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/10</span>
+                <span class='fraction'>11/11</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -85,48 +85,60 @@
 <a name='L20'></a><a href='#L20'>20</a>
 <a name='L21'></a><a href='#L21'>21</a>
 <a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">36x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">38x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { getPlayerHand as getPlayerHandService } from '../../services/playerService.js';
+import { validateParams } from '../../utils/validation.js';
+import {
+  validateGameExists,
+  validatePlayerInGame,
+} from '../../services/validateService.js';
 &nbsp;
-export const getPlayerHand = <span class="fstat-no" title="function not covered" >as</span>ync (req, res, next) =&gt; {
-  const { game_id } = <span class="cstat-no" title="statement not covered" >req.body;</span>
+export const getPlayerHand = async (req, res, next) =&gt; {
+  try {
+    const { game_id } = req.body;
+    validateParams({ game_id }, res);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  try {</span>
-    const hand = <span class="cstat-no" title="statement not covered" >await getPlayerHandService(game_id, req.user);</span>
+    const game = await validateGameExists(game_id, res);
+    await validatePlayerInGame(game, req.user, res);
 &nbsp;
-    const response = <span class="cstat-no" title="statement not covered" >{</span>
+    const hand = await getPlayerHandService(game_id, req.user);
+    const response = {
       player: req.user.username,
-      hand: hand.map(<span class="fstat-no" title="function not covered" >(e</span>ntry) =&gt; <span class="cstat-no" title="statement not covered" >`${entry.color} ${entry.value}`)</span>,
+      hand: hand.map((entry) =&gt; `${entry.color} ${entry.value}`),
     };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    res.status(200).json(response);</span>
+    return res.status(200).json(response);
   } catch (error) {
-<span class="cstat-no" title="statement not covered" >    if (error.status) {</span>
-<span class="cstat-no" title="statement not covered" >      res.status(error.status).json({ message: error.message });</span>
-    } else {
-<span class="cstat-no" title="statement not covered" >      next(error);</span>
-    }
+    next(error);
   }
 };
 &nbsp;</pre></td></tr></table></pre>
@@ -136,7 +148,7 @@ export const getPlayerHand = <span class="fstat-no" title="function not covered"
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-08-20T10:50:50.606Z
+                at 2024-08-21T02:03:37.072Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

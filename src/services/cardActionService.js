@@ -39,7 +39,7 @@ export const handleWild = async (card, color, res) => {
   await card.save();
 };
 
-export const drawCardsAndUpdateState = async (game, user, res) => {
+export const drawCardsAndUpdateState = async (game, user, res, next) => {
   try {
     const cards = await drawCards(game.id, game.cardsToBuy, user.id);
     const gamePlayer = await findGamePlayer(game.id, user.id);
@@ -66,6 +66,6 @@ export const drawCardsAndUpdateState = async (game, user, res) => {
       nextPlayer: nextPlayer?.username,
     });
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };
