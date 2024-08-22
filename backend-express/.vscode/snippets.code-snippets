@@ -1,0 +1,9 @@
+{
+	"Console Dir": {
+		"prefix": "dir",
+		"body": [
+				"console.dir(${1:object});"
+		],
+		"description": "Insere um console.dir()"
+	}
+}
