@@ -37,5 +37,5 @@ yarn-error.log*
 next-env.d.ts
 
 # express
-backend-express/logs
-backend-express/coverage
+backend-express/logs/
+backend-express/coverage/
