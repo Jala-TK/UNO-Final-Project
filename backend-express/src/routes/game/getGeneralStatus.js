@@ -34,7 +34,10 @@ export const getGeneralStatus = async (req, res, next) => {
       game_id: game.id,
       current_player: currentPlayer.username,
       direction: game.clockwise === true ? 'clockwise' : 'counter-clockwise',
-      top_card: `${topCard.color} ${topCard.value}`,
+      top_card: {
+        id: topCard.id,
+        description: `${topCard.color} ${topCard.value}`,
+      },
       hands,
       turnHistory: history.map((entry) => ({
         player: entry.player,

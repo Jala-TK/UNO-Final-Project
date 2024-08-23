@@ -19,8 +19,13 @@ export const getTopCard = async (req, res, next) => {
 
     const response = {
       game_id: game.id,
-      top_card: topCard.value,
-      color: topCard.color,
+      card: {
+        id: topCard.id,
+        color: topCard.color,
+        value: topCard.value,
+        image: topCard.image,
+        description: topCard.description,
+      },
     };
     res.status(200).json(response);
   } catch (error) {

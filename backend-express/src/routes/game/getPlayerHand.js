@@ -16,7 +16,13 @@ export const getPlayerHand = async (req, res, next) => {
     const hand = await getPlayerHandService(game_id, req.user);
     const response = {
       player: req.user.username,
-      hand: hand.map((entry) => `${entry.color} ${entry.value}`),
+      hand: hand.map((entry) => ({
+        id: entry.id,
+        color: entry.color,
+        value: entry.value,
+        image: entry.image,
+        description: `${entry.color} ${entry.value}`,
+      })),
     };
 
     return res.status(200).json(response);

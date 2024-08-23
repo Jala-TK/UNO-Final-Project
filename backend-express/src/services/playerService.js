@@ -29,7 +29,7 @@ export const findExistingPlayer = async (username, email) => {
   const player = await Player.findOne({
     where: {
       [Op.or]: [{ username: username }, { email: email }],
-      auditExcluded: false
+      auditExcluded: false,
     },
   });
   if (player) {
@@ -47,7 +47,7 @@ export const findExistingPlayerUpdate = async (user, username, email) => {
     where: {
       id: { [Op.not]: user.id },
       [Op.or]: [{ username: username }, { email: email }],
-      auditExcluded: false
+      auditExcluded: false,
     },
   });
 
@@ -67,7 +67,7 @@ export const getPlayerHand = async (game_id, player) => {
       gameId: game_id,
       whoOwnerCard: player.id,
       orderDiscarded: null,
-      auditExcluded: false
+      auditExcluded: false,
     },
   });
 };
@@ -82,7 +82,7 @@ export const getPlayerHands = async (game_id, playersInGame) => {
         gameId: game_id,
         whoOwnerCard: playerId,
         orderDiscarded: null,
-        auditExcluded: false
+        auditExcluded: false,
       },
     });
     playerHands[playerId] = cards.map((card) => ({
@@ -103,7 +103,7 @@ export const getPlayerHandsInGame = async (game_id) => {
   const players = await Player.findAll({
     where: {
       id: playerIds,
-      auditExcluded: false
+      auditExcluded: false,
     },
   });
 
@@ -114,12 +114,14 @@ export const getPlayerHandsInGame = async (game_id) => {
         gameId: game_id,
         whoOwnerCard: player.id,
         orderDiscarded: null,
-        auditExcluded: false
+        auditExcluded: false,
       },
     });
     playerHands[player.username] = cards.map((card) => ({
       id: card.id,
-      points: card.points,
+      color: card.color,
+      value: card.value,
+      image: card.image,
       description: `${card.color} ${card.value}`,
     }));
   }
@@ -132,7 +134,7 @@ export const getPlayerNames = async (playersInGame) => {
   const players = await Player.findAll({
     where: {
       id: playerIds,
-      auditExcluded: false
+      auditExcluded: false,
     },
   });
 
@@ -148,7 +150,7 @@ export const getPlayersInGameData = async (gamePlayers) => {
   const users = await Player.findAll({
     where: {
       id: userIds,
-      auditExcluded: false
+      auditExcluded: false,
     },
   });
   const usernames = users.map((user) => user.username);
@@ -165,7 +167,7 @@ export const validatePlayers = async (usernames) => {
     const players = await Player.findAll({
       where: {
         username: usernames,
-        auditExcluded: false
+        auditExcluded: false,
       },
     });
 

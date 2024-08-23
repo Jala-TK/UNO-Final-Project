@@ -83,7 +83,8 @@ export const playCard = async (req, res, next) => {
     }
 
     const topDiscardCard = await getTopDiscardedCard(game_id);
-    await validateCardPlayable(card, topDiscardCard, res);
+    const validateCard = await validateCardPlayable(card, topDiscardCard, res);
+    if (!validateCard) return;
 
     await discardCard(game_id, card, res);
     await updateScoreAutomatic(game.id, user);

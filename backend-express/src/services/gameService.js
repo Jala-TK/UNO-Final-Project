@@ -31,6 +31,11 @@ export const endGame = async (gameId) => {
   }
 };
 
+export const findAll = async () => {
+  const games = await Game.findAll({ where: { auditExcluded: false } });
+  return games;
+};
+
 export const deleteGame = async (game) => {
   if (game) {
     await game.update({ auditExcluded: true });
