@@ -1,0 +1,24 @@
+.buttomIcon {
+  width: 60px;
+  position: relative;
+  height: 60px;
+  margin-right: 20px;
+}
+
+.buttomIcon:hover {
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+}
+.navbar {
+  position: relative;
+  backdrop-filter: blur(48px);
+  background-color: rgba(24, 24, 28, 0.6);
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 8px;
+}

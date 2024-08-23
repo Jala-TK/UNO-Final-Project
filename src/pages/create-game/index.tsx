@@ -1,39 +1,32 @@
 import React, { FormEventHandler, useState } from "react";
-import styles from './Register.module.css';
+import styles from './Room.module.css';
 import InputUsername from "@/components/login/username";
-import InputPassword from "@/components/login/password";
+import InputPassword from "@/components/game/password";
 import Router from "next/router";
-import ButtonLogin from "@/components/login/buttons/login";
-import { Cripto } from "@/utils/cripto/password";
+import ButtomSend from "@/components/login/buttons/send";
 import { Box, Button, Dialog, DialogActions, DialogContent } from "@mui/material";
-import ButtonRegister from "@/components/login/buttons/register";
 import { getAPIClient } from "@/services/axios";
 import { AxiosError } from "axios";
-import InputEmail from "@/components/login/email";
+import InputNumber from "@/components/game/maxPlayers";
 
 
-export default function Register() {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
+export default function CreateRoom() {
+  const [title, setTitle] = useState('');
+  const [maxPlayers, setMaxPlayers] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
   const [messageErro, setMessageErro] = useState('');
   const apiClient = getAPIClient();
 
-  const handleUsernameChange = (value: string) => {
-    setUsername(value);
+  const handleTitleChange = (value: string) => {
+    setTitle(value);
   };
 
-  const handleEmailChange = (value: string) => {
-    setEmail(value);
+  const handleMaxPlayersChange = (value: string) => {
+    setMaxPlayers(value);
   };
 
   const handlePasswordChange = (value: string) => {
     setPassword(value);
-  };
-
-  const handlePasswordConfirmChange = (value: string) => {
-    setPasswordConfirm(value);
   };
 
   const [loadingRequest, setLoadingRequest] = useState(false)
@@ -41,29 +34,25 @@ export default function Register() {
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault()
 
-    if (!password || !username) return
-    if (password != passwordConfirm) {
-      return handleError('Senhas não coincidem')
-    }
-    if (password.length < 8) {
+    if (!password || !title || !maxPlayers) return
+    if (password.length < 4) {
       return handleError('Senha muito pequena')
     }
     setLoadingRequest(true)
 
-    //    const passwordCripto = await Cripto(password);
     const data = {
-      username: username,
-      email: email,
-      password: password
+      title: title,
+      maxPlayers: maxPlayers,
+      //      password: password
     }
 
     try {
-      const result = await apiClient.post("/api/player", data)
+      const result = await apiClient.post("/api/games", data)
 
       if (result?.status == 201) {
-        Router.push('/login')
+        Router.push('/rooms')
       } else {
-        setMessageErro(result?.data.message)
+        setMessageErro(result?.data.error)
       }
     } catch (error: unknown) {
       handleError(error);
@@ -71,10 +60,6 @@ export default function Register() {
 
     setLoadingRequest(false)
   }
-
-  function handleLogin() {
-    Router.push('/login');
-  };
 
   const handleError = (error: unknown) => {
     let errorMessage = '';
@@ -108,34 +93,20 @@ export default function Register() {
       </Dialog>
       <div className={styles.card}>
         <div className={styles.containerHeader}>
-          <Box
-            component="img"
-            className={styles.logo}
-            src="/assets/image.png"
-            alt='Logo'
-            sx={{
-              width: 228,
-              height: 228,
-            }}
-          />
         </div>
-        <h2 className={styles.title}>Registrar-se</h2>
+        <h2 className={styles.title}>Create Game</h2>
         <form onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
-            <InputUsername required onChange={handleUsernameChange} label='Username' username={username} />
+            <InputUsername required onChange={handleTitleChange} label='Title' title={title} />
           </div>
           <div className={styles.formGroup}>
-            <InputEmail required onChange={handleEmailChange} label='Email' email={email} />
+            <InputNumber required onChange={handleMaxPlayersChange} label='MaxPlayers' maxPlayers={maxPlayers} />
           </div>
           <div className={styles.formGroup}>
             <InputPassword required onChange={handlePasswordChange} label='Senha' password={password} />
           </div>
-          <div className={styles.formGroup}>
-            <InputPassword required onChange={handlePasswordConfirmChange} label='Confirme a Senha' password={passwordConfirm} />
-          </div>
           <div className={styles.Buttons} >
-            <ButtonLogin type="submit" label='Registrar' disabledLoading={loadingRequest} />
-            <ButtonRegister label='Fazer login' disabledLoading={loadingRequest} onClick={handleLogin} />
+            <ButtomSend type="submit" label='Create' disabledLoading={loadingRequest} />
           </div>
         </form>
       </div>

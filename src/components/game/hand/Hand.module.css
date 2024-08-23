@@ -1,0 +1,34 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  margin-top: -20px;
+  transform: scale(1.2);
+  z-index: 1;
+}
+
+.handPlayer {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 50%;
+  gap: 10px;
+}
+
+.imageCard {
+  width: 100px;
+  height: 140px;
+  margin-left: -50px;
+  border-radius: 14%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}

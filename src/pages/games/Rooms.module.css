@@ -1,0 +1,161 @@
+.pageContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #2c2c2c;
+  height: 100vh;
+  overflow: auto;
+}
+.roomsContainer {
+  width: 100%;
+  max-width: 70vh;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+}
+
+.roomsDisponiveis {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game {
+  position: relative;
+  width: 220px;
+  height: 270px;
+  background-color: #2c2c2c;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  color: white;
+  transition: transform 0.3s ease;
+}
+
+.game:hover {
+  transform: scale(1.05);
+}
+
+.backgroundIcon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  z-index: 1;
+  object-fit: cover;
+  filter: brightness(0.5);
+}
+.titlePage {
+  font-family: satoshi;
+  font-weight: bold;
+  font-size: 60px;
+  color: #fff;
+}
+
+.profileIcon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 10px auto;
+  z-index: 2;
+  border: 2px solid #fff;
+}
+
+.texts {
+  z-index: 2;
+  position: relative;
+  margin-top: 10px;
+  padding: 0 10px;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.title .id {
+  margin-left: 5px;
+  color: #888;
+}
+
+.players-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #ddd;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2%;
+  font-size: 10px;
+  color: #888;
+}
+
+.players {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5%;
+}
+
+.playersIcon {
+  width: 20px;
+  margin-right: 5px;
+}
+
+.challengeButtom {
+  background-color: #3f3f3f;
+  border-radius: 20px;
+  padding: 8px 25px;
+  cursor: pointer;
+  margin-top: 5%;
+  margin-inline: 20%;
+  transition: background-color 0.3s ease;
+  z-index: 2;
+  position: relative;
+}
+
+.challengeButtom:hover {
+  background-color: #222125;
+}
+
+.createButton {
+  background-color: #271f3d;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  position: fixed;
+  bottom: 2%;
+  right: 2%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.createButton:hover {
+  background-color: rgb(60, 51, 83);
+}
+
+.enter {
+  font-size: 16px;
+  color: white;
+}

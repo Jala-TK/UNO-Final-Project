@@ -1,0 +1,24 @@
+.containerPanel {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: blue;
+  justify-content: center;
+  align-items: center;
+}
+
+.containerTitle {
+  font-family: bold;
+}
+
+.containerInfos {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.itemBox {
+  display: flex;
+}

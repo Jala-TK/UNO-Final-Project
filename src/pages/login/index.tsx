@@ -14,19 +14,6 @@ import { AxiosError } from "axios";
 import InputUsername from "@/components/login/username";
 import { getAPIClient } from "@/services/axios";
 
-export const getServerSideProps: GetServerSideProps<{
-  redirectRoute: string;
-}> = async (ctx) => {
-  const { redirect } = ctx.query;
-  const redirectRoute = typeof redirect === 'string' ? redirect : '/dashboard';
-
-  return {
-    props: {
-      redirectRoute,
-    },
-  };
-};
-
 export default function Login({ redirectRoute }: any) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -58,7 +45,9 @@ export default function Login({ redirectRoute }: any) {
       const result = await apiClient.post("/api/login", dataSession)
 
       if (result?.status == 200) {
-        Router.push('/rooms')
+        const returnOfSignIn: string = await signIn(dataSession);
+
+        Router.push('/games')
       } else {
         setMessageErro(result?.data.error)
       }
