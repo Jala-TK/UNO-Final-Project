@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 const validationToken = (handler: Function) => {
   return async (req: NextApiRequest | any, res: NextApiResponse) => {
-    let { 'nextauth.tokenuno': token } = req.cookies;
+    let { 'nextauth.token.uno': token } = req.cookies;
 
     if (!token) {
       token = `Bearer ${req.body?.tokenRecover}`;

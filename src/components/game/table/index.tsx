@@ -9,7 +9,7 @@ import { Card } from '@/components/game/Card';
 
 interface TableProps {
   gameId: number;
-  className: className
+  className: string
 }
 
 const Table: NextPage<TableProps> = ({ gameId, className }) => {
@@ -23,7 +23,7 @@ const Table: NextPage<TableProps> = ({ gameId, className }) => {
       try {
         if (gameId !== null) {
           const result = await apiClient.post('/api/game/topCard', { game_id: gameId });
-          console.log(result.data.card);
+
           setTopCard(result.data.card);
         }
       } catch (error) {

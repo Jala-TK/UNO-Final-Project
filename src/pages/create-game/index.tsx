@@ -1,13 +1,13 @@
 import React, { FormEventHandler, useState } from "react";
 import styles from './Room.module.css';
 import InputUsername from "@/components/login/username";
-import InputPassword from "@/components/game/password";
+import InputPassword from "@/components/games/password";
 import Router from "next/router";
 import ButtomSend from "@/components/login/buttons/send";
 import { Box, Button, Dialog, DialogActions, DialogContent } from "@mui/material";
 import { getAPIClient } from "@/services/axios";
 import { AxiosError } from "axios";
-import InputNumber from "@/components/game/maxPlayers";
+import InputNumber from "@/components/games/maxPlayers";
 
 
 export default function CreateRoom() {
@@ -49,8 +49,9 @@ export default function CreateRoom() {
     try {
       const result = await apiClient.post("/api/games", data)
 
-      if (result?.status == 201) {
-        Router.push('/rooms')
+
+      if (result?.status == 201 && result.data.game_id) {
+        Router.push('/game/' + result.data.game_id)
       } else {
         setMessageErro(result?.data.error)
       }

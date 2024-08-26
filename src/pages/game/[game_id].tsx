@@ -7,7 +7,10 @@ import Navbar from '@/components/navbar/navbar';
 import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
 import HandPlayer from '@/components/game/hand';
 import Table from '@/components/game/table';
-import Card from '@/components/game/hand';
+import { Card } from '@/components/game/Card';
+import { GetServerSideProps } from 'next';
+import { User } from '@/context/AuthContext';
+import { selectStatusGeral } from '@/services/games/getStatusGeral';
 
 
 interface GameProps {
@@ -21,7 +24,24 @@ interface GameProps {
   turnHistory: any[];
 }
 
-const GamePage: React.FC = () => {
+
+export const getServerSideProps: GetServerSideProps<{
+  user: User | undefined;
+}> = async (ctx) => {
+  const gameId = ctx.query.game_id
+
+  const apiClient = getAPIClient(ctx);
+
+  const result = await selectStatusGeral(apiClient, { game_id: Number(gameId) })
+
+  return {
+    props: {
+      user: undefined,
+    },
+  }
+}
+
+const GamePage: React.FC = async () => {
   const [game, setGame] = useState<GameProps | null>(null);
   const [messageError, setMessageError] = useState('');
   const [loading, setLoading] = useState(true);
@@ -41,7 +61,6 @@ const GamePage: React.FC = () => {
       try {
         if (gameId !== null) {
           const result = await apiClient.post('/api/game/statusGeral', { game_id: gameId });
-          console.log(result);
           setGame(result.data);
         }
       } catch (error) {

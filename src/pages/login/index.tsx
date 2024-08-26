@@ -5,8 +5,6 @@ import { AuthContext } from "@/context/AuthContext";
 import { useContext } from 'react';
 import Router from "next/router";
 import ButtonLogin from "@/components/login/buttons/login";
-import { GetServerSideProps } from "next";
-import { Cripto } from "@/utils/cripto/password";
 import { Box, Button, Dialog, DialogActions, DialogContent } from "@mui/material";
 import { SignInRequestData } from "@/types/login";
 import ButtonRegister from "@/components/login/buttons/register";

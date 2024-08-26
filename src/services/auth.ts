@@ -11,11 +11,7 @@ export async function signInRequest(data: SignInRequestData) {
     })
     .then((res) => {
       const { access_token } = res.data;
-      setCookie(undefined, 'nextauth.token.uno', access_token, {
-        maxAge: 60 * 60 * 24, // 24 hours
-        path: '/',
-      });
-      return res.data;
+      return access_token;
     });
 }
 

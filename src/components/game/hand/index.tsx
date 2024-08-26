@@ -9,7 +9,7 @@ import { Card } from '@/components/game/Card';
 
 interface HandPlayerProps {
   gameId: number;
-  className: className
+  className: string
 }
 
 const HandPlayer: NextPage<HandPlayerProps> = ({ gameId, className }) => {
@@ -23,7 +23,7 @@ const HandPlayer: NextPage<HandPlayerProps> = ({ gameId, className }) => {
       try {
         if (gameId !== null) {
           const result = await apiClient.post('/api/game/hand', { game_id: gameId });
-          console.log(result.data.hand);
+
           setCards(result.data.hand);
         }
       } catch (error) {
@@ -55,7 +55,7 @@ const HandPlayer: NextPage<HandPlayerProps> = ({ gameId, className }) => {
   const handleCardClick = async (cardId: number) => {
     try {
       const result = await apiClient.post('/api/cards/play', { game_id: gameId, card_id: cardId });
-      console.log(result.data);
+
     } catch (error) {
       console.dir(error);
       handleError(error);

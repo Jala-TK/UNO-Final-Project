@@ -28,17 +28,17 @@ export function AuthProvider({ children }: any) {
   const isAuthenticated = !!user;
 
   async function signIn({ username, password }: SignInData): Promise<string> {
-    const response = await signInRequest({
+    const token = await signInRequest({
       username,
       password
     })
 
-    if (!response) { return '' }
-    const token = response.token
+    if (!token) { return '' }
 
-    destroyCookie(null, 'nextauth.tokenuno')
+
+    destroyCookie(null, 'nextauth.token.uno')
     const ctx = parseCookies(null)
-    setCookie(ctx, 'nextauth.tokenuno', token, {
+    setCookie(ctx, 'nextauth.token.uno', token, {
       maxAge: 60 * 60 * 24 * 7
     })
 
