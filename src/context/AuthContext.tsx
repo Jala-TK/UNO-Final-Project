@@ -10,7 +10,7 @@ type SignInData = {
 }
 
 export type User = {
-  IDPESSOA: string,
+  IDUSUARIO: string,
   TOKEN: string
 }
 

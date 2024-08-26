@@ -1,3 +1,4 @@
+"use client"
 import styles from './Navbar.module.css';
 import { useRouter } from "next/navigation";
 import { destroyCookie } from 'nookies';
