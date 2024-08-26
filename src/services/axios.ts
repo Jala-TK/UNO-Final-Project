@@ -9,7 +9,7 @@ export function getAPIClient(
 ): AxiosInstance {
   const { 'nextauth.token.uno': token } = parseCookies(ctx);
 
-  const api = axios.create({});
+  const api = axios.create({ baseURL: 'http://localhost' });
 
   api.interceptors.request.use((config) => {
     if (token) {

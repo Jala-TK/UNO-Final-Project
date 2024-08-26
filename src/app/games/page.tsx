@@ -1,11 +1,12 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import styles from './Rooms.module.css';
 import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
-import { getAPIClient } from "@/services/axios";
-import Router from "next/router";
+import { useRouter } from "next/navigation";
 import { AxiosError } from "axios";
-import ButtonCreateGame from "@/components/games/buttons/createGame";
 import Navbar from "@/components/navbar/navbar";
+import { getAPIClient } from "@/services/axios";
 
 const getRandomImage = () => {
   const images = [
@@ -24,7 +25,6 @@ const getRandomImage = () => {
   return images[randomIndex];
 };
 
-
 interface RoomProps {
   id: number;
   title: string;
@@ -38,6 +38,7 @@ const RoomsDisponiveis: React.FC = () => {
   const [messageError, setMessageError] = useState('');
   const [loading, setLoading] = useState(true);
   const apiClient = getAPIClient();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchRoomData = async () => {
@@ -55,7 +56,7 @@ const RoomsDisponiveis: React.FC = () => {
   }, []);
 
   const handleEnter = (roomId: number) => {
-    Router.push(`/game/${roomId}`);
+    router.push(`/game/${roomId}`);
   };
 
   const handleError = (error: unknown) => {
@@ -68,7 +69,7 @@ const RoomsDisponiveis: React.FC = () => {
         errorMessage = 'Aconteceu um erro: ' + error.message;
       }
     } else {
-      errorMessage = error as string || 'erro';
+      errorMessage = error as string || 'Erro';
     }
 
     setMessageError(errorMessage);
@@ -79,7 +80,7 @@ const RoomsDisponiveis: React.FC = () => {
   };
 
   function handleCreateGame() {
-    Router.push('/create-game');
+    router.push('/create-game');
   };
 
   if (loading) return <div>Loading...</div>;
@@ -132,16 +133,15 @@ const RoomsDisponiveis: React.FC = () => {
                   </div>
                 </div>
 
-                <div className={styles.challengeButtom}>
+                <div onClick={() => handleEnter(room.id)} className={styles.challengeButtom}>
                   <div className={styles.challengeButtomChild} />
-                  <b className={styles.enter} onClick={() => handleEnter(room.id)}>Enter</b>
+                  <b className={styles.enter} >Enter</b>
                 </div>
               </div>
             ))}
           </div>
         </div>
-        <ButtonCreateGame className={styles.createButton} label='Create Game' onClick={handleCreateGame} disabledLoading={false} />
-
+        <button className={styles.createButton} onClick={handleCreateGame} >Create Game</button>
       </div>
     </div>
   );

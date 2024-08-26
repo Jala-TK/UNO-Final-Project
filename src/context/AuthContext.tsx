@@ -1,5 +1,6 @@
+"use client";
 import { signInRequest } from "@/services/auth";
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 import { setCookie, parseCookies, destroyCookie } from 'nookies'
 import { api } from "@/services/api";
 

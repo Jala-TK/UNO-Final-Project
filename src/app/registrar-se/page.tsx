@@ -1,16 +1,17 @@
+
+"use client";
+
 import React, { FormEventHandler, useState } from "react";
 import styles from './Register.module.css';
 import InputUsername from "@/components/login/username";
 import InputPassword from "@/components/login/password";
-import Router from "next/router";
+import { useRouter } from "next/navigation";
 import ButtonLogin from "@/components/login/buttons/login";
-import { Cripto } from "@/utils/cripto/password";
 import { Box, Button, Dialog, DialogActions, DialogContent } from "@mui/material";
 import ButtonRegister from "@/components/login/buttons/register";
 import { getAPIClient } from "@/services/axios";
 import { AxiosError } from "axios";
 import InputEmail from "@/components/login/email";
-
 
 export default function Register() {
   const [username, setUsername] = useState('');
@@ -19,6 +20,7 @@ export default function Register() {
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [messageErro, setMessageErro] = useState('');
   const apiClient = getAPIClient();
+  const router = useRouter();
 
   const handleUsernameChange = (value: string) => {
     setUsername(value);
@@ -36,45 +38,44 @@ export default function Register() {
     setPasswordConfirm(value);
   };
 
-  const [loadingRequest, setLoadingRequest] = useState(false)
+  const [loadingRequest, setLoadingRequest] = useState(false);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
-    if (!password || !username) return
-    if (password != passwordConfirm) {
-      return handleError('Senhas não coincidem')
+    if (!password || !username) return;
+    if (password !== passwordConfirm) {
+      return handleError('Senhas não coincidem');
     }
     if (password.length < 8) {
-      return handleError('Senha muito pequena')
+      return handleError('Senha muito pequena');
     }
-    setLoadingRequest(true)
+    setLoadingRequest(true);
 
-    //    const passwordCripto = await Cripto(password);
     const data = {
-      username: username,
-      email: email,
-      password: password
-    }
+      username,
+      email,
+      password,
+    };
 
     try {
-      const result = await apiClient.post("/api/player", data)
+      const result = await apiClient.post("/api/player", data);
 
-      if (result?.status == 201) {
-        Router.push('/login')
+      if (result?.status === 201) {
+        router.push('/login');
       } else {
-        setMessageErro(result?.data.message)
+        setMessageErro(result?.data.message);
       }
     } catch (error: unknown) {
       handleError(error);
     }
 
-    setLoadingRequest(false)
-  }
+    setLoadingRequest(false);
+  };
 
   function handleLogin() {
-    Router.push('/login');
-  };
+    router.push('/login');
+  }
 
   const handleError = (error: unknown) => {
     let errorMessage = '';
@@ -83,23 +84,22 @@ export default function Register() {
       if (error?.response?.data.error) {
         errorMessage = error.response.data.error;
       } else {
-        errorMessage = 'Aconteceu um erro: ' + error.message
+        errorMessage = 'Aconteceu um erro: ' + error.message;
       }
     } else {
-      errorMessage = error as string || 'erro'
-
+      errorMessage = error as string || 'Erro';
     }
     setMessageErro(errorMessage);
   };
 
   const handleRejectForceDialogClose = () => {
-    setMessageErro('')
-  }
+    setMessageErro('');
+  };
 
   return (
     <div className={styles.container}>
       <Dialog open={messageErro?.length > 0} onClose={handleRejectForceDialogClose}>
-        <DialogContent className={styles.dialogConfirmation} >
+        <DialogContent className={styles.dialogConfirmation}>
           {messageErro}
         </DialogContent>
         <DialogActions className={styles.dialogConfirmation}>
@@ -133,7 +133,7 @@ export default function Register() {
           <div className={styles.formGroup}>
             <InputPassword required onChange={handlePasswordConfirmChange} label='Confirme a Senha' password={passwordConfirm} />
           </div>
-          <div className={styles.Buttons} >
+          <div className={styles.Buttons}>
             <ButtonLogin type="submit" label='Registrar' disabledLoading={loadingRequest} />
             <ButtonRegister label='Fazer login' disabledLoading={loadingRequest} onClick={handleLogin} />
           </div>

@@ -1,31 +1,38 @@
-import type { NextPage } from 'next';
-import styles from './Hand.module.css';
+"use client";
+
 import React, { useState, useEffect } from 'react';
 import { getAPIClient } from '@/services/axios';
 import { AxiosError } from 'axios';
+import styles from './Hand.module.css';
 import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
 import Card from '@/components/game/Card';
 
-
 interface HandPlayerProps {
   gameId: number;
-  className: string
+  className: string;
 }
 
-const HandPlayer: NextPage<HandPlayerProps> = ({ gameId, className }) => {
+const fetchCardsData = async (gameId: number) => {
+  const apiClient = getAPIClient();
+  const result = await apiClient.post('/api/game/hand', { game_id: gameId });
+  return result.data.hand;
+};
+
+const handleCardClick = async (cardId: number, gameId: number) => {
+  const apiClient = getAPIClient();
+  await apiClient.post('/api/cards/play', { game_id: gameId, card_id: cardId });
+};
+
+const HandPlayer: React.FC<HandPlayerProps> = ({ gameId, className }) => {
   const [cards, setCards] = useState<Card[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [messageError, setMessageError] = useState('');
-  const apiClient = getAPIClient();
+  const [messageError, setMessageError] = useState<string>('');
 
   useEffect(() => {
-    const fetchCardsData = async () => {
+    const loadCardsData = async () => {
       try {
-        if (gameId !== null) {
-          const result = await apiClient.post('/api/game/hand', { game_id: gameId });
-
-          setCards(result.data.hand);
-        }
+        const data = await fetchCardsData(gameId);
+        setCards(data);
       } catch (error) {
         handleError(error);
       } finally {
@@ -33,7 +40,7 @@ const HandPlayer: NextPage<HandPlayerProps> = ({ gameId, className }) => {
       }
     };
 
-    fetchCardsData();
+    loadCardsData();
   }, [gameId]);
 
   const handleError = (error: unknown) => {
@@ -52,19 +59,12 @@ const HandPlayer: NextPage<HandPlayerProps> = ({ gameId, className }) => {
     setMessageError(errorMessage);
   };
 
-  const handleCardClick = async (cardId: number) => {
+  const handleDoubleClick = async (cardId: number) => {
     try {
-      const result = await apiClient.post('/api/cards/play', { game_id: gameId, card_id: cardId });
-
+      await handleCardClick(cardId, gameId);
     } catch (error) {
-      console.dir(error);
       handleError(error);
     }
-  };
-
-  const handleDoubleClick = (cardId: number) => {
-    handleCardClick(cardId);
-    // Add animation logic here
   };
 
   const handleCloseDialog = () => {
@@ -73,7 +73,7 @@ const HandPlayer: NextPage<HandPlayerProps> = ({ gameId, className }) => {
 
   if (loading) return <div>Loading...</div>;
 
-  if (!cards) return <div>No cards in hand</div>;
+  if (!cards.length) return <div>No cards in hand</div>;
 
   return (
     <div className={className}>
@@ -85,14 +85,17 @@ const HandPlayer: NextPage<HandPlayerProps> = ({ gameId, className }) => {
           <Button onClick={handleCloseDialog}>Ok</Button>
         </DialogActions>
       </Dialog>
-      <div className={className}>
-        <div className={styles.handPlayer}>
-          {cards.map((card) => (
-            <div key={card.id} className={styles.card}>
-              <img className={styles.imageCard} alt={card.description} src={card.image} onDoubleClick={() => handleDoubleClick(card.id)} />
-            </div>
-          ))}
-        </div>
+      <div className={styles.handPlayer}>
+        {cards.map((card) => (
+          <div key={card.id} className={styles.card}>
+            <img
+              className={styles.imageCard}
+              alt={card.description}
+              src={card.image}
+              onDoubleClick={() => handleDoubleClick(card.id)}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );

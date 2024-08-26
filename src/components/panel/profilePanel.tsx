@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import { TextField, InputAdornment, IconButton } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import React from 'react';
 import styles from './profilePanel.module.css'
 
 export default function ProfilePanel(props: { username: string, email: string }) {

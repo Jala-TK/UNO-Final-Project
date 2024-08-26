@@ -84,8 +84,6 @@ describe('POST /api/game/statusGeral - Get General Game Status', () => {
       .get('/api/game/statusGeral')
       .send({ game_id: game.id });
 
-    console.log(response.body);
-
     expect(response.status).toBe(200);
     expect(response.body.game_id).toBe(game.id);
     expect(response.body.current_player).toBe(player1.username);

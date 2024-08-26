@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+"use client"
+import React, { useState, useContext } from 'react';
 import styles from './Login.module.css';
 import InputPassword from "@/components/login/password";
 import { AuthContext } from "@/context/AuthContext";
-import { useContext } from 'react';
-import Router from "next/router";
 import ButtonLogin from "@/components/login/buttons/login";
 import { Box, Button, Dialog, DialogActions, DialogContent } from "@mui/material";
 import { SignInRequestData } from "@/types/login";
@@ -11,11 +10,13 @@ import ButtonRegister from "@/components/login/buttons/register";
 import { AxiosError } from "axios";
 import InputUsername from "@/components/login/username";
 import { getAPIClient } from "@/services/axios";
+import { useRouter } from 'next/navigation';
 
 export default function Login({ redirectRoute }: any) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [messageErro, setMessageErro] = useState('');
+  const router = useRouter();
   const apiClient = getAPIClient();
 
   const handleUsernameChange = (value: string) => {
@@ -28,39 +29,36 @@ export default function Login({ redirectRoute }: any) {
 
   const { signIn } = useContext(AuthContext);
 
-  const [loadingRequest, setLoadingRequest] = useState(false)
+  const [loadingRequest, setLoadingRequest] = useState(false);
 
   const handleSubmit = async () => {
     if (!username || !password) return;
 
-    setLoadingRequest(true)
+    setLoadingRequest(true);
 
     const dataSession: SignInRequestData = {
-      username: username,
-      password: password,
+      username,
+      password,
     };
     try {
-      const result = await apiClient.post("/api/login", dataSession)
+      const result = await apiClient.post("/api/login", dataSession);
 
-      if (result?.status == 200) {
-        const returnOfSignIn: string = await signIn(dataSession);
-
-        Router.push('/games')
+      if (result?.status === 200) {
+        await signIn(dataSession);
+        router.push('/games');
       } else {
-        setMessageErro(result?.data.error)
+        setMessageErro(result?.data.error);
       }
     } catch (error: unknown) {
       handleError(error);
     }
 
-
-    setLoadingRequest(false)
+    setLoadingRequest(false);
   };
 
-  function handleRegister() {
-    Router.push('/registrar-se');
+  const handleRegister = () => {
+    router.push('/registrar-se');
   };
-
 
   const handleError = (error: unknown) => {
     let errorMessage = '';
@@ -69,23 +67,22 @@ export default function Login({ redirectRoute }: any) {
       if (error?.response?.data.message) {
         errorMessage = error.response.data.message;
       } else {
-        errorMessage = 'Aconteceu um erro: ' + error.message
+        errorMessage = 'Aconteceu um erro: ' + error.message;
       }
     } else {
-      errorMessage = "erro, fale com a T.I: 500";
+      errorMessage = "Erro, fale com a T.I: 500";
     }
     setMessageErro(errorMessage);
   };
 
-
   const handleRejectForceDialogClose = () => {
-    setMessageErro('')
-  }
+    setMessageErro('');
+  };
 
   return (
     <div className={styles.container}>
       <Dialog open={messageErro?.length > 0} onClose={handleRejectForceDialogClose}>
-        <DialogContent className={styles.dialogConfirmation} >
+        <DialogContent className={styles.dialogConfirmation}>
           {messageErro}
         </DialogContent>
         <DialogActions className={styles.dialogConfirmation}>
@@ -99,12 +96,8 @@ export default function Login({ redirectRoute }: any) {
             className={styles.logo}
             src="/assets/image.png"
             alt='Logo'
-            sx={{
-              width: 228,
-              height: 228,
-            }}
+            sx={{ width: 228, height: 228 }}
           />
-
         </div>
         <h2 className={styles.title}>Login</h2>
         <form>
@@ -114,7 +107,7 @@ export default function Login({ redirectRoute }: any) {
           <div className={styles.formGroup}>
             <InputPassword required onChange={handlePasswordChange} label='Senha' password={password} />
           </div>
-          <div className={styles.Buttons} >
+          <div className={styles.Buttons}>
             <ButtonLogin type='submit' disabledLoading={loadingRequest} onClick={handleSubmit} />
             <ButtonRegister className={styles.registerButton} disabledLoading={loadingRequest} onClick={handleRegister} />
           </div>

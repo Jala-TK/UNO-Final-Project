@@ -95,8 +95,6 @@ describe('GET /api/game/hand - Get Player Hand', () => {
       .get('/api/game/hand')
       .send({ game_id: newGame.id, access_token: token });
 
-    console.log(response.body);
-
     expect(response.status).toBe(404);
     expect(response.body.message).toBe('Player not found in this game');
 
