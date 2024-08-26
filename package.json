@@ -7,8 +7,7 @@
     "dev": "next dev",
     "build": "next build ",
     "start": "node server.js",
-    "i": "npm i && cd ./backend-express && npm i && cd ..",
-    "install": "npm i && cd ./backend-express && npm i && cd ..",
+    "install:dep": "npm i && cd ./backend-express && npm i && cd ..",
     "electron:build": "npx electron-builder build"
   },
   "dependencies": {
