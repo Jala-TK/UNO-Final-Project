@@ -1,16 +1,29 @@
 'use client';
-import { Roboto } from 'next/font/google';
 import { createTheme } from '@mui/material/styles';
+import localFont from 'next/font/local';
 
-const roboto = Roboto({
-  weight: ['300', '400', '500', '700'],
-  subsets: ['latin'],
-  display: 'swap',
+const satoshi = localFont({
+  src: [
+    {
+      path: '../../../public/assets/fonts/satoshi/Satoshi-Regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../../../public/assets/fonts/satoshi/Satoshi-Italic.woff2',
+      weight: '400',
+      style: 'italic',
+    },
+    {
+      path: '../../../public/assets/fonts/satoshi/Satoshi-Bold.woff2',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
 });
-
 const theme = createTheme({
   typography: {
-    fontFamily: roboto.style.fontFamily,
+    fontFamily: satoshi.style.fontFamily,
   },
 });
 

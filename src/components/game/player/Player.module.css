@@ -1,0 +1,188 @@
+.backgroundIcon {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0%;
+  right: 0%;
+  bottom: 0%;
+  left: 0%;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+}
+.challengeButtomChild {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-radius: 30px;
+  background-color: rgba(34, 33, 37, 0.6);
+  border: 1px solid #3d3a46;
+  box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+}
+.text {
+  position: absolute;
+  top: 4.8px;
+  left: -43.2px;
+  display: none;
+  width: 38.4px;
+  height: 11.2px;
+}
+.sirenIcon {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+  transform: rotate(90deg);
+}
+.textParent {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 20px;
+  height: 20px;
+}
+.challengeButtom {
+  position: absolute;
+  top: 147px;
+  left: 151px;
+  width: 32px;
+  height: 32px;
+  transform: rotate(-90deg);
+  transform-origin: 0 0;
+}
+.cardGameIcon {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-radius: 56px;
+  width: 54.3px;
+  height: 54.3px;
+  overflow: hidden;
+  object-fit: contain;
+}
+.vectorIcon {
+  position: absolute;
+  height: 89.43%;
+  width: 72.87%;
+  top: 5.21%;
+  right: 13.59%;
+  bottom: 5.37%;
+  left: 13.53%;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+}
+.cardGameChild {
+  position: absolute;
+  height: 78.62%;
+  width: 63.91%;
+  top: 10%;
+  right: 18.1%;
+  bottom: 11.38%;
+  left: 17.99%;
+  border-radius: 6px;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+}
+.cartas {
+  position: absolute;
+  top: calc(50% - 7.49px);
+  left: calc(50% - 5.01px);
+}
+.cardGame {
+  position: absolute;
+  top: 3.48px;
+  left: 16.52px;
+  border-radius: 56px;
+  width: 43.5px;
+  height: 43.5px;
+  overflow: hidden;
+}
+.cards {
+  position: absolute;
+  top: 154px;
+  left: 123px;
+  width: 60px;
+  height: 54.3px;
+}
+.profileContainer {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  height: 121.2px;
+  width: 121.2px;
+}
+
+.backgroundCircle {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.profileIcon {
+  position: relative;
+  margin: 5%;
+  width: 90%;
+  height: 90%;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.points {
+  position: relative;
+}
+.scores {
+  position: absolute;
+  top: 31.86px;
+  left: 0px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+.name {
+  position: absolute;
+  top: 0px;
+  left: 0.41px;
+  border-radius: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  font-size: 20px;
+}
+.texts {
+  position: absolute;
+  top: 144px;
+  left: 18px;
+  width: 49px;
+  height: 51.9px;
+  font-size: 15px;
+}
+.profile {
+  width: 192px;
+  position: relative;
+  height: 212px;
+}
+.player {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 18px 0px;
+  box-sizing: border-box;
+  text-align: left;
+  font-size: 10px;
+  color: #fff;
+  font-family: 'Satoshi Variable';
+}

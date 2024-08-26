@@ -7,10 +7,11 @@ import Navbar from '@/components/navbar/navbar';
 import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
 import HandPlayer from '@/components/game/hand';
 import Table from '@/components/game/table';
-import { Card } from '@/components/game/Card';
+import Card from '@/components/game/Card';
 import { GetServerSideProps } from 'next';
 import { User } from '@/context/AuthContext';
 import { selectStatusGeral } from '@/services/games/getStatusGeral';
+import Player from '@/components/game/player';
 
 
 interface GameProps {
@@ -115,11 +116,14 @@ const GamePage: React.FC = async () => {
         </DialogActions>
       </Dialog>
 
-      <div className={styles.gameInfo}>
+      <div>
+        <Player playerId={0} className={styles.player/* Container */} /> {'// TODO: Update to use player response'}
+
       </div>
       <Table gameId={gameId ?? 0} className={styles.tableGame} />
 
       <HandPlayer gameId={gameId ?? 0} className={styles.handContainer} />
+
     </div>
   );
 };

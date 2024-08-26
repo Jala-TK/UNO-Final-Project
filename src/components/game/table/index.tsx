@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { getAPIClient } from '@/services/axios';
 import { AxiosError } from 'axios';
 import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
-import { Card } from '@/components/game/Card';
+import Card from '@/components/game/Card';
 
 interface TableProps {
   gameId: number;
@@ -62,17 +62,19 @@ const Table: NextPage<TableProps> = ({ gameId, className }) => {
   if (!topCard) return <div>No cards in hand</div>;
 
   return (
-    <div className={styles.tableContainer}>
-      <Dialog open={messageError.length > 0} onClose={handleCloseDialog}>
-        <DialogContent className={styles.dialogConfirmation}>
-          {messageError}
-        </DialogContent>
-        <DialogActions className={styles.dialogConfirmation}>
-          <Button onClick={handleCloseDialog}>Ok</Button>
-        </DialogActions>
-      </Dialog>
-      <div className={styles.table}>
-        <Pile topCard={topCard} className={styles.monte} />
+    <div className={className}>
+      <div className={styles.tableContainer}>
+        <Dialog open={messageError.length > 0} onClose={handleCloseDialog}>
+          <DialogContent className={styles.dialogConfirmation}>
+            {messageError}
+          </DialogContent>
+          <DialogActions className={styles.dialogConfirmation}>
+            <Button onClick={handleCloseDialog}>Ok</Button>
+          </DialogActions>
+        </Dialog>
+        <div className={styles.table}>
+          <Pile topCard={topCard} className={styles.monte} />
+        </div>
       </div>
     </div>
   );

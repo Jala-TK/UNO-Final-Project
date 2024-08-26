@@ -11,7 +11,7 @@ import createEmotionServer from '@emotion/server/create-instance';
 import { AppType } from 'next/app';
 import createEmotionCache from '../utils/layout/createEmotionCache';
 import { MyAppProps } from './_app';
-import theme, { roboto } from '../utils/layout/theme';
+import theme from '../utils/layout/theme';
 
 interface MyDocumentProps extends DocumentProps {
   emotionStyleTags: JSX.Element[];
@@ -19,12 +19,8 @@ interface MyDocumentProps extends DocumentProps {
 
 export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
   return (
-    <Html lang="pt-BR" className={roboto.className}>
+    <Html lang="pt-BR">
       <Head>
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-        />
         <meta name="theme-color" content={theme.palette.primary.main} />
         <link rel="shortcut icon" href="/favicon.ico" />
         <meta name="emotion-insertion-point" content="" />

@@ -1,11 +1,10 @@
 import type { NextPage } from 'next';
 import styles from './Pile.module.css';
-import { Card } from '@/components/game/Card';
+import Card from '@/components/game/Card';
 
 interface PileProps {
   topCard: Card;
-  className: className
-
+  className: string;
 }
 
 const Pile: NextPage<PileProps> = ({ topCard, className }) => {

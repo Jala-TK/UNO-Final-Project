@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { getAPIClient } from '@/services/axios';
 import { AxiosError } from 'axios';
 import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
-import { Card } from '@/components/game/Card';
+import Card from '@/components/game/Card';
 
 
 interface HandPlayerProps {
@@ -76,7 +76,7 @@ const HandPlayer: NextPage<HandPlayerProps> = ({ gameId, className }) => {
   if (!cards) return <div>No cards in hand</div>;
 
   return (
-    <div>
+    <div className={className}>
       <Dialog open={messageError.length > 0} onClose={handleCloseDialog}>
         <DialogContent className={styles.dialogConfirmation}>
           {messageError}

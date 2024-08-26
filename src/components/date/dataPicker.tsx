@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DatePicker as DatePickerMUI } from '@mui/x-date-pickers/DatePicker';
 import 'dayjs/locale/pt-br';
 import dayjs from 'dayjs';
 import { DateValidationError, PickerChangeHandlerContext } from '@mui/x-date-pickers';
@@ -20,7 +20,7 @@ export default function DatePicker(props: any) {
   return (
     <div className={props.className}>
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='pt-br'>
-        <DatePicker
+        <DatePickerMUI
           disabled={props.disabled}
           className={props.className}
           value={props.date}
