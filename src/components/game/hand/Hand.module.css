@@ -20,9 +20,9 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: 8px;
+  padding: 1%;
   border-radius: 50%;
-  gap: 10px;
+  gap: 1%;
 }
 
 .imageCard {

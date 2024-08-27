@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { getAPIClient } from '@/services/axios';
+import { getAPIClientNoCache } from '@/services/axios';
 import { AxiosError } from 'axios';
 import styles from './Hand.module.css';
 import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
@@ -11,15 +11,14 @@ interface HandPlayerProps {
   gameId: number;
   className: string;
 }
+const apiClient = getAPIClientNoCache();
 
 const fetchCardsData = async (gameId: number) => {
-  const apiClient = getAPIClient();
   const result = await apiClient.post('/api/game/hand', { game_id: gameId });
   return result.data.hand;
 };
 
 const handleCardClick = async (cardId: number, gameId: number) => {
-  const apiClient = getAPIClient();
   await apiClient.post('/api/cards/play', { game_id: gameId, card_id: cardId });
 };
 

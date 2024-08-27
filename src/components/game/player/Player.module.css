@@ -73,27 +73,26 @@
   height: 54.3px;
 }
 .profileContainer {
+  display: flex;
   position: relative;
   align-items: center;
+  justify-content: center;
   height: 65%;
   width: 70%;
   margin: auto;
+  background-color: #3d3a44;
+  border-radius: 50%;
 }
 
-.backgroundCircle {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  z-index: 1;
+.currentPlayer {
+  background-color: #4d397c;
 }
 
 .profileIcon {
   position: relative;
-  margin: 5%;
-  width: 90%;
-  height: 90%;
+  margin: auto;
+  width: 95%;
+  height: 95%;
   border-radius: 50%;
   z-index: 2;
 }
@@ -123,12 +122,17 @@
 }
 .texts {
   position: absolute;
-  top: 144px;
-  left: 18px;
-  width: 49px;
-  height: 51.9px;
+  bottom: 10%;
+  left: 10%;
+  width: 80%;
+  height: 20%;
   font-size: 15px;
 }
+
+.info {
+  display: inline;
+}
+
 .profile {
   width: 192px;
   position: relative;

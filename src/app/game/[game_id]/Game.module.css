@@ -22,16 +22,16 @@
 }
 
 .playersContainer {
-  position: absolute; /* Alterado de fixed para absolute */
+  position: absolute;
   z-index: 1;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   gap: 10px;
-  width: 100%; /* Garantir que o playersContainer ocupe todo o espaço do tableContainer */
-  height: 100%; /* Garantir que o playersContainer ocupe todo o espaço do tableContainer */
-  justify-items: center; /* Centralizar os itens dentro das células */
-  align-items: center; /* Centralizar os itens verticalmente dentro das células */
+  width: 100%;
+  height: 100%;
+  justify-items: center;
+  align-items: center;
 }
 
 .handContainer {

@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import styles from './Table.module.css';
 import Pile from '../pile';
 import React, { useState, useEffect } from 'react';
-import { getAPIClient } from '@/services/axios';
+import { getAPIClientNoCache } from '@/services/axios';
 import { AxiosError } from 'axios';
 import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
 import Card from '@/components/game/Card';
@@ -16,7 +16,7 @@ const Table: NextPage<TableProps> = ({ gameId, className }) => {
   const [topCard, setTopCard] = useState<Card>();
   const [loading, setLoading] = useState<boolean>(true);
   const [messageError, setMessageError] = useState('');
-  const apiClient = getAPIClient();
+  const apiClient = getAPIClientNoCache();
 
   useEffect(() => {
     const fetchCardsData = async () => {

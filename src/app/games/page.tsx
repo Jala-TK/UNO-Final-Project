@@ -43,8 +43,15 @@ const RoomsDisponiveis: React.FC = () => {
   useEffect(() => {
     const fetchRoomData = async () => {
       try {
-        const gamesInfo = await apiClient.get("/api/games");
+        const gamesInfo = await apiClient.get("/api/games", {
+          headers: {
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache',
+            'Expires': '0',
+          },
+        });
         setRooms(gamesInfo.data.games);
+        console.log(gamesInfo.data.games)
       } catch (error) {
         handleError(error);
       } finally {
