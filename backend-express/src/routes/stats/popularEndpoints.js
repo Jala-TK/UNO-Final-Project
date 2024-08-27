@@ -2,7 +2,7 @@ import { findAllTrackings } from '../../services/statsService.js';
 
 export const popularEndpoints = async (req, res, next) => {
   try {
-    const trackings = await findAllTrackings.findAll();
+    const trackings = await findAllTrackings();
 
     let mostPopular = { endpointAccess: '', requestCount: 0 };
 
