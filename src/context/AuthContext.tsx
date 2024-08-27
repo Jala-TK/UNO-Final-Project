@@ -3,6 +3,7 @@ import { signInRequest } from "@/services/auth";
 import { createContext, useState } from "react";
 import { setCookie, parseCookies, destroyCookie } from 'nookies'
 import { api } from "@/services/api";
+import { recoverUserInformation } from '@/services/auth';
 
 type SignInData = {
   username: string,
@@ -10,8 +11,8 @@ type SignInData = {
 }
 
 export type User = {
-  IDUSUARIO: string,
-  TOKEN: string
+  username: string,
+  email: string
 }
 
 type AuthContextType = {
@@ -24,7 +25,7 @@ export const AuthContext = createContext({} as AuthContextType)
 
 export function AuthProvider({ children }: any) {
 
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<User | null>(null);
 
   const isAuthenticated = !!user;
 
@@ -36,14 +37,21 @@ export function AuthProvider({ children }: any) {
 
     if (!token) { return '' }
 
-
     destroyCookie(null, 'nextauth.token.uno')
     const ctx = parseCookies(null)
     setCookie(ctx, 'nextauth.token.uno', token, {
       maxAge: 60 * 60 * 24 * 7
     })
 
-    setUser(user)
+
+    const userInfo = await recoverUserInformation(token);
+    setUser(userInfo.user);
+    if (user != null) {
+      setCookie(ctx, 'nextauth.token.user', user.username, {
+        maxAge: 60 * 60 * 24 * 7
+      })
+    }
+
 
     api.defaults.headers['Authorization'] = `Bearer ${token}`
 

@@ -8,6 +8,7 @@ const router = Router();
 
 router.post('/login', login);
 router.get('/getPerfil', authMiddleware, getPerfil);
+router.post('/getPerfil', authMiddleware, getPerfil);
 router.post('/logout', authMiddleware, logout);
 
 export default router;

@@ -1,56 +1,18 @@
 .backgroundIcon {
   position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0%;
-  right: 0%;
-  bottom: 0%;
-  left: 0%;
-  max-width: 100%;
   overflow: hidden;
-  max-height: 100%;
 }
-.challengeButtomChild {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  border-radius: 30px;
-  background-color: rgba(34, 33, 37, 0.6);
-  border: 1px solid #3d3a46;
-  box-sizing: border-box;
-  width: 32px;
-  height: 32px;
-}
-.text {
-  position: absolute;
-  top: 4.8px;
-  left: -43.2px;
-  display: none;
-  width: 38.4px;
-  height: 11.2px;
-}
+
 .sirenIcon {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 20px;
-  height: 20px;
-  overflow: hidden;
+  position: relative;
+  width: 100%;
   transform: rotate(90deg);
 }
-.textParent {
-  position: absolute;
-  top: 6px;
-  left: 6px;
-  width: 20px;
-  height: 20px;
-}
+
 .challengeButtom {
   position: absolute;
-  top: 147px;
-  left: 151px;
-  width: 32px;
-  height: 32px;
+  top: 65%;
+  right: 10%;
   transform: rotate(-90deg);
   transform-origin: 0 0;
 }
@@ -112,10 +74,10 @@
 }
 .profileContainer {
   position: relative;
-  display: inline-block;
-  overflow: hidden;
-  height: 121.2px;
-  width: 121.2px;
+  align-items: center;
+  height: 65%;
+  width: 70%;
+  margin: auto;
 }
 
 .backgroundCircle {
@@ -174,15 +136,24 @@
 }
 .player {
   position: relative;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 18px 0px;
-  box-sizing: border-box;
-  text-align: left;
   font-size: 10px;
   color: #fff;
-  font-family: 'Satoshi Variable';
+}
+
+.playersContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.playerWrapper {
+  position: absolute;
+  width: 20%;
+  height: 20%;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }

@@ -43,8 +43,8 @@ const RoomsDisponiveis: React.FC = () => {
   useEffect(() => {
     const fetchRoomData = async () => {
       try {
-        const result = await apiClient.get("/api/games");
-        setRooms(result.data.games);
+        const gamesInfo = await apiClient.get("/api/games");
+        setRooms(gamesInfo.data.games);
       } catch (error) {
         handleError(error);
       } finally {
