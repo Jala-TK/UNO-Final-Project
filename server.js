@@ -9,7 +9,7 @@ import sequelize from './backend-express/src/config/database.js';
 import routes from './backend-express/src/routes/index.js';
 import errorHandler from './backend-express/src/middleware/errorHandler.js';
 import CacheMiddleware from './backend-express/src/middleware/cacheMiddleware.js';
-
+import trackingMiddleware from './backend-express/src/middleware/trackingMiddleware.js'
 nextApp.prepare().then(async () => {
   const PORTHTTP = process.env.PORTHTTP;
   const app = express();
@@ -21,9 +21,10 @@ nextApp.prepare().then(async () => {
   const cacheMiddleware = new CacheMiddleware(cacheOptions);
   app.use(cacheMiddleware.handleCache.bind(cacheMiddleware));
 
+  app.use(trackingMiddleware);
+  app.use(errorHandler);
   app.use(json());
   app.use('/api', routes);
-  app.use(errorHandler);
 
   app.all('*', (req, res) => {
     const parsedUrl = parse(req.url, true);

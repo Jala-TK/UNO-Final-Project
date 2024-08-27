@@ -40,3 +40,4 @@ next-env.d.ts
 backend-express/logs/
 backend-express/coverage/
 logs/*
+error.log

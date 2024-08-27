@@ -3,6 +3,7 @@ import sequelize from './config/database.js';
 import routes from './routes/index.js';
 import errorHandler from './middleware/errorHandler.js';
 import CacheMiddleware from './middleware/cacheMiddleware.js';
+import trackingMiddleware from './middleware/trackingMiddleware.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -11,12 +12,14 @@ const cacheOptions = {
   max: 50,
   maxAge: 2000,
 };
+app.use(trackingMiddleware);
 const cacheMiddleware = new CacheMiddleware(cacheOptions);
 app.use(cacheMiddleware.handleCache.bind(cacheMiddleware));
 
+app.use(errorHandler);
+
 app.use(express.json());
 app.use('/api', routes);
-app.use(errorHandler);
 
 const startServer = async () => {
   try {
