@@ -35,14 +35,11 @@ const HandPlayer: React.FC<HandPlayerProps> = ({ gameId, className }) => {
   const rotateCards = (direction: 'left' | 'right') => {
     setVisibleCards((prevCards) => {
       const cardsArray = [...cards];
-      const currentVisibleIndices = cardsArray.slice(cardsArray.indexOf(prevCards[0]), cardsArray.indexOf(prevCards[0]) + ITEMS_PER_PAGE);
       let newVisibleCards: Card[];
 
       if (direction === 'left') {
-        // Remove a primeira carta e adiciona a próxima da lista
         newVisibleCards = [...prevCards.slice(1), cardsArray[(cardsArray.indexOf(prevCards[prevCards.length - 1]) + 1) % cardsArray.length]];
       } else {
-        // Remove a última carta e adiciona a carta anterior da lista
         newVisibleCards = [cardsArray[(cardsArray.indexOf(prevCards[0]) - 1 + cardsArray.length) % cardsArray.length], ...prevCards.slice(0, -1)];
       }
 
@@ -64,6 +61,9 @@ const HandPlayer: React.FC<HandPlayerProps> = ({ gameId, className }) => {
     };
 
     loadCardsData();
+
+    const interval = setInterval(loadCardsData, 5000)
+    return () => clearInterval(interval);
   }, [gameId]);
 
   const handleError = (error: unknown) => {
@@ -92,6 +92,7 @@ const HandPlayer: React.FC<HandPlayerProps> = ({ gameId, className }) => {
         game_id: gameId,
         card_id: card.id,
       });
+
     }
   };
 

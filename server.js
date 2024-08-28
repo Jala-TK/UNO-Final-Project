@@ -47,6 +47,8 @@ const startServer = async () => {
     console.log('Cliente conectado via Socket.IO');
 
     socket.on('message', (message) => {
+      io.emit('message', message);
+
       console.log('Mensagem recebida:', message);
     });
 

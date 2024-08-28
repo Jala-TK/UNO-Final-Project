@@ -7,6 +7,10 @@ import { useRouter } from "next/navigation";
 import { AxiosError } from "axios";
 import Navbar from "@/components/navbar/navbar";
 import { getAPIClientNoCache } from "@/services/axios";
+import PopUpSettings from "@/components/popup/settings";
+import { parseCookies } from 'nookies';
+const apiClient = getAPIClientNoCache();
+const { 'nextauth.token.user': user } = parseCookies();
 
 const getRandomImage = () => {
   const images = [
@@ -31,21 +35,33 @@ interface RoomProps {
   status: string;
   maxPlayers: number;
   playersInGame: number;
+  creator: string;
+  players: string[];
+}
+
+async function enterGame(gameId: number | null): Promise<boolean> {
+  const result = await apiClient.post(`/api/game/join?timestamp=${new Date().getTime()}`, { game_id: gameId });
+  if (result.status === 200) {
+    const result = await apiClient.post(`/api/game/ready?timestamp=${new Date().getTime()}`, { game_id: gameId });
+    return true;
+  }
+  return false;
 }
 
 const RoomsDisponiveis: React.FC = () => {
   const [rooms, setRooms] = useState<RoomProps[]>([]);
   const [messageError, setMessageError] = useState('');
   const [loading, setLoading] = useState(true);
-  const apiClient = getAPIClientNoCache();
   const router = useRouter();
+  const [showPopup, setShowPopup] = useState(true);
+  const [selectedRoom, setSelectedRoom] = useState<RoomProps>();
+
 
   useEffect(() => {
     const fetchRoomData = async () => {
       try {
         const gamesInfo = await apiClient.get(`/api/games?timestamp=${new Date().getTime()}`);
         setRooms(gamesInfo.data.games);
-        console.log(gamesInfo.data.games)
       } catch (error) {
         handleError(error);
       } finally {
@@ -54,10 +70,39 @@ const RoomsDisponiveis: React.FC = () => {
     };
 
     fetchRoomData();
+
+    const interval = setInterval(fetchRoomData, 60000)
+    return () => clearInterval(interval);
   }, []);
 
-  const handleEnter = (roomId: number) => {
-    router.push(`/game/${roomId}`);
+  const handleClosePopup = async () => {
+    setShowPopup(false);
+  };
+
+  const handleConfirm = async () => {
+    try {
+      const enter = selectedRoom ? await enterGame(selectedRoom.id) : false;
+      if (enter && selectedRoom) {
+        setShowPopup(false);
+        router.push(`/game/${selectedRoom.id}`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+
+  const handleEnter = (room: RoomProps) => {
+    if (room.creator === user) {
+      router.push(`/game/${room.id}`);
+    }
+    else {
+      console.log(room.players.includes(user))
+      setSelectedRoom(room);
+      setShowPopup(true);
+    }
+
   };
 
   const handleError = (error: unknown) => {
@@ -134,12 +179,24 @@ const RoomsDisponiveis: React.FC = () => {
                   </div>
                 </div>
 
-                <div onClick={() => handleEnter(room.id)} className={styles.challengeButtom}>
+                <div className={styles.challengeButtom} onClick={() => handleEnter(room)}>
                   <div className={styles.challengeButtomChild} />
                   <b className={styles.enter} >Enter</b>
                 </div>
               </div>
             ))}
+          </div>
+          <div>
+            {showPopup && selectedRoom && (
+              <PopUpSettings
+                title={selectedRoom.title}
+                waitingMessage={selectedRoom.status}
+                playerCount={`${selectedRoom.players.length}/${selectedRoom.maxPlayers}`}
+                buttonText={!selectedRoom.players.includes(user) ? "Enter Game" : "Back"}
+                onClose={handleClosePopup}
+                onConfirm={!selectedRoom.players.includes(user) ? handleConfirm : handleClosePopup}
+              />
+            )}
           </div>
         </div>
         <button className={styles.createButton} onClick={handleCreateGame} >Create Game</button>

@@ -45,7 +45,6 @@ export function AuthProvider({ children }: any) {
 
 
     const userInfo = await recoverUserInformation(token);
-    console.log("userInfo", userInfo)
     setUser(userInfo.user);
     if (userInfo.user != null) {
       destroyCookie(null, 'nextauth.token.user')

@@ -13,6 +13,7 @@ import { parseCookies } from 'nookies';
 import { useRouter } from "next/navigation";
 import PopUpSettings from '@/components/popup/settings';
 import io from 'socket.io-client';
+import Card from '@/components/game/Card';
 const socket = io();
 
 const apiClient = getAPIClientNoCache();
@@ -74,19 +75,12 @@ async function dealerCards(gameId: number | null, players: string[]): Promise<bo
   return false;
 }
 
-
-// TODO: Popup confirmar entrada no jogo e prontidao;
-// TODO: Automatizar prontidao do criador.
-// TODO: Popup aguardando jogadores, aguardando todos ficarem prontos, <OK>
-// TODO: se todos estiverem prontos inicia automaticamente, se quiser inciar antes pressionar botao começar.
-// TODO: ação de começar deve startar o game e dar as cartas. <OK>
+// TODO: monte de comprar
 // TODO: botão challenge adicionar.
-// TODO: verificar quais requisições precisam de no-cache. <OK>
 // TODO: botao sair do jogo.
 // TODO: score do jogador.
 // TODO: som ?!
 // TODO: circulo da foto, tempo para jogada. 
-// TODO: monte de comprar
 
 const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
   const gameId = Number(params.game_id);
@@ -97,6 +91,8 @@ const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
   const [messageError, setMessageError] = useState('');
   const [showPopup, setShowPopup] = useState(true);
   const router = useRouter()
+
+  // TODO: Clicar na carta fazer fetch game data assim que der tudo certo.
 
   useEffect(() => {
     const loadGame = async () => {
@@ -137,13 +133,10 @@ const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
   }, [game && !showPopup && !dealCards]);
 
   useEffect(() => {
-    // Ouvir o evento gameStatusUpdate
     socket.on('gameStatusUpdate', (data) => {
-      console.log('Status do jogo atualizado:', data);
       setGameStatus(data);
     });
 
-    // Limpar os ouvintes ao desmontar o componente
     return () => {
       socket.off('gameStatusUpdate');
     };
@@ -173,6 +166,7 @@ const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
 
   const handleClosePopup = async () => {
     const exit = await exitGame(gameId);
+    //TODO: chamar load Game
     if (exit) {
       router.push("/games");
     }
@@ -180,6 +174,9 @@ const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
 
   const handleConfirm = async () => {
     const start = await startGame(gameId);
+    //TODO: chamar dealer
+    //TODO: chamar ready player
+
     if (start) {
       setShowPopup(false);
       console.log('Game Started');
