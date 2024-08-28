@@ -22,7 +22,7 @@ const Table: NextPage<TableProps> = ({ gameId, className }) => {
     const fetchCardsData = async () => {
       try {
         if (gameId !== null) {
-          const result = await apiClient.post('/api/game/topCard', { game_id: gameId });
+          const result = await apiClient.post(`/api/game/topCard?timestamp=${new Date().getTime()}`, { game_id: gameId });
 
           setTopCard(result.data.card);
         }

@@ -29,7 +29,7 @@ export default function RootLayout({
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <html lang="pt-BR">
-            <body style={{ backgroundColor: 'var(--white-01)' }}>
+            <body style={{ backgroundColor: 'var(--gray-main)' }}>
               {children}
             </body>
           </html>

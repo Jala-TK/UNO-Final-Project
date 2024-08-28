@@ -37,7 +37,7 @@ export default function CreateRoom() {
     const data = {
       title,
       maxPlayers,
-      // password // Adicione o campo password se necessário
+      // password //TODO: Adicionar o campo password
     };
 
     try {

@@ -6,7 +6,7 @@ import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { AxiosError } from "axios";
 import Navbar from "@/components/navbar/navbar";
-import { getAPIClient } from "@/services/axios";
+import { getAPIClientNoCache } from "@/services/axios";
 
 const getRandomImage = () => {
   const images = [
@@ -37,19 +37,13 @@ const RoomsDisponiveis: React.FC = () => {
   const [rooms, setRooms] = useState<RoomProps[]>([]);
   const [messageError, setMessageError] = useState('');
   const [loading, setLoading] = useState(true);
-  const apiClient = getAPIClient();
+  const apiClient = getAPIClientNoCache();
   const router = useRouter();
 
   useEffect(() => {
     const fetchRoomData = async () => {
       try {
-        const gamesInfo = await apiClient.get("/api/games", {
-          headers: {
-            'Cache-Control': 'no-cache',
-            'Pragma': 'no-cache',
-            'Expires': '0',
-          },
-        });
+        const gamesInfo = await apiClient.get(`/api/games?timestamp=${new Date().getTime()}`);
         setRooms(gamesInfo.data.games);
         console.log(gamesInfo.data.games)
       } catch (error) {

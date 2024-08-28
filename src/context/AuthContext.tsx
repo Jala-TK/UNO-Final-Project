@@ -45,9 +45,11 @@ export function AuthProvider({ children }: any) {
 
 
     const userInfo = await recoverUserInformation(token);
+    console.log("userInfo", userInfo)
     setUser(userInfo.user);
-    if (user != null) {
-      setCookie(ctx, 'nextauth.token.user', user.username, {
+    if (userInfo.user != null) {
+      destroyCookie(null, 'nextauth.token.user')
+      setCookie(ctx, 'nextauth.token.user', userInfo.user.username, {
         maxAge: 60 * 60 * 24 * 7
       })
     }

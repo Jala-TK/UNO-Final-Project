@@ -14,12 +14,12 @@ interface HandPlayerProps {
 const apiClient = getAPIClientNoCache();
 
 const fetchCardsData = async (gameId: number) => {
-  const result = await apiClient.post('/api/game/hand', { game_id: gameId });
+  const result = await apiClient.post(`/api/game/hand?timestamp=${new Date().getTime()}`, { game_id: gameId });
   return result.data.hand;
 };
 
 const handleCardClick = async (cardId: number, gameId: number) => {
-  await apiClient.post('/api/cards/play', { game_id: gameId, card_id: cardId });
+  await apiClient.post(`/api/cards/play?timestamp=${new Date().getTime()}`, { game_id: gameId, card_id: cardId });
 };
 
 const HandPlayer: React.FC<HandPlayerProps> = ({ gameId, className }) => {
