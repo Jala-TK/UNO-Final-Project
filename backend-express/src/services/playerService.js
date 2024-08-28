@@ -128,6 +128,25 @@ export const getPlayerHandsInGame = async (game_id) => {
   return playerHands;
 };
 
+export const getPlayerNamesInGame = async (game_id) => {
+  const playersInGame = await GamePlayer.findAll({
+    where: { gameId: game_id },
+  });
+  const playerIds = playersInGame.map((player) => player.playerId);
+
+  const players = await Player.findAll({
+    where: {
+      id: playerIds,
+      auditExcluded: false,
+    },
+  });
+
+  return players.reduce((acc, player) => {
+    acc.push(player.username);
+    return acc;
+  }, []);
+};
+
 export const getPlayerNames = async (playersInGame) => {
   const playerIds = playersInGame.map((player) => player.playerId);
 
