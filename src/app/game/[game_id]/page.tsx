@@ -38,7 +38,7 @@ interface GameProps {
 
 
 async function fetchGameStatusData(gameId: number | null): Promise<GameStatusProps | null> {
-  const result = await apiClient.post('/api/game/statusGeral?timestamp=${new Date().getTime()}', { game_id: gameId });
+  const result = await apiClient.post(`/api/game/statusGeral?timestamp=${new Date().getTime()}`, { game_id: gameId });
   return result.data;
 }
 
@@ -56,7 +56,7 @@ async function exitGame(gameId: number | null): Promise<boolean> {
 }
 
 async function startGame(gameId: number | null): Promise<boolean> {
-  const result = await apiClient.post('/api/game/start?timestamp=${new Date().getTime()}', { game_id: gameId });
+  const result = await apiClient.post(`/api/game/start?timestamp=${new Date().getTime()}`, { game_id: gameId });
   if (result.status === 200) {
     return true;
   }
@@ -77,15 +77,15 @@ async function dealerCards(gameId: number | null, players: string[]): Promise<bo
 
 // TODO: Popup confirmar entrada no jogo e prontidao;
 // TODO: Automatizar prontidao do criador.
-// TODO: Popup aguardando jogadores, aguardando todos ficarem prontos, 
+// TODO: Popup aguardando jogadores, aguardando todos ficarem prontos, <OK>
 // TODO: se todos estiverem prontos inicia automaticamente, se quiser inciar antes pressionar botao começar.
-// TODO: ação de começar deve startar o game e dar as cartas.
+// TODO: ação de começar deve startar o game e dar as cartas. <OK>
 // TODO: botão challenge adicionar.
-// TODO: verificar quais requisições precisam de no-cache.
+// TODO: verificar quais requisições precisam de no-cache. <OK>
 // TODO: botao sair do jogo.
 // TODO: score do jogador.
 // TODO: som ?!
-// TODO: circulo da foto, tempo para jogada.
+// TODO: circulo da foto, tempo para jogada. 
 // TODO: monte de comprar
 
 const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
@@ -120,7 +120,7 @@ const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
   useEffect(() => {
     const actionDealCards = async () => {
       try {
-        if (game && game.creator == user) {
+        if (game && game.creator == user && !dealCards) {
           await dealerCards(gameId, game?.players || [])
           setDealCards(true);
         }
