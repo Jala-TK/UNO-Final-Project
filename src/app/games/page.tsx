@@ -4,11 +4,13 @@ import React, { useState, useEffect } from "react";
 import styles from './Rooms.module.css';
 import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { AxiosError } from "axios";
 import Navbar from "@/components/navbar/navbar";
 import { getAPIClientNoCache } from "@/services/axios";
 import PopUpSettings from "@/components/popup/settings";
 import { parseCookies } from 'nookies';
+import { useSocket } from '@/context/SocketContext';
+import { handleError } from '@/utils/handleError'; // Importando a função
+
 const apiClient = getAPIClientNoCache();
 const { 'nextauth.token.user': user } = parseCookies();
 
@@ -43,12 +45,19 @@ async function enterGame(gameId: number | null): Promise<boolean> {
   const result = await apiClient.post(`/api/game/join?timestamp=${new Date().getTime()}`, { game_id: gameId });
   if (result.status === 200) {
     const result = await apiClient.post(`/api/game/ready?timestamp=${new Date().getTime()}`, { game_id: gameId });
-    return true;
+    if (result.status === 200) {
+      return true;
+    }
   }
   return false;
 }
 
+async function getGames() {
+  return await apiClient.get(`/api/games?timestamp=${new Date().getTime()}`);
+}
+
 const RoomsDisponiveis: React.FC = () => {
+  const { socket, isConnected } = useSocket();
   const [rooms, setRooms] = useState<RoomProps[]>([]);
   const [messageError, setMessageError] = useState('');
   const [loading, setLoading] = useState(true);
@@ -56,24 +65,40 @@ const RoomsDisponiveis: React.FC = () => {
   const [showPopup, setShowPopup] = useState(true);
   const [selectedRoom, setSelectedRoom] = useState<RoomProps>();
 
+  const fetchRoomData = async () => {
+    try {
+      const gamesInfo = await getGames()
+      setRooms(gamesInfo.data.games);
+    } catch (error) {
+      handleError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchRoomData = async () => {
-      try {
-        const gamesInfo = await apiClient.get(`/api/games?timestamp=${new Date().getTime()}`);
+    if (!socket || !isConnected) return;
+
+    if (isConnected) {
+      fetchRoomData();
+    }
+
+    const handleUpdate = async (message: string) => {
+      if (message === 'updateGames' || message === 'playerInGame') {
+        console.log('Jogos atualizados', message);
+        const gamesInfo = await getGames()
         setRooms(gamesInfo.data.games);
-      } catch (error) {
-        handleError(error);
-      } finally {
-        setLoading(false);
       }
     };
 
-    fetchRoomData();
+    socket.on('update', handleUpdate);
 
-    const interval = setInterval(fetchRoomData, 60000)
-    return () => clearInterval(interval);
-  }, []);
+    return () => {
+      socket.off('update', handleUpdate);
+    };
+  }, [socket, isConnected]);
+
+
 
   const handleClosePopup = async () => {
     setShowPopup(false);
@@ -81,9 +106,10 @@ const RoomsDisponiveis: React.FC = () => {
 
   const handleConfirm = async () => {
     try {
-      const enter = selectedRoom ? await enterGame(selectedRoom.id) : false;
+      const enter = await enterGame(selectedRoom!.id);
       if (enter && selectedRoom) {
         setShowPopup(false);
+        fetchRoomData();
         router.push(`/game/${selectedRoom.id}`);
       }
     } catch (error) {
@@ -94,31 +120,14 @@ const RoomsDisponiveis: React.FC = () => {
 
 
   const handleEnter = (room: RoomProps) => {
+    setSelectedRoom(room);
     if (room.creator === user) {
       router.push(`/game/${room.id}`);
     }
     else {
       console.log(room.players.includes(user))
-      setSelectedRoom(room);
       setShowPopup(true);
     }
-
-  };
-
-  const handleError = (error: unknown) => {
-    let errorMessage = '';
-
-    if (error instanceof AxiosError) {
-      if (error?.response?.data.error) {
-        errorMessage = error.response.data.error;
-      } else {
-        errorMessage = 'Aconteceu um erro: ' + error.message;
-      }
-    } else {
-      errorMessage = error as string || 'Erro';
-    }
-
-    setMessageError(errorMessage);
   };
 
   const handleCloseDialog = () => {
