@@ -7,6 +7,7 @@ import Head from 'next/head';
 import createEmotionCache from '../utils/layout/createEmotionCache';
 import theme from '../utils/layout/theme';
 import { AuthProvider } from '@/context/AuthContext';
+import { SocketProvider } from '@/context/SocketContext';
 
 import '../styles/colors.css';
 import '../styles/globals.css';
@@ -20,21 +21,23 @@ export default function RootLayout({
 }) {
   return (
     <AuthProvider>
-      <CacheProvider value={clientSideEmotionCache}>
-        <Head>
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
-          <meta name="theme-color" content={theme.palette.primary.main} />
-          <link rel="shortcut icon" href="/favicon.ico" />
-        </Head>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <html lang="pt-BR">
-            <body style={{ backgroundColor: 'var(--gray-main)' }}>
-              {children}
-            </body>
-          </html>
-        </ThemeProvider>
-      </CacheProvider>
+      <SocketProvider>
+        <CacheProvider value={clientSideEmotionCache}>
+          <Head>
+            <meta name="viewport" content="initial-scale=1, width=device-width" />
+            <meta name="theme-color" content={theme.palette.primary.main} />
+            <link rel="shortcut icon" href="/favicon.ico" />
+          </Head>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <html lang="pt-BR" suppressHydrationWarning>
+              <body style={{ backgroundColor: 'var(--gray-main)' }}>
+                {children}
+              </body>
+            </html>
+          </ThemeProvider>
+        </CacheProvider>
+      </SocketProvider>
     </AuthProvider>
   );
 }

@@ -47,7 +47,15 @@ const startServer = async () => {
     console.log('Cliente conectado via Socket.IO');
 
     socket.on('message', (message) => {
+      io.emit('message', message);
+
       console.log('Mensagem recebida:', message);
+    });
+
+    socket.on('update', (update) => {
+      socket.broadcast.emit('update', update);
+
+      console.log('Atualização:', update);
     });
 
     socket.on('disconnect', () => {

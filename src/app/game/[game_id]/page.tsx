@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { getAPIClientNoCache } from '@/services/axios';
-import { AxiosError } from 'axios';
 import styles from './Game.module.css';
 import Navbar from '@/components/navbar/navbar';
 import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
@@ -12,8 +11,10 @@ import Player from '@/components/game/player';
 import { parseCookies } from 'nookies';
 import { useRouter } from "next/navigation";
 import PopUpSettings from '@/components/popup/settings';
-import io from 'socket.io-client';
-const socket = io();
+import Card from '@/components/game/Card';
+import { useSocket } from '@/context/SocketContext';
+import { handleError } from '@/utils/handleError';
+
 
 const apiClient = getAPIClientNoCache();
 
@@ -23,7 +24,10 @@ interface GameStatusProps {
   direction: string;
   top_card: string;
   hands: {
-    [playerName: string]: Card[];
+    [playerName: string]: {
+      wins: number;
+      cards: Card[];
+    };
   };
   turnHistory: any[];
 }
@@ -74,98 +78,116 @@ async function dealerCards(gameId: number | null, players: string[]): Promise<bo
   return false;
 }
 
+async function getTopCard(gameId: number | null): Promise<any> {
+  const result = await apiClient.post(`/api/game/topCard?timestamp=${new Date().getTime()}`, { game_id: gameId });
+  return result.data;
 
-// TODO: Popup confirmar entrada no jogo e prontidao;
-// TODO: Automatizar prontidao do criador.
-// TODO: Popup aguardando jogadores, aguardando todos ficarem prontos, <OK>
-// TODO: se todos estiverem prontos inicia automaticamente, se quiser inciar antes pressionar botao começar.
-// TODO: ação de começar deve startar o game e dar as cartas. <OK>
+}
+
+async function fetchCardsData(gameId: number | null): Promise<Card[]> {
+  const result = await apiClient.post(`/api/game/hand?timestamp=${new Date().getTime()}`, { game_id: gameId });
+  return result.data.hand;
+}
+
+
+
 // TODO: botão challenge adicionar.
-// TODO: verificar quais requisições precisam de no-cache. <OK>
 // TODO: botao sair do jogo.
 // TODO: score do jogador.
 // TODO: som ?!
 // TODO: circulo da foto, tempo para jogada. 
-// TODO: monte de comprar
 
 const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
+  const { socket, isConnected } = useSocket();
   const gameId = Number(params.game_id);
   const { 'nextauth.token.user': user } = parseCookies();
   const [game, setGame] = useState<GameProps | null>(null);
   const [gameStatus, setGameStatus] = useState<GameStatusProps | null>(null);
-  const [dealCards, setDealCards] = useState(true);
+  const [isCurrentPlayer, setIsCurrentPlayer] = useState<boolean>(false);
+  const [topCard, setTopCard] = useState<Card | null>(null);
+  const [cards, setCards] = useState<Card[]>([]);
   const [messageError, setMessageError] = useState('');
   const [showPopup, setShowPopup] = useState(true);
   const router = useRouter()
 
-  useEffect(() => {
-    const loadGame = async () => {
-      try {
-        const gameData = await fetchGameData(gameId);
-        if (gameData?.status === 'Waiting for players') {
-        }
-        setGame(gameData);
-      } catch (error) {
-        if (error instanceof AxiosError) {
-          setMessageError(error.response?.data.error || 'Erro ao carregar os dados do jogo');
-        } else {
-          setMessageError('Erro desconhecido');
-        }
-      }
-    };
+  const loadGame = async () => {
+    try {
+      const gameData = await fetchGameData(gameId);
+      setGame(gameData);
+    } catch (error) {
+      setMessageError(handleError(error));
+    }
+  };
 
-    loadGame();
-  }, [gameId && showPopup]);
-
-  useEffect(() => {
-    const actionDealCards = async () => {
-      try {
-        if (game && game.creator == user && !dealCards) {
-          await dealerCards(gameId, game?.players || [])
-          setDealCards(true);
-        }
-      } catch (error) {
-        if (error instanceof AxiosError) {
-          setMessageError(error.response?.data.error || 'Erro ao carregar os dados do jogo');
-        } else {
-          setMessageError('Erro desconhecido');
-        }
-      }
-    };
-
-    actionDealCards();
-  }, [game && !showPopup && !dealCards]);
-
-  useEffect(() => {
-    // Ouvir o evento gameStatusUpdate
-    socket.on('gameStatusUpdate', (data) => {
-      console.log('Status do jogo atualizado:', data);
+  const loadGameStatus = async () => {
+    try {
+      const data = await fetchGameStatusData(gameId);
       setGameStatus(data);
-    });
+    } catch (error) {
+      setMessageError(handleError(error));
+    }
+  };
 
-    // Limpar os ouvintes ao desmontar o componente
-    return () => {
-      socket.off('gameStatusUpdate');
-    };
-  }, []);
+  const loadTopCard = async () => {
+    try {
+      const data = await getTopCard(gameId);
+      setTopCard(data.card);
+    } catch (error) {
+      setMessageError(handleError(error));
+    }
+  };
 
+  const loadCards = async () => {
+    try {
+      const data = await fetchCardsData(gameId);
+      setCards(data);
+    } catch (error) {
+      setMessageError(handleError(error));
+    }
+  };
+
+  const handlerCurrentPlayer = async () => {
+    if (gameStatus && gameStatus.current_player) {
+      const isCurrentPlayer = gameStatus.current_player === user;
+      console.log("currentPlayer", isCurrentPlayer, gameStatus.current_player);
+      setIsCurrentPlayer(isCurrentPlayer);
+    }
+  };
 
   useEffect(() => {
-    const loadGameStatus = async () => {
-      try {
-        const data = await fetchGameStatusData(gameId);
-        setGameStatus(data);
-      } catch (error) {
-        if (error instanceof AxiosError) {
-          setMessageError(error.response?.data.error || 'Erro ao carregar os dados do jogo');
-        } else {
-          setMessageError('Erro desconhecido');
-        }
+    if (!socket || !isConnected) return;
+
+    if (isConnected) {
+      loadGame();
+      loadGameStatus();
+      loadTopCard()
+      loadCards();
+      console.log("Game is connected");
+    }
+
+    const handleUpdate = async (message: any) => {
+      if (message?.updateGame === gameId || message === 'updatedGame') {
+        console.log('Jogos atualizados', message);
+        loadGame();
+        loadGameStatus();
+        loadTopCard()
+      }
+      if (message?.updatedHand === 'update' && message?.player === user) {
+        console.log('Cartas atualizadas', message);
+        loadCards();
       }
     };
 
-    loadGameStatus();
-  }, [gameId && !showPopup]);
+    socket.on('update', handleUpdate);
+
+    return () => {
+      socket.off('update', handleUpdate);
+    };
+  }, [socket, isConnected]);
+
+  useEffect(() => {
+    handlerCurrentPlayer();
+  }, [gameStatus]);
 
   const handleCloseDialog = () => {
     setMessageError('');
@@ -180,7 +202,8 @@ const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
 
   const handleConfirm = async () => {
     const start = await startGame(gameId);
-    if (start) {
+    const dealer = await dealerCards(gameId, game?.players || [])
+    if (start && dealer) {
       setShowPopup(false);
       console.log('Game Started');
     }
@@ -197,7 +220,7 @@ const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
           playerCount={`${game.players.length}/${game.maxPlayers}`}
           buttonText={game.players.length > 1 && game.creator == user ? "Start Game" : "Exit Game"}
           onClose={handleClosePopup}
-          onConfirm={(game.creator == user) ? handleConfirm : handleClosePopup}
+          onConfirm={(game.players.length > 1 && game.creator) ? handleConfirm : handleClosePopup}
         />
       )}
     </div>
@@ -222,17 +245,16 @@ const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
             <Player
               key={playerName}
               playerName={playerName}
-              hand={gameStatus.hands[playerName].length}
-              wins={playerName === user ? 100 : 0}
+              hand={gameStatus.hands[playerName]?.cards?.length || 0}
+              wins={gameStatus.hands[playerName]?.wins || 0}
               className={`${playerName === user ? styles.currentUser : styles.player}`}
               currentPlayer={gameStatus.current_player === playerName ? true : false}
             />
           ))}
         </div>
-        <Table gameId={gameId} className={styles.tableContainer} />
+        <Table currentPlayer={isCurrentPlayer} gameId={gameId} topCard={topCard} className={styles.tableContainer} />
       </div>
-
-      <HandPlayer gameId={gameId} className={styles.handContainer} />
+      <HandPlayer currentPlayer={isCurrentPlayer} gameId={gameId} cards={cards} className={styles.handContainer} />
 
     </div>
   );

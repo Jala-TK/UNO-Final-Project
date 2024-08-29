@@ -31,3 +31,11 @@
   position: relative;
   justify-content: center;
 }
+
+.cards {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 3px;
+  z-index: 9999;
+}

@@ -1,5 +1,6 @@
 import { createGame as createGameService } from '../../services/gameService.js';
 import { createGamePlayer } from '../../services/gamePlayerService.js';
+import { io } from '../../../../server.js';
 
 export const createGame = async (req, res, next) => {
   try {
@@ -12,6 +13,16 @@ export const createGame = async (req, res, next) => {
     const user = req.user;
     const newGame = await createGameService(name || title, maxPlayers, user.id);
     await createGamePlayer(newGame.id, user.id);
+
+    io.emit('update', {
+      type: 'newGame',
+      game: newGame.id,
+      updateGame: newGame.id,
+      player: user.username,
+    });
+
+    io.emit('update', 'playerInGame');
+    io.emit('update', 'updatedGames');
 
     res
       .status(201)

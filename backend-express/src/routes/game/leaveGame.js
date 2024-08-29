@@ -3,6 +3,7 @@ import { findGameById } from '../../services/gameService.js';
 import { verifyPlayerInGame } from '../../services/playerService.js';
 import { deleteGamePlayer } from '../../services/gamePlayerService.js';
 import { handleGameCreatorLeaving } from '../../services/gamePlayerService.js';
+import { io } from '../../../../server.js';
 
 export const leaveGame = async (req, res, next) => {
   try {
@@ -25,6 +26,13 @@ export const leaveGame = async (req, res, next) => {
       return res.status(200).json({ message: responseMessage });
     } else {
       await deleteGamePlayer(gamePlayer, true);
+
+      io.emit('update', {
+        type: 'leaveGame',
+        game: newGame.id,
+      });
+      io.emit('update', 'playerInGame');
+
       return res
         .status(200)
         .json({ message: 'Player left the game successfully' });

@@ -2,6 +2,7 @@
 import { signInRequest } from "@/services/auth";
 import { createContext, useState } from "react";
 import { setCookie, parseCookies, destroyCookie } from 'nookies'
+
 import { api } from "@/services/api";
 import { recoverUserInformation } from '@/services/auth';
 
@@ -45,7 +46,6 @@ export function AuthProvider({ children }: any) {
 
 
     const userInfo = await recoverUserInformation(token);
-    console.log("userInfo", userInfo)
     setUser(userInfo.user);
     if (userInfo.user != null) {
       destroyCookie(null, 'nextauth.token.user')
