@@ -3,6 +3,7 @@ import {
   findGameById,
   updateGame as updateGameService,
 } from '../../services/gameService.js';
+import { io } from '../../../../server.js';
 
 export const updateGame = async (req, res, next) => {
   try {
@@ -30,6 +31,12 @@ export const updateGame = async (req, res, next) => {
       status,
       maxPlayers,
     });
+
+    io.emit('update', {
+      type: 'updateGame',
+      game: newGame.id,
+    });
+
     res.status(200).json({
       id: updatedGame.id,
       title: updatedGame.title,

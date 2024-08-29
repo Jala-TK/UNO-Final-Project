@@ -5,6 +5,7 @@ import {
   addPlayerToGame,
   getPlayersInGame,
 } from '../../services/gamePlayerService.js';
+import { io } from '../../../../server.js';
 
 export const joinGame = async (req, res, next) => {
   try {
@@ -27,6 +28,14 @@ export const joinGame = async (req, res, next) => {
       return res.status(400).json({ error: 'User is already in the game' });
 
     await addPlayerToGame(game_id, user.id);
+
+    io.emit('update', {
+      type: 'joinGame',
+      game: game.id,
+      player: user.username,
+      updateGame: game.id,
+    });
+    io.emit('update', 'playerInGame');
 
     return res
       .status(200)

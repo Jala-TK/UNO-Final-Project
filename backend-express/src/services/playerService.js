@@ -25,6 +25,10 @@ export const findExistPlayerByUsername = async (username) => {
   });
 };
 
+export const updateWins = async (player, wins) => {
+  return await player.update({ wins: player.wins + wins });
+};
+
 export const findExistingPlayer = async (username, email) => {
   const player = await Player.findOne({
     where: {
@@ -96,7 +100,7 @@ export const getPlayerHands = async (game_id, playersInGame) => {
 
 export const getPlayerHandsInGame = async (game_id) => {
   const playersInGame = await GamePlayer.findAll({
-    where: { gameId: game_id },
+    where: { gameId: game_id, auditExcluded: false },
   });
   const playerIds = playersInGame.map((player) => player.playerId);
 
@@ -117,20 +121,25 @@ export const getPlayerHandsInGame = async (game_id) => {
         auditExcluded: false,
       },
     });
-    playerHands[player.username] = cards.map((card) => ({
-      id: card.id,
-      color: card.color,
-      value: card.value,
-      image: card.image,
-      description: `${card.color} ${card.value}`,
-    }));
+    playerHands[player.username] = [
+      {
+        wins: player.wins,
+        cards: cards.map((card) => ({
+          id: card.id,
+          color: card.color,
+          value: card.value,
+          image: card.image,
+          description: `${card.color} ${card.value}`,
+        })),
+      },
+    ];
   }
   return playerHands;
 };
 
 export const getPlayerNamesInGame = async (game_id) => {
   const playersInGame = await GamePlayer.findAll({
-    where: { gameId: game_id },
+    where: { gameId: game_id, auditExcluded: false },
   });
   const playerIds = playersInGame.map((player) => player.playerId);
 

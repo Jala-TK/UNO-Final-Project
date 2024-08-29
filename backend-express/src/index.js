@@ -1,43 +1,34 @@
 import express from 'express';
 import http from 'http';
 import 'dotenv/config';
-import { Server as SocketIOServer } from 'socket.io';
 import sequelize from './config/database.js';
 import routes from './routes/index.js';
 import errorHandler from './middleware/errorHandler.js';
 import CacheMiddleware from './middleware/cacheMiddleware.js';
 import trackingMiddleware from './middleware/trackingMiddleware.js';
+import { initializeSocket } from './socket.js';
 
 const startServer = async () => {
-  const PORTHTTP = process.env.PORT || 3000;
+  const PORTHTTP = process.env.PORTHTTP || 3000;
   const app = express();
   const server = http.createServer(app);
-
-  const io = new SocketIOServer(server);
 
   const cacheOptions = {
     max: 50,
     maxAge: 2000,
   };
+
   const cacheMiddleware = new CacheMiddleware(cacheOptions);
 
-  app.use(trackingMiddleware);
-  app.use(cacheMiddleware.handleCache.bind(cacheMiddleware));
   app.use(express.json());
-  app.use(errorHandler);
+  app.use(cacheMiddleware.handleCache.bind(cacheMiddleware));
+  app.use(trackingMiddleware);
+
   app.use('/api', routes);
 
-  io.on('connection', (socket) => {
-    console.log('A user connected');
+  app.use(errorHandler);
 
-    socket.on('disconnect', () => {
-      console.log('Cliente desconectado');
-    });
-
-    socket.on('disconnect', () => {
-      console.log('User disconnected');
-    });
-  });
+  const io = initializeSocket(server);
 
   try {
     await sequelize.authenticate();
@@ -61,6 +52,4 @@ const startServer = async () => {
   return io;
 };
 
-const io = startServer();
-
-export { io };
+startServer();

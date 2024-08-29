@@ -2,6 +2,7 @@ import { findGameById } from '../../services/gameService.js';
 import { getPlayerInGame } from '../../services/gamePlayerService.js';
 import { updatePlayerStatus } from '../../services/gamePlayerService.js';
 import { validateParams } from '../../utils/validation.js';
+import { io } from '../../../../server.js';
 
 export const getReady = async (req, res, next) => {
   try {
@@ -22,6 +23,8 @@ export const getReady = async (req, res, next) => {
       return res.status(400).json({ error: 'The player was ready' });
 
     await updatePlayerStatus(playerInGame, true);
+
+    io.emit('update', 'playerInGame');
 
     return res.status(200).json({ message: 'The player is ready' });
   } catch (err) {
