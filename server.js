@@ -52,6 +52,12 @@ const startServer = async () => {
       console.log('Mensagem recebida:', message);
     });
 
+    socket.on('update', (update) => {
+      socket.broadcast.emit('update', update);
+
+      console.log('Atualização:', update);
+    });
+
     socket.on('disconnect', () => {
       console.log('Cliente desconectado');
     });
