@@ -22,6 +22,7 @@ import { getHistory } from '../routes/game/getHistory.js';
 import { getPlayerHand } from '../routes/game/getPlayerHand.js';
 import { checkHand } from '../routes/game/checkHand.js';
 import { getAllGames } from '../routes/game/getAllGames.js';
+import { skipSelfPlayer } from '../routes/game/skipSelfPlayer.js';
 const router = Router();
 
 router.post('/games/', authMiddleware, createGame);
@@ -38,6 +39,7 @@ router.post('/game/end', authMiddleware, endGame);
 router.post('/game/dealCards/:id', authMiddleware, dealCards);
 router.post('/game/uno', authMiddleware, sayUNO);
 router.post('/game/challengeUno', authMiddleware, challengePlayer);
+router.post('/game/skip', authMiddleware, skipSelfPlayer);
 
 router.get('/game/status/', getStatusGame);
 router.get('/game/players', getPlayersInGame);

@@ -17,8 +17,8 @@ const sequelize = new Sequelize(
         encrypt: process.env.DB_DIALECT === 'mssql' ? true : false,
       },
     },
-    logging: isTest ? false : true,
-  }
+    logging: false,
+  },
 );
 
 export default sequelize;

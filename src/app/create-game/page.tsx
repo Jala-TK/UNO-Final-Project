@@ -6,7 +6,7 @@ import InputUsername from "@/components/login/username";
 import InputPassword from "@/components/games/password";
 import { useRouter } from "next/navigation";
 import ButtonSend from "@/components/login/buttons/send";
-import { Box, Button, Dialog, DialogActions, DialogContent } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
 import { getAPIClient } from "@/services/axios";
 import { AxiosError } from "axios";
 import InputNumber from "@/components/games/maxPlayers";
@@ -37,14 +37,17 @@ export default function CreateRoom() {
     const data = {
       title,
       maxPlayers,
-      // password // Adicione o campo password se necessário
+      // password //TODO: Adicionar o campo password
     };
 
     try {
       const result = await apiClient.post("/api/games", data);
 
       if (result?.status === 201 && result.data.game_id) {
-        router.push(`/game/${result.data.game_id}`);
+        const readyPlayer = await apiClient.post("/api/game/ready", { game_id: result.data.game_id });
+        if (readyPlayer.status === 200) {
+          router.push(`/game/${result.data.game_id}`);
+        }
       } else {
         setMessageError(result?.data.error || 'Erro desconhecido');
       }

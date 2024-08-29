@@ -4,6 +4,7 @@ import {
 } from '../../services/gameService.js';
 import { removeGamePlayers } from '../../services/gamePlayerService.js';
 import { validateParams } from '../../utils/validation.js';
+import { io } from '../../../../server.js';
 
 export const endGame = async (req, res, next) => {
   try {
@@ -25,6 +26,12 @@ export const endGame = async (req, res, next) => {
 
     await removeGamePlayers(game_id);
     await endGameService(game_id);
+
+    io.emit('update', {
+      type: 'endGame',
+      game: newGame.id,
+    });
+    io.emit('update', 'updatedGames');
 
     res.status(200).json({ message: 'Game ended successfully' });
   } catch (error) {

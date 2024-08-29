@@ -2,6 +2,8 @@ import { updateGame } from '../services/gameService.js';
 import { getPlayersInGame } from '../services/gamePlayerService.js';
 import { getPlayerScores } from '../services/scoreService.js';
 import { addActionToHistory } from '../services/historyService.js';
+import { findExistPlayerByUsername, updateWins } from './playerService.js';
+import { io } from '../../../server.js';
 
 export const processEndOfGame = async (game, user, card, res) => {
   await updateGame(game, {
@@ -20,6 +22,17 @@ export const processEndOfGame = async (game, user, card, res) => {
     `Played ${card.color} ${card.value} and won the game!`,
     user.username,
   );
+
+  const player = await findExistPlayerByUsername(user.username);
+  await updateWins(player, 1);
+
+  io.emit('update', {
+    type: 'winGame',
+    updateGame: game.id,
+    updatedHand: 'update',
+    player: user.username,
+    topCard: 'update',
+  });
 
   return res.status(200).json({
     message: `Card played successfully. ${user.username} has won the game!`,

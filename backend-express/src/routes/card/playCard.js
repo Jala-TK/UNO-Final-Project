@@ -21,6 +21,7 @@ import { getTopDiscardedCard } from '../../services/gamePlayerService.js';
 import { discardCard } from '../../services/cardService.js';
 import { getPlayerHand } from '../../services/playerService.js';
 import { updateScoreAutomatic } from '../../services/scoreService.js';
+import { io } from '../../../../server.js';
 
 export const playCard = async (req, res, next) => {
   try {
@@ -103,6 +104,14 @@ export const playCard = async (req, res, next) => {
     }
 
     const nextPlayer = await setNextPlayer(game_id, 1, res);
+
+    io.emit('update', {
+      type: 'playCard',
+      updateGame: game_id,
+      updatedHand: 'update',
+      player: user.username,
+      topCard: 'update',
+    });
 
     return res.status(200).json({
       message: `${user.username} played ${card.color} ${card.value}`,

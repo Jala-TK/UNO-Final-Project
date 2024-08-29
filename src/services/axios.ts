@@ -23,3 +23,26 @@ export function getAPIClient(
 
   return api;
 }
+
+export function getAPIClientNoCache(
+  ctx?: NextPageContext | GetServerSidePropsContext<ParsedUrlQuery, PreviewData>
+): AxiosInstance {
+  const { 'nextauth.token.uno': token } = parseCookies(ctx);
+
+  const api = axios.create({ baseURL: 'http://localhost' });
+
+  api.interceptors.request.use((config) => {
+    if (token) {
+      config.data = {
+        ...config.data,
+        access_token: token,
+      };
+    }
+    config.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate';
+    config.headers.Pragma = 'no-cache';
+    config.headers.Expires = '0';
+    return config;
+  });
+
+  return api;
+}

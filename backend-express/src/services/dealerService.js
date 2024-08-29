@@ -52,7 +52,12 @@ export const setTopCard = async (gameId) => {
 
 export const deliverCards = async (gameId, handSize, players) => {
   const deck = await Card.findAll({
-    where: { gameId: gameId, whoOwnerCard: null, orderDiscarded: null, auditExcluded: false },
+    where: {
+      gameId: gameId,
+      whoOwnerCard: null,
+      orderDiscarded: null,
+      auditExcluded: false,
+    },
   });
 
   const hands = {};
@@ -105,7 +110,6 @@ export const dealCards = async (gameId, handSize, players) => {
 
   return { shuffledDeck: deck, hands };
 };
-
 export const setNextPlayer = async (game_id, position, res) => {
   try {
     const game = await Game.findByPk(game_id);
@@ -185,7 +189,12 @@ export const drawCards = async (gameId, quantity, playerId) => {
 
   for (let i = 0; i < quantity; i++) {
     let deck = await Card.findAll({
-      where: { gameId: gameId, whoOwnerCard: null, orderDiscarded: null, auditExcluded: false },
+      where: {
+        gameId: gameId,
+        whoOwnerCard: null,
+        orderDiscarded: null,
+        auditExcluded: false,
+      },
       order: [['createdAt', 'ASC']],
     });
 
@@ -193,7 +202,12 @@ export const drawCards = async (gameId, quantity, playerId) => {
       await initializeDeck(gameId);
 
       deck = await Card.findAll({
-        where: { gameId: gameId, whoOwnerCard: null, orderDiscarded: null, auditExcluded: false },
+        where: {
+          gameId: gameId,
+          whoOwnerCard: null,
+          orderDiscarded: null,
+          auditExcluded: false,
+        },
         order: [['createdAt', 'ASC']],
       });
     }
