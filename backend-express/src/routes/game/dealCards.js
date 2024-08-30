@@ -5,6 +5,7 @@ import {
   validatePlayers,
   verifyPlayerInGame,
 } from '../../services/playerService.js';
+import { io } from '../../../../server.js';
 
 export const dealCards = async (req, res, next) => {
   try {
@@ -58,6 +59,12 @@ export const dealCards = async (req, res, next) => {
         response[playerId] = [];
       }
     }
+
+    io.emit('update', {
+      type: 'dealCard',
+      game: game.id,
+    });
+    io.emit('update', 'playerInGame');
 
     res
       .status(200)

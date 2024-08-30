@@ -121,18 +121,16 @@ export const getPlayerHandsInGame = async (game_id) => {
         auditExcluded: false,
       },
     });
-    playerHands[player.username] = [
-      {
-        wins: player.wins,
-        cards: cards.map((card) => ({
-          id: card.id,
-          color: card.color,
-          value: card.value,
-          image: card.image,
-          description: `${card.color} ${card.value}`,
-        })),
-      },
-    ];
+    playerHands[player.username] = {
+      wins: player.wins,
+      cards: cards.map((card) => ({
+        id: card.id,
+        color: card.color,
+        value: card.value,
+        image: card.image,
+        description: `${card.color} ${card.value}`,
+      })),
+    };
   }
   return playerHands;
 };

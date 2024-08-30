@@ -9,6 +9,7 @@ import { validateParams } from '../../utils/validation.js';
 import { addActionToHistory } from '../../services/historyService.js';
 import { updatePlayerUNO } from '../../services/gamePlayerService.js';
 import { io } from '../../../../server.js';
+import { getTopDiscardedCard } from '../../services/gamePlayerService.js';
 
 export const drawCard = async (req, res, next) => {
   try {
@@ -26,6 +27,17 @@ export const drawCard = async (req, res, next) => {
       return res
         .status(400)
         .json({ message: 'It is not the players turn yet' });
+    }
+
+    if (game.cardsToBuy > 0) {
+      await drawCardsAndUpdateState(game, user, res, next);
+      io.emit('update', {
+        type: 'drawCards',
+        updateGame: game.id,
+        updatedHand: 'update',
+        player: user.username,
+      });
+      return;
     }
 
     let card = await drawCards(game_id, 1, user.id);

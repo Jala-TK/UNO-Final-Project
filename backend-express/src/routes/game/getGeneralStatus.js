@@ -27,7 +27,7 @@ export const getGeneralStatus = async (req, res, next) => {
       return res.status(404).json({ message: 'Card not found' });
     }
 
-    const hands = await getPlayerHandsInGame(game_id);
+    const players = await getPlayerHandsInGame(game_id);
 
     const history = await getGameHistory(game_id);
     const response = {
@@ -38,7 +38,7 @@ export const getGeneralStatus = async (req, res, next) => {
         id: topCard.id,
         description: `${topCard.color} ${topCard.value}`,
       },
-      hands,
+      players,
       turnHistory: history.map((entry) => ({
         player: entry.player,
         action: entry.action,

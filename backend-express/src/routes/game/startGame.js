@@ -2,6 +2,7 @@ import { validateParams } from '../../utils/validation.js';
 import { findGameById, updateGame } from '../../services/gameService.js';
 import { verifyPlayersReady } from '../../services/gamePlayerService.js';
 import { initializeDeck, setTopCard } from '../../services/dealerService.js';
+import { io } from '../../../../server.js';
 
 export const startGame = async (req, res, next) => {
   try {
@@ -35,6 +36,13 @@ export const startGame = async (req, res, next) => {
       status: 'In progress',
       currentPlayer: user.id,
     });
+
+    io.emit('update', {
+      type: 'startedGame',
+      game: game.id,
+      player: user.username,
+    });
+    io.emit('update', 'playerInGame');
 
     res.status(200).json({ message: 'Game started successfully' });
   } catch (err) {

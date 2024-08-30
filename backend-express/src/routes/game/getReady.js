@@ -25,6 +25,12 @@ export const getReady = async (req, res, next) => {
     await updatePlayerStatus(playerInGame, true);
 
     io.emit('update', 'playerInGame');
+    io.emit('update', {
+      type: 'readyGame',
+      game: game.id,
+      player: user.username,
+    });
+    io.emit('update', 'playerInGame');
 
     return res.status(200).json({ message: 'The player is ready' });
   } catch (err) {

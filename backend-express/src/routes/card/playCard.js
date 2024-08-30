@@ -53,6 +53,12 @@ export const playCard = async (req, res, next) => {
       } else {
         // Jogador não pode jogar outra carta, deve comprar as cartas acumuladas
         await drawCardsAndUpdateState(game, user, res, next);
+        io.emit('update', {
+          type: 'drawCards',
+          updateGame: game.id,
+          updatedHand: 'update',
+          player: user.username,
+        });
         return;
       }
     } else {
@@ -85,7 +91,15 @@ export const playCard = async (req, res, next) => {
 
     const topDiscardCard = await getTopDiscardedCard(game_id);
     const validateCard = await validateCardPlayable(card, topDiscardCard, res);
-    if (!validateCard) return;
+    if (!validateCard) {
+      io.emit('update', {
+        type: 'invalidCard',
+        updateGame: game.id,
+        updatedHand: 'update',
+        player: user.username,
+      });
+      return;
+    }
 
     await discardCard(game_id, card, res);
     await updateScoreAutomatic(game.id, user);
