@@ -38,7 +38,9 @@ export function getAPIClientNoCache(
         access_token: token,
       };
     }
-    config.headers['Cache-Control'] = 'no-cache';
+    config.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate';
+    config.headers.Pragma = 'no-cache';
+    config.headers.Expires = '0';
     return config;
   });
 

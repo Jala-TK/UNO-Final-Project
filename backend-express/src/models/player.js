@@ -1,7 +1,7 @@
-import { DataTypes } from "sequelize";
-import sequelize from "../config/database.js";
+import { DataTypes } from 'sequelize';
+import sequelize from '../config/database.js';
 
-const Player = sequelize.define("Player", {
+const Player = sequelize.define('Player', {
   username: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -15,6 +15,11 @@ const Player = sequelize.define("Player", {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
+  },
+  wins: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+    allowNull: false,
   },
   auditExcluded: {
     type: DataTypes.BOOLEAN,

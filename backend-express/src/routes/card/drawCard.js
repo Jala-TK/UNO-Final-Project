@@ -8,6 +8,7 @@ import { setNextPlayer, drawCards } from '../../services/dealerService.js';
 import { validateParams } from '../../utils/validation.js';
 import { addActionToHistory } from '../../services/historyService.js';
 import { updatePlayerUNO } from '../../services/gamePlayerService.js';
+import { io } from '../../../../server.js';
 
 export const drawCard = async (req, res, next) => {
   try {
@@ -43,6 +44,14 @@ export const drawCard = async (req, res, next) => {
       `Drew a card ${card.color} ${card.value}`,
       user.username,
     );
+
+    io.emit('update', {
+      type: 'drawCard',
+      updateGame: game_id,
+      updatedHand: 'update',
+      player: user.username,
+      topCard: 'update',
+    });
 
     res.status(200).json({
       message: `${user.username} drew a card from the deck`,

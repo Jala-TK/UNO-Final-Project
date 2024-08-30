@@ -1,6 +1,5 @@
 .pageContainer {
   background-image: url('/assets/background.png');
-  background-color: #000;
   width: 100%;
   height: 100vh;
   overflow: hidden;
@@ -23,7 +22,6 @@
 
 .playersContainer {
   position: absolute;
-  z-index: 1;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
@@ -46,35 +44,36 @@
 }
 
 /* Topo */
-.player:nth-child(1) {
+.player:not(.currentUser):nth-child(1) {
   grid-column: 2;
   grid-row: 1;
 }
-.player:nth-child(2) {
+.player:not(.currentUser):nth-child(2) {
   grid-column: 3;
   grid-row: 2;
 }
-.player:nth-child(3) {
+.player:not(.currentUser):nth-child(3) {
   grid-column: 1;
   grid-row: 2;
 }
 
 /* Cantos superiores */
-.player:nth-child(4) {
+.player:not(.currentUser):nth-child(4) {
   grid-column: 1;
   grid-row: 1;
 }
 
-.player:nth-child(5) {
+.player:not(.currentUser):nth-child(5) {
   grid-column: 3;
   grid-row: 1;
 }
 
-.player:nth-child(6) {
+.player:not(.currentUser):nth-child(6) {
   grid-column: 1;
   grid-row: 3;
 }
 
+/* Posição específica para o currentUser */
 .currentUser {
   grid-column: 3;
   grid-row: 3;

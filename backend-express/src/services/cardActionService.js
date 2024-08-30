@@ -7,6 +7,7 @@ import {
 } from '../services/gamePlayerService.js';
 import { updateScoreAutomatic } from '../services/scoreService.js';
 import { setNextPlayer } from '../services/dealerService.js';
+import { io } from '../../../server.js';
 
 export const handleDrawTwo = async (game, card, res) => {
   await updateGame(game, {
@@ -59,6 +60,13 @@ export const drawCardsAndUpdateState = async (game, user, res, next) => {
 
     game.cardsToBuy = 0;
     await game.save();
+
+    io.emit('update', {
+      type: 'drawCards',
+      updateGame: game.id,
+      updatedHand: 'update',
+      player: user.username,
+    });
 
     return res.status(200).json({
       message: `${user.username} cannot play this card and drew cards from the deck`,

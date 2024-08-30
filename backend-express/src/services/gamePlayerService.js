@@ -24,7 +24,7 @@ export const findGamePlayer = async (gameId, playerId) => {
 
 export const getPlayersInGame = async (game_id) => {
   return await GamePlayer.findAll({
-    where: { gameId: game_id, auditExcluded: false, auditExcluded: false },
+    where: { gameId: game_id, auditExcluded: false },
   });
 };
 
@@ -39,7 +39,7 @@ export const getTopDiscardedCard = async (game_id) => {
     where: {
       gameId: game_id,
       orderDiscarded: { [Op.ne]: null },
-      auditExcluded: false
+      auditExcluded: false,
     },
     order: [['orderDiscarded', 'DESC']],
   });

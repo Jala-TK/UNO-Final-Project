@@ -6,13 +6,18 @@
 .sirenIcon {
   position: relative;
   width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
   transform: rotate(90deg);
+  border-radius: 50%;
+  background-color: #000;
+  border: 5px solid #000;
 }
 
 .challengeButtom {
   position: absolute;
   top: 65%;
-  right: 10%;
+  right: 5%;
   transform: rotate(-90deg);
   transform-origin: 0 0;
 }
@@ -51,6 +56,36 @@
   overflow: hidden;
   max-height: 100%;
 }
+
+.profile {
+  width: 192px;
+  position: relative;
+  height: 212px;
+  z-index: 1;
+}
+
+.info {
+  display: flex;
+  width: 100%;
+  height: 40%;
+  padding: 10%;
+  font-size: 15px;
+}
+
+.texts {
+  position: relative;
+  height: 30%;
+  width: 70%;
+  bottom: 20%;
+}
+
+.cards {
+  position: relative;
+  height: 30%;
+  width: 20%;
+  bottom: 20%;
+}
+
 .cartas {
   position: absolute;
   top: calc(50% - 7.49px);
@@ -65,13 +100,7 @@
   height: 43.5px;
   overflow: hidden;
 }
-.cards {
-  position: absolute;
-  top: 154px;
-  left: 123px;
-  width: 60px;
-  height: 54.3px;
-}
+
 .profileContainer {
   display: flex;
   position: relative;
@@ -120,24 +149,7 @@
   justify-content: flex-start;
   font-size: 20px;
 }
-.texts {
-  position: absolute;
-  bottom: 10%;
-  left: 10%;
-  width: 80%;
-  height: 20%;
-  font-size: 15px;
-}
 
-.info {
-  display: inline;
-}
-
-.profile {
-  width: 192px;
-  position: relative;
-  height: 212px;
-}
 .player {
   position: relative;
   font-size: 10px;

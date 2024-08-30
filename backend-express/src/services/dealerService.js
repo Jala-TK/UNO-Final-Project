@@ -110,7 +110,6 @@ export const dealCards = async (gameId, handSize, players) => {
 
   return { shuffledDeck: deck, hands };
 };
-// TODO: Criar rota apenas para isso!
 export const setNextPlayer = async (game_id, position, res) => {
   try {
     const game = await Game.findByPk(game_id);

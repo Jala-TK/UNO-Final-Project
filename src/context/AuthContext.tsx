@@ -2,6 +2,7 @@
 import { signInRequest } from "@/services/auth";
 import { createContext, useState } from "react";
 import { setCookie, parseCookies, destroyCookie } from 'nookies'
+
 import { api } from "@/services/api";
 import { recoverUserInformation } from '@/services/auth';
 
@@ -46,8 +47,9 @@ export function AuthProvider({ children }: any) {
 
     const userInfo = await recoverUserInformation(token);
     setUser(userInfo.user);
-    if (user != null) {
-      setCookie(ctx, 'nextauth.token.user', user.username, {
+    if (userInfo.user != null) {
+      destroyCookie(null, 'nextauth.token.user')
+      setCookie(ctx, 'nextauth.token.user', userInfo.user.username, {
         maxAge: 60 * 60 * 24 * 7
       })
     }

@@ -1,5 +1,8 @@
 import { findAll } from '../../services/gameService.js';
-import { getPlayersInGame } from '../../services/gamePlayerService.js';
+import {
+  findPlayerById,
+  getPlayerNamesInGame,
+} from '../../services/playerService.js';
 
 export const getAllGames = async (req, res, next) => {
   try {
@@ -9,7 +12,13 @@ export const getAllGames = async (req, res, next) => {
         games.map(async (game) => {
           const gameData = game.dataValues;
 
-          const playersCount = (await getPlayersInGame(gameData.id)).length;
+          const creator = await findPlayerById(game.creatorId);
+          if (creator.auditExcluded) {
+            return res.status(404).json({ message: 'Creator not found' });
+          }
+
+          const players = await getPlayerNamesInGame(gameData.id);
+          const playersCount = players.length;
 
           return {
             id: gameData.id,
@@ -17,6 +26,8 @@ export const getAllGames = async (req, res, next) => {
             status: gameData.status,
             maxPlayers: gameData.maxPlayers,
             playersInGame: playersCount,
+            creator: creator.username,
+            players: players,
           };
         }),
       );
