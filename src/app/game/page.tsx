@@ -25,11 +25,14 @@ import { useMessage } from '@/context/MessageContext';
 import MessageBar from '@/components/message-bar';
 import UnoButton from '@/components/game/uno';
 
-// TODO: botao sair do jogo.
-// TODO: score do jogador.
-// TODO: som ?!
-// TODO: circulo da foto, tempo para jogada. 
-// TODO: adicionar cartas que podem jogar
+// TODO: Botao sair do jogo.
+// TODO: Ação sair do jogo.
+// TODO: Score do jogador.
+// TODO: Cartas que podem ser jogar.
+// TODO: Tela quando ganhar o jogo.
+// TODO: Som ?!
+// TODO: Circulo da foto, <Tempo para jogada>. 
+
 
 
 const GamePage: React.FC = () => {
