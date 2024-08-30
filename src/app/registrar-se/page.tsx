@@ -5,21 +5,20 @@ import React, { FormEventHandler, useState } from "react";
 import styles from './Register.module.css';
 import InputUsername from "@/components/login/username";
 import InputPassword from "@/components/login/password";
+import InputEmail from "@/components/login/email";
 import { useRouter } from "next/navigation";
 import ButtonLogin from "@/components/login/buttons/login";
 import { Box, Button, Dialog, DialogActions, DialogContent } from "@mui/material";
 import ButtonRegister from "@/components/login/buttons/register";
-import { getAPIClient } from "@/services/axios";
-import { AxiosError } from "axios";
-import InputEmail from "@/components/login/email";
+import { handleError } from "@/utils/handleError";
+import { createUser } from "@/services/authService";
 
 export default function Register() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [messageErro, setMessageErro] = useState('');
-  const apiClient = getAPIClient();
+  const [messageError, setMessageError] = useState('');
   const router = useRouter();
 
   const handleUsernameChange = (value: string) => {
@@ -59,15 +58,15 @@ export default function Register() {
     };
 
     try {
-      const result = await apiClient.post("/api/player", data);
+      const result = await createUser(data);
 
       if (result?.status === 201) {
         router.push('/login');
       } else {
-        setMessageErro(result?.data.message);
+        setMessageError(result?.data.message);
       }
     } catch (error: unknown) {
-      handleError(error);
+      setMessageError(handleError(error));
     }
 
     setLoadingRequest(false);
@@ -77,33 +76,18 @@ export default function Register() {
     router.push('/login');
   }
 
-  const handleError = (error: unknown) => {
-    let errorMessage = '';
-
-    if (error instanceof AxiosError) {
-      if (error?.response?.data.error) {
-        errorMessage = error.response.data.error;
-      } else {
-        errorMessage = 'Aconteceu um erro: ' + error.message;
-      }
-    } else {
-      errorMessage = error as string || 'Erro';
-    }
-    setMessageErro(errorMessage);
-  };
-
-  const handleRejectForceDialogClose = () => {
-    setMessageErro('');
+  const handleCloseDialog = () => {
+    setMessageError('');
   };
 
   return (
     <div className={styles.container}>
-      <Dialog open={messageErro?.length > 0} onClose={handleRejectForceDialogClose}>
+      <Dialog open={messageError?.length > 0} onClose={handleCloseDialog}>
         <DialogContent className={styles.dialogConfirmation}>
-          {messageErro}
+          {messageError}
         </DialogContent>
         <DialogActions className={styles.dialogConfirmation}>
-          <Button className={styles.buttonYes} onClick={handleRejectForceDialogClose}>Ok</Button>
+          <Button className={styles.buttonYes} onClick={handleCloseDialog}>Ok</Button>
         </DialogActions>
       </Dialog>
       <div className={styles.card}>

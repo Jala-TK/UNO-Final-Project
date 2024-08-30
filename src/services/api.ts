@@ -1,3 +1,3 @@
-import { getAPIClient } from './axios';
+import { apiClient } from './fetch';
 
-export const api = getAPIClient();
+export const api = apiClient();

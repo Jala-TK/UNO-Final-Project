@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import styles from './Deck.module.css';
-import { getAPIClientNoCache } from '@/services/axios';
+import { drawCard } from '@/services/cardService';
 
 
 interface DeckProps {
@@ -10,16 +10,12 @@ interface DeckProps {
 
 
 const Deck: NextPage<DeckProps> = ({ gameId, currentPlayer }) => {
-  const apiClient = getAPIClientNoCache();
 
   const handleDoubleClick = async () => {
     if (!currentPlayer) {
       return;
     }
-    await apiClient.post(`/api/cards/draw?timestamp=${new Date().getTime()}`, {
-      game_id: gameId,
-    });
-
+    await drawCard(gameId);
   }
 
 

@@ -1,7 +1,6 @@
 import type { NextPage } from 'next';
 import styles from './Pile.module.css';
-import Card from '@/components/game/Card';
-
+import { Card } from '@/types/types';
 interface PileProps {
   topCard: Card | null;
   className: string;

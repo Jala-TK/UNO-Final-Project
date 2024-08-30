@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { getAPIClientNoCache } from '@/services/axios';
 import styles from './Hand.module.css';
-import Card from '@/components/game/Card';
+import { Card } from '@/types/types';
 import ColorSelector from '@/components/game/color-selector';
 import { handleError } from '@/utils/handleError';
+import { playCard, playWildCard } from '@/services/cardService';
 
 interface HandPlayerProps {
   gameId: number;
@@ -11,8 +11,6 @@ interface HandPlayerProps {
   cards: Card[];
   className: string;
 }
-
-const apiClient = getAPIClientNoCache();
 
 const ITEMS_PER_PAGE = 10;
 
@@ -36,7 +34,6 @@ const HandPlayer: React.FC<HandPlayerProps> = ({ currentPlayer, gameId, cards, c
       } else {
         newVisibleCards = [cardsArray[(cardsArray.indexOf(prevCards[0]) - 1 + cardsArray.length) % cardsArray.length], ...prevCards.slice(0, -1)];
       }
-
       return newVisibleCards;
     });
   };
@@ -51,22 +48,14 @@ const HandPlayer: React.FC<HandPlayerProps> = ({ currentPlayer, gameId, cards, c
     if (card.color === 'wild') {
       setShowColorSelector(true);
     } else {
-      await apiClient.post(`/api/cards/play?timestamp=${new Date().getTime()}`, {
-        game_id: gameId,
-        card_id: card.id,
-      });
-
+      await playCard(gameId, card.id);
     }
   };
 
   const handleSelectColor = async (selectedColor: string) => {
     if (selectedCard) {
       setShowColorSelector(false);
-      await apiClient.post(`/api/cards/play?timestamp=${new Date().getTime()}`, {
-        game_id: gameId,
-        card_id: selectedCard.id,
-        color: selectedColor,
-      });
+      await playWildCard(gameId, selectedCard.id, selectedColor);
     }
   };
 

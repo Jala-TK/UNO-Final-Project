@@ -4,32 +4,14 @@ import React, { useState, useEffect } from "react";
 import styles from './Rooms.module.css';
 import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
 import { useRouter } from "next/navigation";
-import Navbar from "@/components/navbar/navbar";
-import { getAPIClientNoCache } from "@/services/axios";
-import PopUpSettings from "@/components/popup/settings";
+import PopUpSettings from "@/components/popup";
 import { parseCookies } from 'nookies';
 import { useSocket } from '@/context/SocketContext';
-import { handleError } from '@/utils/handleError'; // Importando a função
+import { handleError } from '@/utils/handleError';
+import { getGames, enterGame } from '@/services/gameService';
+import { getRandomImage } from "./getRandomImage";
 
-const apiClient = getAPIClientNoCache();
 const { 'nextauth.token.user': user } = parseCookies();
-
-const getRandomImage = () => {
-  const images = [
-    "/assets/game-photos/bane.png",
-    "/assets/game-photos/batman.png",
-    "/assets/game-photos/batwoman.png",
-    "/assets/game-photos/dick.png",
-    "/assets/game-photos/future-batman.png",
-    "/assets/game-photos/harley-quinn.png",
-    "/assets/game-photos/jason.png",
-    "/assets/game-photos/joker.png",
-    "/assets/game-photos/penguin.png",
-    "/assets/game-photos/robin.png"
-  ];
-  const randomIndex = Math.floor(Math.random() * images.length);
-  return images[randomIndex];
-};
 
 interface RoomProps {
   id: number;
@@ -41,26 +23,10 @@ interface RoomProps {
   players: string[];
 }
 
-async function enterGame(gameId: number | null): Promise<boolean> {
-  const result = await apiClient.post(`/api/game/join?timestamp=${new Date().getTime()}`, { game_id: gameId });
-  if (result.status === 200) {
-    const result = await apiClient.post(`/api/game/ready?timestamp=${new Date().getTime()}`, { game_id: gameId });
-    if (result.status === 200) {
-      return true;
-    }
-  }
-  return false;
-}
-
-async function getGames() {
-  return await apiClient.get(`/api/games?timestamp=${new Date().getTime()}`);
-}
-
 const RoomsDisponiveis: React.FC = () => {
   const { socket, isConnected } = useSocket();
   const [rooms, setRooms] = useState<RoomProps[]>([]);
   const [messageError, setMessageError] = useState('');
-  const [loading, setLoading] = useState(true);
   const router = useRouter();
   const [showPopup, setShowPopup] = useState(true);
   const [selectedRoom, setSelectedRoom] = useState<RoomProps>();
@@ -68,11 +34,11 @@ const RoomsDisponiveis: React.FC = () => {
   const fetchRoomData = async () => {
     try {
       const gamesInfo = await getGames()
-      setRooms(gamesInfo.data.games);
+      const waitingRooms = gamesInfo.data.games.filter(
+        (room: { status: string; }) => room.status === 'Waiting for players');
+      setRooms(waitingRooms);
     } catch (error) {
       handleError(error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -84,7 +50,7 @@ const RoomsDisponiveis: React.FC = () => {
     }
 
     const handleUpdate = async (message: string) => {
-      if (message === 'updateGames' || message === 'playerInGame') {
+      if (message === 'updatedGames' || message === 'playerInGame') {
         console.log('Jogos atualizados', message);
         const gamesInfo = await getGames()
         setRooms(gamesInfo.data.games);
@@ -118,7 +84,6 @@ const RoomsDisponiveis: React.FC = () => {
   };
 
 
-
   const handleEnter = (room: RoomProps) => {
     setSelectedRoom(room);
     if (room.creator === user) {
@@ -138,14 +103,9 @@ const RoomsDisponiveis: React.FC = () => {
     router.push('/create-game');
   };
 
-  if (loading) return <div>Loading...</div>;
-
   return (
     <div>
-
-
       <div className={styles.pageContainer}>
-        <Navbar />
         <div className={styles.roomsDisponiveis}>
           <Dialog open={messageError.length > 0} onClose={handleCloseDialog}>
             <DialogContent className={styles.dialogConfirmation}>

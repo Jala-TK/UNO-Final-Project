@@ -7,9 +7,9 @@ import InputPassword from "@/components/games/password";
 import { useRouter } from "next/navigation";
 import ButtonSend from "@/components/login/buttons/send";
 import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
-import { getAPIClient } from "@/services/axios";
-import { AxiosError } from "axios";
+import { handleError } from "@/utils/handleError";
 import InputNumber from "@/components/games/maxPlayers";
+import { createGame, readyGame } from "@/services/gameService";
 
 export default function CreateRoom() {
   const [title, setTitle] = useState('');
@@ -17,7 +17,6 @@ export default function CreateRoom() {
   const [password, setPassword] = useState('');
   const [messageError, setMessageError] = useState('');
   const [loadingRequest, setLoadingRequest] = useState(false);
-  const apiClient = getAPIClient();
   const router = useRouter();
 
   const handleTitleChange = (value: string) => setTitle(value);
@@ -26,14 +25,12 @@ export default function CreateRoom() {
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
-
     if (!password || !title || !maxPlayers) return;
     if (password.length < 4) {
-      return handleError('Senha muito pequena');
+      return setMessageError('Senha muito pequena');
     }
 
     setLoadingRequest(true);
-
     const data = {
       title,
       maxPlayers,
@@ -41,45 +38,35 @@ export default function CreateRoom() {
     };
 
     try {
-      const result = await apiClient.post("/api/games", data);
-
+      const result = await createGame(data);
       if (result?.status === 201 && result.data.game_id) {
-        const readyPlayer = await apiClient.post("/api/game/ready", { game_id: result.data.game_id });
-        if (readyPlayer.status === 200) {
-          router.push(`/game/${result.data.game_id}`);
+        const gameId = result.data.game_id;
+        const readyPlayer = await readyGame(gameId);
+        if (readyPlayer) {
+          router.push(`/game/${gameId}`);
         }
       } else {
         setMessageError(result?.data.error || 'Erro desconhecido');
       }
     } catch (error: unknown) {
-      handleError(error);
+      setMessageError(handleError(error));
     } finally {
       setLoadingRequest(false);
     }
   };
 
-  const handleError = (error: unknown) => {
-    let errorMessage = '';
-
-    if (error instanceof AxiosError) {
-      errorMessage = error.response?.data.error || 'Aconteceu um erro: ' + error.message;
-    } else {
-      errorMessage = error as string || 'Erro desconhecido';
-    }
-
-    setMessageError(errorMessage);
+  const handleCloseDialog = () => {
+    setMessageError('');
   };
-
-  const handleRejectForceDialogClose = () => setMessageError('');
 
   return (
     <div className={styles.container}>
-      <Dialog open={!!messageError} onClose={handleRejectForceDialogClose}>
+      <Dialog open={!!messageError} onClose={handleCloseDialog}>
         <DialogContent className={styles.dialogConfirmation}>
           {messageError}
         </DialogContent>
         <DialogActions className={styles.dialogConfirmation}>
-          <Button onClick={handleRejectForceDialogClose}>Ok</Button>
+          <Button onClick={handleCloseDialog}>Ok</Button>
         </DialogActions>
       </Dialog>
       <div className={styles.card}>

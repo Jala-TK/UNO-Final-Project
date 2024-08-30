@@ -14,7 +14,7 @@ const Player: NextPage<PlayerProps> = ({ playerName, hand, wins, currentPlayer, 
     <div className={`${styles.player} ${className}`}>
       <div className={styles.profile}>
         <img className={styles.backgroundIcon} alt="" src="/assets/player/BackGround.svg" />
-        {(hand < 2 && !currentPlayer) && (
+        {(hand < 2) && (
           <div className={styles.challengeButtom}>
             <img className={styles.sirenIcon} alt="" src="/assets/player/siren.svg" />
           </div>

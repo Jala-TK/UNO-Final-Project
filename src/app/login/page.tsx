@@ -7,17 +7,17 @@ import ButtonLogin from "@/components/login/buttons/login";
 import { Box, Button, Dialog, DialogActions, DialogContent } from "@mui/material";
 import { SignInRequestData } from "@/types/login";
 import ButtonRegister from "@/components/login/buttons/register";
-import { AxiosError } from "axios";
 import InputUsername from "@/components/login/username";
-import { getAPIClient } from "@/services/axios";
 import { useRouter } from 'next/navigation';
+import { login } from '@/services/authService';
+import { handleError } from '@/utils/handleError';
 
 export default function Login({ redirectRoute }: any) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [messageErro, setMessageErro] = useState('');
+  const [messageError, setMessageError] = useState('');
   const router = useRouter();
-  const apiClient = getAPIClient();
 
   const handleUsernameChange = (value: string) => {
     setUsername(value);
@@ -41,8 +41,7 @@ export default function Login({ redirectRoute }: any) {
       password,
     };
     try {
-      const result = await apiClient.post("/api/login", dataSession);
-
+      const result = await login(dataSession);
       if (result?.status === 200) {
         await signIn(dataSession);
         router.push('/games');
@@ -50,7 +49,7 @@ export default function Login({ redirectRoute }: any) {
         setMessageErro(result?.data.error);
       }
     } catch (error: unknown) {
-      handleError(error);
+      setMessageError(handleError(error));
     }
 
     setLoadingRequest(false);
@@ -60,33 +59,20 @@ export default function Login({ redirectRoute }: any) {
     router.push('/registrar-se');
   };
 
-  const handleError = (error: unknown) => {
-    let errorMessage = '';
 
-    if (error instanceof AxiosError) {
-      if (error?.response?.data.message) {
-        errorMessage = error.response.data.message;
-      } else {
-        errorMessage = 'Aconteceu um erro: ' + error.message;
-      }
-    } else {
-      errorMessage = "Erro, fale com a T.I: 500";
-    }
-    setMessageErro(errorMessage);
+  const handleCloseDialog = () => {
+    setMessageError('');
   };
 
-  const handleRejectForceDialogClose = () => {
-    setMessageErro('');
-  };
 
   return (
     <div className={styles.container}>
-      <Dialog open={messageErro?.length > 0} onClose={handleRejectForceDialogClose}>
+      <Dialog open={!!messageError} onClose={handleCloseDialog}>
         <DialogContent className={styles.dialogConfirmation}>
-          {messageErro}
+          {messageError}
         </DialogContent>
         <DialogActions className={styles.dialogConfirmation}>
-          <Button className={styles.buttonYes} onClick={handleRejectForceDialogClose}>Ok</Button>
+          <Button className={styles.buttonYes} onClick={handleCloseDialog}>Ok</Button>
         </DialogActions>
       </Dialog>
       <div className={styles.card}>

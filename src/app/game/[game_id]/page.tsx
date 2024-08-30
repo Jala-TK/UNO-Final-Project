@@ -1,101 +1,37 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { getAPIClientNoCache } from '@/services/axios';
 import styles from './Game.module.css';
-import Navbar from '@/components/navbar/navbar';
 import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
 import HandPlayer from '@/components/game/hand';
 import Table from '@/components/game/table';
 import Player from '@/components/game/player';
 import { parseCookies } from 'nookies';
 import { useRouter } from "next/navigation";
-import PopUpSettings from '@/components/popup/settings';
-import Card from '@/components/game/Card';
+import PopUpSettings from '@/components/popup';
+import { GameProps, GameStatusProps } from '@/types/types';
 import { useSocket } from '@/context/SocketContext';
 import { handleError } from '@/utils/handleError';
-
-
-const apiClient = getAPIClientNoCache();
-
-interface GameStatusProps {
-  game_id: number;
-  current_player: string;
-  direction: string;
-  top_card: string;
-  hands: {
-    [playerName: string]: {
-      wins: number;
-      cards: Card[];
-    };
-  };
-  turnHistory: any[];
-}
-interface GameProps {
-  id: number;
-  title: string;
-  status: string;
-  maxPlayers: number;
-  creator: string;
-  players: string[];
-}
-
-
-async function fetchGameStatusData(gameId: number | null): Promise<GameStatusProps | null> {
-  const result = await apiClient.post(`/api/game/statusGeral?timestamp=${new Date().getTime()}`, { game_id: gameId });
-  return result.data;
-}
-
-async function fetchGameData(gameId: number | null): Promise<GameProps | null> {
-  const result = await apiClient.post(`/api/games/${gameId}?timestamp=${new Date().getTime()}`);
-  return result.data;
-}
-
-async function exitGame(gameId: number | null): Promise<boolean> {
-  const result = await apiClient.post(`/api/game/leave?timestamp=${new Date().getTime()}`, { game_id: gameId });
-  if (result.status === 200) {
-    return true;
-  }
-  return false;
-}
-
-async function startGame(gameId: number | null): Promise<boolean> {
-  const result = await apiClient.post(`/api/game/start?timestamp=${new Date().getTime()}`, { game_id: gameId });
-  if (result.status === 200) {
-    return true;
-  }
-  return false;
-}
-
-async function dealerCards(gameId: number | null, players: string[]): Promise<boolean> {
-  const result = await apiClient.post(`/api/game/dealCards/${gameId}`, {
-    players: players,
-    cardsPerPlayer: 7
-  });
-  if (result.status === 200) {
-    return true;
-  }
-  return false;
-}
-
-async function getTopCard(gameId: number | null): Promise<any> {
-  const result = await apiClient.post(`/api/game/topCard?timestamp=${new Date().getTime()}`, { game_id: gameId });
-  return result.data;
-
-}
-
-async function fetchCardsData(gameId: number | null): Promise<Card[]> {
-  const result = await apiClient.post(`/api/game/hand?timestamp=${new Date().getTime()}`, { game_id: gameId });
-  return result.data.hand;
-}
-
-
+import {
+  fetchGameStatusData,
+  fetchGameData,
+  exitGame,
+  startGame,
+  dealerCards,
+  getTopCard,
+  fetchCardsData
+} from '@/services/gameService';
 
 // TODO: botão challenge adicionar.
+// TODO: botão gritar uno.
 // TODO: botao sair do jogo.
 // TODO: score do jogador.
 // TODO: som ?!
 // TODO: circulo da foto, tempo para jogada. 
+// TODO: adicionar cartas que podem jogar
+// TODO: adicionar mensagens para o jogador
+
+
 
 const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
   const { socket, isConnected } = useSocket();
@@ -166,7 +102,7 @@ const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
     }
 
     const handleUpdate = async (message: any) => {
-      if (message?.updateGame === gameId || message === 'updatedGame') {
+      if (message?.updateGame === gameId || message === 'updatedGame' || message.type === 'drawCards') {
         console.log('Jogos atualizados', message);
         loadGame();
         loadGameStatus();
@@ -229,7 +165,6 @@ const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
 
   return (
     <div className={styles.pageContainer}>
-      <Navbar />
       <Dialog open={!!messageError} onClose={handleCloseDialog}>
         <DialogContent className={styles.dialogConfirmation}>
           {messageError}
@@ -241,12 +176,12 @@ const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
 
       <div className={styles.tableContainer}>
         <div className={styles.playersContainer}>
-          {Object.keys(gameStatus.hands).map((playerName, index) => (
+          {Object.keys(gameStatus.players).map((playerName, index) => (
             <Player
               key={playerName}
               playerName={playerName}
-              hand={gameStatus.hands[playerName]?.cards?.length || 0}
-              wins={gameStatus.hands[playerName]?.wins || 0}
+              hand={gameStatus.players[playerName].cards.length}
+              wins={gameStatus.players[playerName].wins}
               className={`${playerName === user ? styles.currentUser : styles.player}`}
               currentPlayer={gameStatus.current_player === playerName ? true : false}
             />
