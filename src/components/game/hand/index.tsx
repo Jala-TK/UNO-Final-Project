@@ -1,9 +1,11 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './Hand.module.css';
 import { Card } from '@/types/types';
 import ColorSelector from '@/components/game/color-selector';
 import { handleError } from '@/utils/handleError';
 import { playCard, playWildCard } from '@/services/cardService';
+import { useMessage } from '@/context/MessageContext';
 
 interface HandPlayerProps {
   gameId: number;
@@ -18,6 +20,7 @@ const HandPlayer: React.FC<HandPlayerProps> = ({ currentPlayer, gameId, cards, c
   const [showColorSelector, setShowColorSelector] = useState(false);
   const [selectedCard, setSelectedCard] = useState<Card | null>(null);
   const [visibleCards, setVisibleCards] = useState(cards.slice(0, ITEMS_PER_PAGE));
+  const { setMessage } = useMessage();
 
   useEffect(() => {
     if (cards.length > 0) {
@@ -45,17 +48,27 @@ const HandPlayer: React.FC<HandPlayerProps> = ({ currentPlayer, gameId, cards, c
       return;
     }
     setSelectedCard(card);
-    if (card.color === 'wild') {
-      setShowColorSelector(true);
-    } else {
-      await playCard(gameId, card.id);
+    try {
+      if (card.color === 'wild') {
+        setShowColorSelector(true);
+      } else {
+        const play = await playCard(gameId, card.id);
+        if (!play.success) setMessage(play.message);
+      }
+    } catch (error) {
+      setMessage(handleError(error))
     }
   };
 
   const handleSelectColor = async (selectedColor: string) => {
     if (selectedCard) {
       setShowColorSelector(false);
-      await playWildCard(gameId, selectedCard.id, selectedColor);
+      try {
+        const play = await playWildCard(gameId, selectedCard.id, selectedColor);
+        if (!play.success) setMessage(play.message);
+      } catch (error) {
+        setMessage(handleError(error))
+      }
     }
   };
 
@@ -63,7 +76,7 @@ const HandPlayer: React.FC<HandPlayerProps> = ({ currentPlayer, gameId, cards, c
     try {
       await handleCardClick(card, gameId);
     } catch (error) {
-      handleError(error);
+      setMessage(handleError(error))
     }
   };
 

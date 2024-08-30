@@ -22,3 +22,10 @@
   justify-content: flex-end;
   padding: 8px;
 }
+
+.navbar p {
+  color: #fff;
+  position: relative;
+  margin-right: auto;
+  margin-left: 20px;
+}

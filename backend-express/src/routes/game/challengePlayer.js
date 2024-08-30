@@ -7,6 +7,7 @@ import { validateParams } from '../../utils/validation.js';
 import { findGameById } from '../../services/gameService.js';
 import { findGamePlayer } from '../../services/gamePlayerService.js';
 import { drawCards } from '../../services/dealerService.js';
+import { io } from '../../../../server.js';
 
 export const challengePlayer = async (req, res, next) => {
   try {
@@ -39,6 +40,13 @@ export const challengePlayer = async (req, res, next) => {
       await drawCards(game_id, 2, playerChallenged.id);
 
       const nextPlayer = await findPlayerById(game.currentPlayer);
+
+      io.emit('update', {
+        type: 'challenge',
+        updateGame: game.id,
+        updatedHand: 'update',
+        player: user.username,
+      });
 
       res.status(200).json({
         message: `Challenge successful. ${playerChallenged.username} forgot to say UNO and draws 2 cards.`,

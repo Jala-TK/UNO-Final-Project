@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 import styles from './Deck.module.css';
 import { drawCard } from '@/services/cardService';
+import { useMessage } from '@/context/MessageContext';
 
 
 interface DeckProps {
@@ -10,12 +11,14 @@ interface DeckProps {
 
 
 const Deck: NextPage<DeckProps> = ({ gameId, currentPlayer }) => {
+  const { message, setMessage } = useMessage();
 
   const handleDoubleClick = async () => {
     if (!currentPlayer) {
       return;
     }
-    await drawCard(gameId);
+    const draw = await drawCard(gameId);
+    if (!draw.success) setMessage(draw.message)
   }
 
 

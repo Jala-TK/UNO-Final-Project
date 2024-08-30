@@ -1,0 +1,36 @@
+.messageBar {
+  background-color: #6d6d6d;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  min-height: 5%;
+  border-radius: 0% 0% 30% 30%;
+  animation-name: slideDown;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  opacity: 0.5;
+  text-align: center;
+  max-width: 70%;
+  margin: 0 auto;
+  display: inline-block;
+  word-wrap: break-word;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding-inline: 1%;
+  padding-bottom: 2%;
+  z-index: 10;
+}
+
+.messageBar p {
+  margin: auto;
+  white-space: pre-wrap;
+  color: white;
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

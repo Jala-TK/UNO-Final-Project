@@ -2,7 +2,6 @@ import type { NextPage } from 'next';
 import styles from './Table.module.css';
 import Pile from '../pile';
 import React, { useState } from 'react';
-import Card from '@/components/game/Card';
 import Deck from '@/components/game/deck';
 interface TableProps {
   topCard: Card | null;

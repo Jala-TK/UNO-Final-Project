@@ -10,7 +10,7 @@ import { addActionToHistory } from '../../services/historyService.js';
 import { updatePlayerUNO } from '../../services/gamePlayerService.js';
 import { io } from '../../../../server.js';
 import { getTopDiscardedCard } from '../../services/gamePlayerService.js';
-
+import { drawCardsAndUpdateState } from '../../services/cardActionService.js';
 export const drawCard = async (req, res, next) => {
   try {
     const { game_id } = req.body;

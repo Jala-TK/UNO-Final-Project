@@ -2,73 +2,166 @@ import { apiClient } from '@/services/fetch';
 import { GameProps, GameStatusProps, Card } from '@/types/types';
 export async function fetchGameStatusData(
   gameId: number | null
-): Promise<GameStatusProps | null> {
+): Promise<{ success: boolean; message: string; data: GameStatusProps }> {
   const result = await apiClient().post(`/api/game/statusGeral`, {
     game_id: gameId,
   });
-  if (!result) {
-    throw new Error('Erro ao buscar status do jogo');
-  }
-  return result.data;
+  return {
+    success: result.status === 200,
+    message: result.data.message,
+    data: result.data,
+  };
 }
 
 export async function fetchGameData(
   gameId: number | null
-): Promise<GameProps | null> {
+): Promise<{ success: boolean; message: string; data: GameProps }> {
   const result = await apiClient().post(`/api/games/${gameId}`, {});
-  return result.data;
+  return {
+    success: result.status === 200,
+    message: result.data.message,
+    data: result.data,
+  };
 }
 
-export async function exitGame(gameId: number | null): Promise<boolean> {
+export async function exitGame(
+  gameId: number | null
+): Promise<{ success: boolean; message: string; data: any }> {
   const result = await apiClient().post(`/api/game/leave`, { game_id: gameId });
-  return result.status === 200;
+  return {
+    success: result.status === 200,
+    message: result.data.message,
+    data: result.data,
+  };
 }
 
-export async function startGame(gameId: number | null): Promise<boolean> {
+export async function startGame(
+  gameId: number | null
+): Promise<{ success: boolean; message: string; data: any }> {
   const result = await apiClient().post(`/api/game/start`, { game_id: gameId });
-  return result.status === 200;
+  return {
+    success: result.status === 200,
+    message: result.data.message,
+    data: result.data,
+  };
+}
+
+export async function challenge(
+  gameId: number | null,
+  challengePlayer: string
+): Promise<{ success: boolean; message: string; data: any }> {
+  const result = await apiClient().post(`/api/game/challengeUno`, {
+    game_id: gameId,
+    challengePlayer: challengePlayer,
+  });
+  return {
+    success: result.status === 200,
+    message: result.data.message,
+    data: result.data,
+  };
 }
 
 export async function dealerCards(
   gameId: number | null,
   players: string[]
-): Promise<boolean> {
+): Promise<{ success: boolean; message: string; data: any }> {
   const result = await apiClient().post(`/api/game/dealCards/${gameId}`, {
     players: players,
     cardsPerPlayer: 7,
   });
-  return result.status === 200;
+  return {
+    success: result.status === 200,
+    message: result.data.message,
+    data: result.data,
+  };
 }
 
-export async function getTopCard(gameId: number | null): Promise<any> {
+export async function getTopCard(
+  gameId: number | null
+): Promise<{ success: boolean; message: string; data: any }> {
   const result = await apiClient().post(`/api/game/topCard`, {
     game_id: gameId,
   });
-  return result.data;
+  return {
+    success: result.status === 200,
+    message: result.data.message,
+    data: result.data,
+  };
 }
 
-export async function fetchCardsData(gameId: number | null): Promise<Card[]> {
+export async function fetchCardsData(
+  gameId: number | null
+): Promise<{ success: boolean; message: string; data: Card[] }> {
   const result = await apiClient().post(`/api/game/hand`, { game_id: gameId });
-  return result.data.hand;
+  return {
+    success: result.status === 200,
+    message: result.data.message,
+    data: result.data.hand,
+  };
 }
 
-export async function enterGame(gameId: number | null): Promise<boolean> {
+export async function enterGame(
+  gameId: number | null
+): Promise<{ success: boolean; message: string; data: any }> {
   const join = await apiClient().post(`/api/game/join`, { game_id: gameId });
   if (join.status === 200) {
-    return readyGame(gameId);
+    const ready = await readyGame(gameId);
+
+    return {
+      success: ready.success,
+      message: ready.message,
+      data: ready.data,
+    };
   }
-  return false;
+  return {
+    success: join.status === 200,
+    message: join.data.message,
+    data: join.data,
+  };
 }
 
-export async function readyGame(gameId: number | null): Promise<boolean> {
+export async function readyGame(
+  gameId: number | null
+): Promise<{ success: boolean; message: string; data: any }> {
   const result = await apiClient().post(`/api/game/ready`, { game_id: gameId });
-  return result.status === 200;
+  return {
+    success: result.status === 200,
+    message: result.data.message,
+    data: result.data,
+  };
 }
 
-export async function getGames() {
-  return await apiClient().get(`/api/games`);
+export async function getGames(): Promise<{
+  success: boolean;
+  message: string;
+  data: any;
+}> {
+  const game = await apiClient().get(`/api/games`);
+  return {
+    success: game.status === 200,
+    message: game.data.message,
+    data: game.data,
+  };
 }
 
-export async function createGame(data: any) {
-  return await apiClient().post(`/api/games`, data);
+export async function createGame(
+  data: any
+): Promise<{ success: boolean; message: string; data: any }> {
+  const createdGame = await apiClient().post(`/api/games`, data);
+  return {
+    success: createdGame.status === 201,
+    message: createdGame.data.message,
+    data: createdGame.data,
+  };
+}
+
+export async function sayUno(
+  gameId: number | null
+): Promise<{ success: boolean; message: string; data: any }> {
+  const result = await apiClient().post(`/api/game/uno`, { game_id: gameId });
+  return {
+    success: result.status === 200,
+    message: result.data.message,
+    data: result.data,
+  };
 }

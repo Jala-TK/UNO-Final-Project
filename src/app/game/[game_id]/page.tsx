@@ -9,7 +9,7 @@ import Player from '@/components/game/player';
 import { parseCookies } from 'nookies';
 import { useRouter } from "next/navigation";
 import PopUpSettings from '@/components/popup';
-import { GameProps, GameStatusProps } from '@/types/types';
+import { Card, GameProps, GameStatusProps } from '@/types/types';
 import { useSocket } from '@/context/SocketContext';
 import { handleError } from '@/utils/handleError';
 import {
@@ -21,16 +21,15 @@ import {
   getTopCard,
   fetchCardsData
 } from '@/services/gameService';
+import { useMessage } from '@/context/MessageContext';
+import MessageBar from '@/components/message-bar';
+import UnoButton from '@/components/game/uno';
 
-// TODO: botão challenge adicionar.
-// TODO: botão gritar uno.
 // TODO: botao sair do jogo.
 // TODO: score do jogador.
 // TODO: som ?!
 // TODO: circulo da foto, tempo para jogada. 
 // TODO: adicionar cartas que podem jogar
-// TODO: adicionar mensagens para o jogador
-
 
 
 const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
@@ -44,41 +43,68 @@ const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
   const [cards, setCards] = useState<Card[]>([]);
   const [messageError, setMessageError] = useState('');
   const [showPopup, setShowPopup] = useState(true);
+  const { message, setMessage } = useMessage();
+
   const router = useRouter()
 
   const loadGame = async () => {
     try {
       const gameData = await fetchGameData(gameId);
-      setGame(gameData);
+      if (gameData.success) {
+        setGame(gameData.data);
+      }
     } catch (error) {
-      setMessageError(handleError(error));
+      setMessage(handleError(error));
     }
   };
 
   const loadGameStatus = async () => {
     try {
       const data = await fetchGameStatusData(gameId);
-      setGameStatus(data);
+      if (data.success) {
+        const inGame =
+          Object.keys(data.data.players)
+            .some((playerName) => playerName === user);
+
+        if (inGame) {
+          setGameStatus(data.data);
+        }
+        else {
+          router.push("/games");
+        }
+      }
     } catch (error) {
-      setMessageError(handleError(error));
+      setMessage(handleError(error));
     }
   };
 
   const loadTopCard = async () => {
     try {
       const data = await getTopCard(gameId);
-      setTopCard(data.card);
+      if (data.success) {
+        setTopCard(data.data.card);
+      }
     } catch (error) {
-      setMessageError(handleError(error));
+      setMessage(handleError(error));
     }
   };
 
   const loadCards = async () => {
     try {
       const data = await fetchCardsData(gameId);
-      setCards(data);
+      if (data.success) {
+        setCards(data.data);
+      }
     } catch (error) {
-      setMessageError(handleError(error));
+      setMessage(handleError(error));
+    }
+  };
+
+  const leaveGame = async () => {
+    try {
+      const data = await exitGame(gameId);
+    } catch (error) {
+      setMessage(handleError(error));
     }
   };
 
@@ -118,6 +144,7 @@ const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
 
     return () => {
       socket.off('update', handleUpdate);
+      leaveGame();
     };
   }, [socket, isConnected]);
 
@@ -165,6 +192,7 @@ const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
 
   return (
     <div className={styles.pageContainer}>
+      {message && <MessageBar message={message} />}
       <Dialog open={!!messageError} onClose={handleCloseDialog}>
         <DialogContent className={styles.dialogConfirmation}>
           {messageError}
@@ -183,10 +211,13 @@ const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
               hand={gameStatus.players[playerName].cards.length}
               wins={gameStatus.players[playerName].wins}
               className={`${playerName === user ? styles.currentUser : styles.player}`}
+              currentUser={user}
+              game={game}
               currentPlayer={gameStatus.current_player === playerName ? true : false}
             />
           ))}
         </div>
+        <UnoButton gameId={gameId} />
         <Table currentPlayer={isCurrentPlayer} gameId={gameId} topCard={topCard} className={styles.tableContainer} />
       </div>
       <HandPlayer currentPlayer={isCurrentPlayer} gameId={gameId} cards={cards} className={styles.handContainer} />

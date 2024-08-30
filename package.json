@@ -8,7 +8,8 @@
     "build": "next build ",
     "start": "node server.js",
     "install:dep": "npm i && cd ./backend-express && npm i && cd ..",
-    "electron:build": "npx electron-builder build"
+    "electron:build": "npx electron-builder build",
+    "dev:server": "nodemon server.js"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
@@ -25,6 +26,7 @@
     "https": "^1.0.0",
     "jsonwebtoken": "^9.0.2",
     "next": "^14.2.4",
+    "nodemon": "^3.1.4",
     "nookies": "^2.5.2",
     "react": "^18",
     "react-dom": "^18",

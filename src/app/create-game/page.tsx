@@ -39,7 +39,7 @@ export default function CreateRoom() {
 
     try {
       const result = await createGame(data);
-      if (result?.status === 201 && result.data.game_id) {
+      if (result.success && result.data.game_id) {
         const gameId = result.data.game_id;
         const readyPlayer = await readyGame(gameId);
         if (readyPlayer) {

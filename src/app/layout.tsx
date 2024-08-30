@@ -12,6 +12,7 @@ import { SocketProvider } from '@/context/SocketContext';
 import '../styles/colors.css';
 import '../styles/globals.css';
 import Navbar from '@/components/navbar';
+import { MessageProvider } from '@/context/MessageContext';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -34,8 +35,9 @@ export default function RootLayout({
             <html lang="pt-BR" suppressHydrationWarning>
               <body style={{ backgroundColor: 'var(--gray-main)' }}>
                 <Navbar />
-
-                {children}
+                <MessageProvider>
+                  {children}
+                </MessageProvider>
               </body>
             </html>
           </ThemeProvider>
