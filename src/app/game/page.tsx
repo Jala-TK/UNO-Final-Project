@@ -6,7 +6,7 @@ import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
 import HandPlayer from '@/components/game/hand';
 import Table from '@/components/game/table';
 import Player from '@/components/game/player';
-import { parseCookies } from 'nookies';
+import { destroyCookie, parseCookies, setCookie } from 'nookies';
 import { useRouter } from "next/navigation";
 import PopUpSettings from '@/components/popup';
 import { Card, GameProps, GameStatusProps } from '@/types/types';
@@ -32,9 +32,13 @@ import UnoButton from '@/components/game/uno';
 // TODO: adicionar cartas que podem jogar
 
 
-const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
+const GamePage: React.FC = () => {
+  const router = useRouter()
   const { socket, isConnected } = useSocket();
-  const gameId = Number(params.game_id);
+  let { 'nextauth.token.game': gameId } = (parseCookies())
+  if (!gameId) {
+    router.back();
+  }
   const { 'nextauth.token.user': user } = parseCookies();
   const [game, setGame] = useState<GameProps | null>(null);
   const [gameStatus, setGameStatus] = useState<GameStatusProps | null>(null);
@@ -44,12 +48,12 @@ const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
   const [messageError, setMessageError] = useState('');
   const [showPopup, setShowPopup] = useState(true);
   const { message, setMessage } = useMessage();
+  document.title = `${(game?.title || 'Game')}`;
 
-  const router = useRouter()
 
   const loadGame = async () => {
     try {
-      const gameData = await fetchGameData(gameId);
+      const gameData = await fetchGameData(Number(gameId));
       if (gameData.success) {
         setGame(gameData.data);
       }
@@ -60,7 +64,7 @@ const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
 
   const loadGameStatus = async () => {
     try {
-      const data = await fetchGameStatusData(gameId);
+      const data = await fetchGameStatusData(Number(gameId));
       if (data.success) {
         const inGame =
           Object.keys(data.data.players)
@@ -80,7 +84,7 @@ const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
 
   const loadTopCard = async () => {
     try {
-      const data = await getTopCard(gameId);
+      const data = await getTopCard(Number(gameId));
       if (data.success) {
         setTopCard(data.data.card);
       }
@@ -91,7 +95,7 @@ const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
 
   const loadCards = async () => {
     try {
-      const data = await fetchCardsData(gameId);
+      const data = await fetchCardsData(Number(gameId));
       if (data.success) {
         setCards(data.data);
       }
@@ -102,7 +106,8 @@ const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
 
   const leaveGame = async () => {
     try {
-      const data = await exitGame(gameId);
+      await exitGame(Number(gameId));
+      destroyCookie(null, 'nextauth.token.game');
     } catch (error) {
       setMessage(handleError(error));
     }
@@ -144,7 +149,6 @@ const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
 
     return () => {
       socket.off('update', handleUpdate);
-      leaveGame();
     };
   }, [socket, isConnected]);
 
@@ -157,15 +161,15 @@ const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
   };
 
   const handleClosePopup = async () => {
-    const exit = await exitGame(gameId);
+    const exit = await exitGame(Number(gameId));
     if (exit) {
       router.push("/games");
     }
   };
 
   const handleConfirm = async () => {
-    const start = await startGame(gameId);
-    const dealer = await dealerCards(gameId, game?.players || [])
+    const start = await startGame(Number(gameId));
+    const dealer = await dealerCards(Number(gameId), game?.players || [])
     if (start && dealer) {
       setShowPopup(false);
       console.log('Game Started');
@@ -217,13 +221,12 @@ const GamePage: React.FC<{ params: { game_id: string } }> = ({ params }) => {
             />
           ))}
         </div>
-        <UnoButton gameId={gameId} />
-        <Table currentPlayer={isCurrentPlayer} gameId={gameId} topCard={topCard} className={styles.tableContainer} />
+        <UnoButton gameId={Number(gameId)} />
+        <Table currentPlayer={isCurrentPlayer} gameId={Number(gameId)} topCard={topCard} className={styles.tableContainer} />
       </div>
-      <HandPlayer currentPlayer={isCurrentPlayer} gameId={gameId} cards={cards} className={styles.handContainer} />
+      <HandPlayer currentPlayer={isCurrentPlayer} gameId={Number(gameId)} cards={cards} className={styles.handContainer} />
 
     </div>
   );
 };
-
 export default GamePage;

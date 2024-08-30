@@ -5,7 +5,7 @@ import styles from './Rooms.module.css';
 import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
 import { useRouter } from "next/navigation";
 import PopUpSettings from "@/components/popup";
-import { parseCookies } from 'nookies';
+import { parseCookies, setCookie } from 'nookies';
 import { useSocket } from '@/context/SocketContext';
 import { handleError } from '@/utils/handleError';
 import { getGames, enterGame } from '@/services/gameService';
@@ -86,8 +86,10 @@ const RoomsDisponiveis: React.FC = () => {
 
   const handleEnter = (room: RoomProps) => {
     setSelectedRoom(room);
+    setCookie(null, 'nextauth.token.game', room.id.toString(), { path: '/' });
+
     if (room.creator === user) {
-      router.push(`/game/${room.id}`);
+      router.push(`/game`);
     }
     else {
       console.log(room.players.includes(user))
