@@ -1,6 +1,6 @@
 "use client";
 import { signInRequest } from "@/services/auth";
-import { createContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { setCookie, parseCookies, destroyCookie } from 'nookies'
 
 import { api } from "@/services/api";
@@ -30,6 +30,16 @@ export function AuthProvider({ children }: any) {
 
   const isAuthenticated = !!user;
 
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    const storedToken = localStorage.getItem('token');
+
+    if (storedUser && storedToken) {
+      setUser(JSON.parse(storedUser));
+      api.defaults.headers['Authorization'] = `Bearer ${storedToken}`;
+    }
+  }, []);
+
   async function signIn({ username, password }: SignInData): Promise<string> {
     const token = await signInRequest({
       username,
@@ -39,24 +49,17 @@ export function AuthProvider({ children }: any) {
     if (!token) { return '' }
 
     destroyCookie(null, 'nextauth.token.uno')
-    destroyCookie(null, 'nextauth.token.user')
     const ctx = parseCookies(null)
     setCookie(ctx, 'nextauth.token.uno', token, {
       maxAge: 60 * 60 * 24 * 7
     })
 
-
     const userData = await getPerfil();
-    if (userData == null) {
-      setUser(userData);
-    }
     if (userData != null) {
-      destroyCookie(null, 'nextauth.token.user')
-      setCookie(ctx, 'nextauth.token.user', userData.username, {
-        maxAge: 60 * 60 * 24 * 7
-      })
+      setUser(userData);
+      localStorage.setItem('user', JSON.stringify(userData));
+      localStorage.setItem('token', token);
     }
-
 
     api.defaults.headers['Authorization'] = `Bearer ${token}`
 
@@ -69,3 +72,5 @@ export function AuthProvider({ children }: any) {
     </AuthContext.Provider>
   )
 }
+
+export const useAuth = () => useContext(AuthContext);

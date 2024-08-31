@@ -10,14 +10,16 @@ import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
 import { handleError } from "@/utils/handleError";
 import InputNumber from "@/components/games/maxPlayers";
 import { createGame, readyGame } from "@/services/gameService";
+import { useAuth } from "@/context/AuthContext";
 
 export default function CreateRoom() {
+  const router = useRouter();
+  const { user } = useAuth();
   const [title, setTitle] = useState('');
   const [maxPlayers, setMaxPlayers] = useState('');
   const [password, setPassword] = useState('');
   const [messageError, setMessageError] = useState('');
   const [loadingRequest, setLoadingRequest] = useState(false);
-  const router = useRouter();
 
   const handleTitleChange = (value: string) => setTitle(value);
   const handleMaxPlayersChange = (value: string) => setMaxPlayers(value);
@@ -42,8 +44,11 @@ export default function CreateRoom() {
       if (result.success && result.data.game_id) {
         const gameId = result.data.game_id;
         const readyPlayer = await readyGame(gameId);
+        localStorage.setItem('game',
+          JSON.stringify(gameId));
+
         if (readyPlayer) {
-          router.push(`/game/${gameId}`);
+          router.push(`/game`);
         }
       } else {
         setMessageError(result?.data.error || 'Erro desconhecido');

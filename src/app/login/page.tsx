@@ -13,11 +13,11 @@ import { login } from '@/services/authService';
 import { handleError } from '@/utils/handleError';
 
 export default function Login({ redirectRoute }: any) {
+  const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [messageErro, setMessageErro] = useState('');
   const [messageError, setMessageError] = useState('');
-  const router = useRouter();
 
   const handleUsernameChange = (value: string) => {
     setUsername(value);
@@ -59,11 +59,9 @@ export default function Login({ redirectRoute }: any) {
     router.push('/registrar-se');
   };
 
-
   const handleCloseDialog = () => {
     setMessageError('');
   };
-
 
   return (
     <div className={styles.container}>

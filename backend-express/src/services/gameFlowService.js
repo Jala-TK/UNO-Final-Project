@@ -34,6 +34,8 @@ export const processEndOfGame = async (game, user, card, res) => {
     topCard: 'update',
   });
 
+  io.emit('update', 'winGame');
+
   return res.status(200).json({
     message: `Card played successfully. ${user.username} has won the game!`,
     scores: scores,

@@ -37,7 +37,9 @@ export const playCard = async (req, res, next) => {
     if (!isTurn) return;
 
     const card = await validateCardExists(card_id, game, res);
-    if (!card) return;
+    if (!card) {
+      return;
+    }
 
     const ownsCard = await validateCardOwnership(card, user, res);
     if (!ownsCard) return;

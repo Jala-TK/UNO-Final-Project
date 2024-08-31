@@ -18,7 +18,7 @@ const Deck: NextPage<DeckProps> = ({ gameId, currentPlayer }) => {
       return;
     }
     const draw = await drawCard(gameId);
-    if (!draw.success) setMessage(draw.message)
+    if (draw.data.nextPlayer) setMessage(draw.data.message);
   }
 
 

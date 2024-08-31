@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -5,13 +6,12 @@ import styles from './Rooms.module.css';
 import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
 import { useRouter } from "next/navigation";
 import PopUpSettings from "@/components/popup";
-import { parseCookies, setCookie } from 'nookies';
 import { useSocket } from '@/context/SocketContext';
 import { handleError } from '@/utils/handleError';
 import { getGames, enterGame } from '@/services/gameService';
 import { getRandomImage } from "./getRandomImage";
+import { useAuth } from "@/context/AuthContext";
 
-const { 'nextauth.token.user': user } = parseCookies();
 
 interface RoomProps {
   id: number;
@@ -24,10 +24,11 @@ interface RoomProps {
 }
 
 const RoomsDisponiveis: React.FC = () => {
+  const router = useRouter();
+  const { user } = useAuth();
   const { socket, isConnected } = useSocket();
   const [rooms, setRooms] = useState<RoomProps[]>([]);
   const [messageError, setMessageError] = useState('');
-  const router = useRouter();
   const [showPopup, setShowPopup] = useState(true);
   const [selectedRoom, setSelectedRoom] = useState<RoomProps>();
 
@@ -53,7 +54,9 @@ const RoomsDisponiveis: React.FC = () => {
       if (message === 'updatedGames' || message === 'playerInGame') {
         console.log('Jogos atualizados', message);
         const gamesInfo = await getGames()
-        setRooms(gamesInfo.data.games);
+        const waitingRooms = gamesInfo.data.games.filter(
+          (room: { status: string; }) => room.status === 'Waiting for players');
+        setRooms(waitingRooms);
       }
     };
 
@@ -73,10 +76,13 @@ const RoomsDisponiveis: React.FC = () => {
   const handleConfirm = async () => {
     try {
       const enter = await enterGame(selectedRoom!.id);
+      localStorage.setItem('game',
+        JSON.stringify(selectedRoom!.id));
+
       if (enter && selectedRoom) {
         setShowPopup(false);
         fetchRoomData();
-        router.push(`/game/${selectedRoom.id}`);
+        router.push(`/game`);
       }
     } catch (error) {
       console.log(error);
@@ -86,13 +92,14 @@ const RoomsDisponiveis: React.FC = () => {
 
   const handleEnter = (room: RoomProps) => {
     setSelectedRoom(room);
-    setCookie(null, 'nextauth.token.game', room.id.toString(), { path: '/' });
+    localStorage.setItem('game',
+      JSON.stringify(room.id));
 
-    if (room.creator === user) {
+    if (room.creator === user?.username) {
       router.push(`/game`);
     }
     else {
-      console.log(room.players.includes(user))
+      console.log(room.players.includes(user?.username ?? ''))
       setShowPopup(true);
     }
   };
@@ -163,9 +170,9 @@ const RoomsDisponiveis: React.FC = () => {
                 title={selectedRoom.title}
                 waitingMessage={selectedRoom.status}
                 playerCount={`${selectedRoom.players.length}/${selectedRoom.maxPlayers}`}
-                buttonText={!selectedRoom.players.includes(user) ? "Enter Game" : "Back"}
+                buttonText={!selectedRoom.players.includes(user?.username ?? '') ? "Enter Game" : "Back"}
                 onClose={handleClosePopup}
-                onConfirm={!selectedRoom.players.includes(user) ? handleConfirm : handleClosePopup}
+                onConfirm={!selectedRoom.players.includes(user?.username ?? '') ? handleConfirm : handleClosePopup}
               />
             )}
           </div>

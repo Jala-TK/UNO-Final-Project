@@ -53,7 +53,7 @@ const HandPlayer: React.FC<HandPlayerProps> = ({ currentPlayer, gameId, cards, c
         setShowColorSelector(true);
       } else {
         const play = await playCard(gameId, card.id);
-        if (!play.success) setMessage(play.message);
+        if (play.data.cardDrawn) setMessage(play.data.message);
       }
     } catch (error) {
       setMessage(handleError(error))
@@ -65,7 +65,7 @@ const HandPlayer: React.FC<HandPlayerProps> = ({ currentPlayer, gameId, cards, c
       setShowColorSelector(false);
       try {
         const play = await playWildCard(gameId, selectedCard.id, selectedColor);
-        if (!play.success) setMessage(play.message);
+        if (play.data.cardDrawn) setMessage(play.data.message);
       } catch (error) {
         setMessage(handleError(error))
       }
