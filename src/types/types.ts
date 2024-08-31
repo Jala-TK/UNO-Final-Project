@@ -12,6 +12,7 @@ export interface CardPlayable {
 }
 export interface GameStatusProps {
   game_id: number;
+  status: string;
   current_player: string;
   direction: string;
   top_card: string;
@@ -31,4 +32,8 @@ export interface GameProps {
   maxPlayers: number;
   creator: string;
   players: string[];
+}
+
+export interface Scores {
+  [playerName: string]: number;
 }

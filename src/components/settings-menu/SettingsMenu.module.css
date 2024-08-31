@@ -1,0 +1,35 @@
+.menuContainer {
+  position: fixed; /* Fixa o menu em um lugar na tela */
+  left: 10px; /* Define a distância do menu para a borda esquerda */
+  top: 50px; /* Define a distância do menu do topo da tela */
+  display: flex;
+  flex-direction: column; /* Organiza os botões verticalmente */
+  align-items: flex-start; /* Alinha os itens à esquerda */
+  z-index: 1000; /* Garante que o menu fique acima de outros elementos */
+}
+
+.iconButton {
+  background-color: #333;
+  border: none;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s;
+}
+
+.iconButton:hover {
+  background-color: #555;
+}
+
+.menuItems {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}

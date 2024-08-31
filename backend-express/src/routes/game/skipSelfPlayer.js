@@ -2,6 +2,7 @@ import { findGameById, isCurrentPlayer } from '../../services/gameService.js';
 import { setNextPlayer } from '../../services/dealerService.js';
 import { validateParams } from '../../utils/validation.js';
 import { addActionToHistory } from '../../services/historyService.js';
+import { io } from '../../../../server.js';
 
 export const skipSelfPlayer = async (req, res, next) => {
   try {
@@ -23,6 +24,14 @@ export const skipSelfPlayer = async (req, res, next) => {
 
     await setNextPlayer(game_id, 1, res);
     await addActionToHistory(game_id, `Skipped turn`, user.username);
+
+    io.emit('update', {
+      type: 'skipPlayer',
+      game: game.id,
+      player: user.username,
+      updateGame: game.id,
+    });
+    io.emit('update', 'playerInGame');
 
     res.status(200).json({
       message: `${user.username} skip your turn`,

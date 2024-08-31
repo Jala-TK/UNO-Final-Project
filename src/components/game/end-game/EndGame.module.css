@@ -1,0 +1,105 @@
+/* styles/podio.module.css */
+
+.podioContainer {
+  display: flex;
+  text-align: center;
+  padding: 20px;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+  z-index: 100;
+  width: 100%;
+  position: fixed;
+  flex-direction: column;
+}
+
+.podio {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  height: 80%;
+  max-height: 400px;
+}
+
+.podioPosition {
+  border: 2px solid #000;
+  border-radius: 10px;
+  background-color: #f0f0f0;
+  text-align: center;
+  position: relative;
+  width: 150px;
+}
+
+.podioPosition1 {
+  background-color: gold;
+  height: 80%;
+  order: 2;
+}
+
+.podioPosition2 {
+  background-color: silver;
+  height: 70%;
+  order: 3;
+}
+
+.podioPosition3 {
+  background-color: #cd7f32;
+  height: 60%;
+  order: 1;
+}
+
+.podioGif {
+  border-radius: 7px 7px 0 0;
+  width: 100%;
+  height: 50%;
+  max-height: 100px;
+  object-fit: cover;
+  object-position: center;
+  margin-bottom: 10px;
+}
+
+.crown {
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+}
+
+.buttons {
+  display: flex;
+  margin: 5%;
+  padding: 10px 20px;
+  flex-direction: column;
+}
+
+.buttons button {
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 5%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.createButton {
+  background-color: #271f3d;
+}
+
+.createButton:hover {
+  background-color: rgb(60, 51, 83);
+}
+
+.backButton {
+  background-color: #6a53aa;
+}
+
+.backButton:hover {
+  background-color: rgb(177, 156, 231);
+}

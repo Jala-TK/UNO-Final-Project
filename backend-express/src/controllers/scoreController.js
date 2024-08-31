@@ -12,5 +12,6 @@ router.get('/score/:id', getScore);
 router.put('/score/:id', updateScore);
 router.delete('/score/:id', deleteScore);
 router.get('/score', getPlayerScores);
+router.post('/getScore', getPlayerScores);
 
 export default router;

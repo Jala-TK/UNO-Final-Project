@@ -32,6 +32,7 @@ export const getGeneralStatus = async (req, res, next) => {
     const history = await getGameHistory(game_id);
     const response = {
       game_id: game.id,
+      status: game.status,
       current_player: currentPlayer.username,
       direction: game.clockwise === true ? 'clockwise' : 'counter-clockwise',
       top_card: {

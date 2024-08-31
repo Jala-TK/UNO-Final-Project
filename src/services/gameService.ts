@@ -1,5 +1,5 @@
 import { apiClient } from '@/services/fetch';
-import { GameProps, GameStatusProps, Card } from '@/types/types';
+import { GameProps, GameStatusProps, Card, Scores } from '@/types/types';
 export async function fetchGameStatusData(
   gameId: number | null
 ): Promise<{ success: boolean; message: string; data: GameStatusProps }> {
@@ -176,5 +176,16 @@ export async function sayUno(
     success: result.status === 200,
     message: result.data.message,
     data: result.data,
+  };
+}
+
+export async function fetchScoreData(
+  gameId: number | null
+): Promise<{ success: boolean; message: string; data: Scores[] }> {
+  const result = await apiClient().post(`/api/getScore`, { game_id: gameId });
+  return {
+    success: result.status === 200,
+    message: result.data.message,
+    data: result.data.scores,
   };
 }

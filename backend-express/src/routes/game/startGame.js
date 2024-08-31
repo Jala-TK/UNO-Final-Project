@@ -41,6 +41,7 @@ export const startGame = async (req, res, next) => {
       type: 'startedGame',
       game: game.id,
       player: user.username,
+      updateGame: game.id,
     });
     io.emit('update', 'playerInGame');
 

@@ -1,0 +1,36 @@
+.infoCard {
+  position: fixed;
+  left: 10px;
+  top: 150px;
+  background-color: #222;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 200px;
+  text-align: center;
+  z-index: 1000;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: transparent;
+  color: white;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 3%;
+}
+
+.closeButton:hover {
+  color: #ff3333;
+}

@@ -9,7 +9,7 @@ import Player from '@/components/game/player';
 import { destroyCookie, parseCookies, setCookie } from 'nookies';
 import { useRouter } from "next/navigation";
 import PopUpSettings from '@/components/popup';
-import { Card, GameProps, GameStatusProps } from '@/types/types';
+import { Card, GameProps, GameStatusProps, Scores } from '@/types/types';
 import { useSocket } from '@/context/SocketContext';
 import { handleError } from '@/utils/handleError';
 import {
@@ -20,18 +20,19 @@ import {
   dealerCards,
   getTopCard,
   fetchCardsData,
-  fetchCardsPlayableData
+  fetchCardsPlayableData,
+  fetchScoreData
 } from '@/services/gameService';
 import { useMessage } from '@/context/MessageContext';
 import MessageBar from '@/components/message-bar';
 import UnoButton from '@/components/game/uno';
 import { useAuth } from '@/context/AuthContext';
+import Podio from '@/components/game/end-game';
+import SettingsToogle from '@/components/settings-menu';
 
 // TODO: Botao sair do jogo.
 // TODO: Ação sair do jogo.
 // TODO: Score do jogador.
-// TODO: Cartas que podem ser jogar.
-// TODO: Tela quando ganhar o jogo.
 // TODO: Som ?!
 // TODO: Circulo da foto, <Tempo para jogada>. 
 
@@ -56,6 +57,7 @@ const GamePage: React.FC = () => {
   const [finishGame, setFinishGame] = useState(false);
   const { message, setMessage } = useMessage();
   const [playableCards, setPlayableCards] = useState<Card[]>([]);
+  const [scores, setScores] = useState<Scores[]>([]);
 
   const loadGame = async () => {
     try {
@@ -77,7 +79,11 @@ const GamePage: React.FC = () => {
             .some((playerName) => playerName === user?.username);
 
         if (inGame) {
-          setGameStatus(data.data);
+          if (data.data.status == 'Finished') {
+            router.push("/games");
+          } else {
+            setGameStatus(data.data);
+          }
         }
         else {
           router.push("/games");
@@ -116,6 +122,17 @@ const GamePage: React.FC = () => {
       if (data.success) {
         setPlayableCards(data.data);
         console.log("playableCards", data.data);
+      }
+    } catch (error) {
+      setMessage(handleError(error));
+    }
+  };
+
+  const loadScore = async () => {
+    try {
+      const scoresData = await fetchScoreData(gameId);
+      if (scoresData.success) {
+        setScores(scoresData.data);
       }
     } catch (error) {
       setMessage(handleError(error));
@@ -166,6 +183,7 @@ const GamePage: React.FC = () => {
 
       if (message.type == "winGame" || message === 'winGame') {
         setFinishGame(true);
+        loadScore();
         console.log(`${message.player}, ganhou o jogo!`)
         setMessage(`${message.player}, ganhou o jogo!`);
       }
@@ -222,37 +240,43 @@ const GamePage: React.FC = () => {
 
   return (
     <div className={styles.pageContainer}>
-      {message && <MessageBar message={message} />}
-      <Dialog open={!!messageError} onClose={handleCloseDialog}>
-        <DialogContent className={styles.dialogConfirmation}>
-          {messageError}
-        </DialogContent>
-        <DialogActions className={styles.dialogConfirmation}>
-          <Button onClick={handleCloseDialog}>Ok</Button>
-        </DialogActions>
-      </Dialog>
-
-      <div className={styles.tableContainer}>
-        <div className={styles.playersContainer}>
-          {Object.keys(gameStatus.players).map((playerName, index) => (
-            <Player
-              key={playerName}
-              playerName={playerName}
-              hand={gameStatus.players[playerName].cards.length}
-              wins={gameStatus.players[playerName].wins}
-              className={`${playerName === user?.username ? styles.currentUser : styles.player}`}
-              currentUser={user?.username || ''}
-              game={game}
-              currentPlayer={gameStatus.current_player === playerName ? true : false}
-            />
-          ))}
-        </div>
-        <UnoButton gameId={gameId} />
-        <Table currentPlayer={isCurrentPlayer} gameId={gameId} topCard={topCard} className={styles.tableContainer} />
-      </div>
-      <HandPlayer currentPlayer={isCurrentPlayer} gameId={gameId} cards={cards} playableCards={playableCards} className={styles.handContainer} />
-
+      {finishGame ? (
+        <Podio scores={scores} />
+      ) : (
+        <>
+          {message && <MessageBar message={message} />}
+          <Dialog open={!!messageError} onClose={handleCloseDialog}>
+            <DialogContent className={styles.dialogConfirmation}>
+              {messageError}
+            </DialogContent>
+            <DialogActions className={styles.dialogConfirmation}>
+              <Button onClick={handleCloseDialog}>Ok</Button>
+            </DialogActions>
+          </Dialog>
+          <div className={styles.tableContainer}>
+            <div className={styles.playersContainer}>
+              {Object.keys(gameStatus.players).map((playerName, index) => (
+                <Player
+                  key={playerName}
+                  playerName={playerName}
+                  hand={gameStatus.players[playerName].cards.length}
+                  wins={gameStatus.players[playerName].wins}
+                  className={`${playerName === user?.username ? styles.currentUser : styles.player}`}
+                  currentUser={user?.username || ''}
+                  game={game}
+                  currentPlayer={gameStatus.current_player === playerName ? true : false}
+                />
+              ))}
+            </div>
+            <UnoButton gameId={gameId} />
+            <Table currentPlayer={isCurrentPlayer} gameId={gameId} topCard={topCard} className={styles.tableContainer} />
+          </div>
+          <HandPlayer currentPlayer={isCurrentPlayer} gameId={gameId} cards={cards} playableCards={playableCards} className={styles.handContainer} />
+          <SettingsToogle />
+        </>
+      )}
     </div>
   );
+
 };
 export default GamePage;
