@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './Hand.module.css';
-import { Card } from '@/types/types';
+import { Card, CardPlayable } from '@/types/types';
 import ColorSelector from '@/components/game/color-selector';
 import { handleError } from '@/utils/handleError';
 import { playCard, playWildCard } from '@/services/cardService';
@@ -12,18 +12,19 @@ interface HandPlayerProps {
   currentPlayer: boolean;
   cards: Card[];
   className: string;
+  playableCards: CardPlayable[] | [];
 }
 
 const ITEMS_PER_PAGE = 10;
 
-const HandPlayer: React.FC<HandPlayerProps> = ({ currentPlayer, gameId, cards, className }) => {
+const HandPlayer: React.FC<HandPlayerProps> = ({ currentPlayer, gameId, cards, className, playableCards }) => {
   const [showColorSelector, setShowColorSelector] = useState(false);
   const [selectedCard, setSelectedCard] = useState<Card | null>(null);
-  const [visibleCards, setVisibleCards] = useState(cards.slice(0, ITEMS_PER_PAGE));
+  const [visibleCards, setVisibleCards] = useState<Card[]>([]);
   const { setMessage } = useMessage();
 
   useEffect(() => {
-    if (cards.length > 0) {
+    if (cards && cards.length > 0) {
       setVisibleCards(cards.slice(0, ITEMS_PER_PAGE));
     }
   }, [cards]);
@@ -80,7 +81,12 @@ const HandPlayer: React.FC<HandPlayerProps> = ({ currentPlayer, gameId, cards, c
     }
   };
 
-  if (!cards.length) return <div>No cards in hand</div>;
+  const isPlayable = (card: Card, playableCards: CardPlayable[]): boolean => {
+    return playableCards.some(playableCard => playableCard.id === card.id);
+  };
+
+
+  if (!cards || !cards.length) return <div>No cards in hand</div>;
 
   return (
     <div className={className}>
@@ -96,7 +102,7 @@ const HandPlayer: React.FC<HandPlayerProps> = ({ currentPlayer, gameId, cards, c
           {visibleCards.map((card) => (
             <div key={card.id} className={styles.card}>
               <img
-                className={styles.imageCard}
+                className={`${styles.imageCard} ${playableCards ? (isPlayable(card, playableCards) ? styles.playableCard : '') : ''}`}
                 alt={card.description}
                 src={card.image}
                 onDoubleClick={() => handleDoubleClick(card)}

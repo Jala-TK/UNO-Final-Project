@@ -5,7 +5,11 @@ export interface Card {
   image: string;
   description: string;
 }
-
+export interface CardPlayable {
+  id: number;
+  color: string;
+  value: string;
+}
 export interface GameStatusProps {
   game_id: number;
   current_player: string;

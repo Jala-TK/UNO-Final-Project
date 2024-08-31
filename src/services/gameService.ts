@@ -100,6 +100,19 @@ export async function fetchCardsData(
   };
 }
 
+export async function fetchCardsPlayableData(
+  gameId: number | null
+): Promise<{ success: boolean; message: string; data: CardPlayable[] }> {
+  const result = await apiClient().post(`/api/game/checkHand`, {
+    game_id: gameId,
+  });
+  return {
+    success: result.status === 200,
+    message: result.data.message,
+    data: result.data.validCards,
+  };
+}
+
 export async function enterGame(
   gameId: number | null
 ): Promise<{ success: boolean; message: string; data: any }> {

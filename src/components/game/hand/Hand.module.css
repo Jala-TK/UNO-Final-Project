@@ -61,3 +61,20 @@
 .nextButton {
   right: -15%;
 }
+
+.playableCard {
+  margin-top: -10px;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
+  }
+  70% {
+    box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.8);
+  }
+}

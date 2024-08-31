@@ -19,7 +19,8 @@ import {
   startGame,
   dealerCards,
   getTopCard,
-  fetchCardsData
+  fetchCardsData,
+  fetchCardsPlayableData
 } from '@/services/gameService';
 import { useMessage } from '@/context/MessageContext';
 import MessageBar from '@/components/message-bar';
@@ -54,7 +55,7 @@ const GamePage: React.FC = () => {
   const [showPopup, setShowPopup] = useState(true);
   const [finishGame, setFinishGame] = useState(false);
   const { message, setMessage } = useMessage();
-
+  const [playableCards, setPlayableCards] = useState<Card[]>([]);
 
   const loadGame = async () => {
     try {
@@ -109,6 +110,18 @@ const GamePage: React.FC = () => {
     }
   };
 
+  const loadPlayableCards = async () => {
+    try {
+      const data = await fetchCardsPlayableData(gameId);
+      if (data.success) {
+        setPlayableCards(data.data);
+        console.log("playableCards", data.data);
+      }
+    } catch (error) {
+      setMessage(handleError(error));
+    }
+  };
+
   const leaveGame = async () => {
     try {
       await exitGame(gameId);
@@ -134,6 +147,7 @@ const GamePage: React.FC = () => {
       loadGameStatus();
       loadTopCard()
       loadCards();
+      loadPlayableCards();
       console.log("Game is connected");
     }
 
@@ -147,6 +161,7 @@ const GamePage: React.FC = () => {
       if (message?.updatedHand === 'update') {
         console.log('Cartas atualizadas', message);
         loadCards();
+        loadPlayableCards()
       }
 
       if (message.type == "winGame" || message === 'winGame') {
@@ -235,7 +250,7 @@ const GamePage: React.FC = () => {
         <UnoButton gameId={gameId} />
         <Table currentPlayer={isCurrentPlayer} gameId={gameId} topCard={topCard} className={styles.tableContainer} />
       </div>
-      <HandPlayer currentPlayer={isCurrentPlayer} gameId={gameId} cards={cards} className={styles.handContainer} />
+      <HandPlayer currentPlayer={isCurrentPlayer} gameId={gameId} cards={cards} playableCards={playableCards} className={styles.handContainer} />
 
     </div>
   );
