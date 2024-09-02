@@ -9,7 +9,7 @@ export default function InputNumber(props: any) {
     let { value } = event.target;
     const numberValue = parseInt(value, 10);
 
-    if (isNaN(numberValue) || numberValue < 2 || numberValue > 8) {
+    if (isNaN(numberValue) || numberValue < 2 || numberValue > 5) {
       setNumberInvalid(true);
     } else {
       setNumberInvalid(false);
@@ -18,7 +18,7 @@ export default function InputNumber(props: any) {
     setValue(value);
 
     if (numberInvalid) {
-      event.target.setCustomValidity("Digite um número válido entre 2 e 8");
+      event.target.setCustomValidity("Digite um número válido entre 2 e 5");
       event.target.reportValidity();
       return;
     }
@@ -38,7 +38,7 @@ export default function InputNumber(props: any) {
       label={props.label}
       variant="outlined"
       type="number"
-      inputProps={{ min: 2, max: 8 }}
+      inputProps={{ min: 2, max: 5 }}
       onChange={handleChange}
     />
   );

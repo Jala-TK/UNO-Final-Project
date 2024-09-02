@@ -42,3 +42,28 @@
     width: 40%;
   }
 }
+
+.photoPlaceholder {
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  color: #999;
+  flex-direction: column;
+}
+
+.photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.defaultPhoto {
+  opacity: 0.8;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

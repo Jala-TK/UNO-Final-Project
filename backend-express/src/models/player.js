@@ -21,6 +21,10 @@ const Player = sequelize.define('Player', {
     defaultValue: 0,
     allowNull: false,
   },
+  photo: {
+    type: DataTypes.BLOB('long'),
+    allowNull: true,
+  },
   auditExcluded: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,

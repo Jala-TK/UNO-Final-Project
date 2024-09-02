@@ -1,9 +1,9 @@
-import { apiClient } from '@/services/fetch';
+import { apiClient, apiClientMultiPart } from '@/services/fetch';
 import { User } from '@/context/AuthContext';
 import { SignInRequestData } from '@/types/login';
 
 export async function createUser(data: any) {
-  return await apiClient().post(`/api/player`, data);
+  return await apiClientMultiPart().post(`/api/player`, data);
 }
 
 export async function login(data: SignInRequestData) {
@@ -20,4 +20,15 @@ export async function getPerfil(): Promise<User | null> {
   } else {
     return null;
   }
+}
+
+export async function getPerfilWithPhoto(username: string): Promise<any> {
+  const result = await apiClient().post(`/api/player/photo`, {
+    username: username,
+  });
+  return {
+    success: result.status === 200,
+    message: result.data.message,
+    data: result.data,
+  };
 }

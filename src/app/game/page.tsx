@@ -30,7 +30,6 @@ import { useAuth } from '@/context/AuthContext';
 import Podio from '@/components/game/end-game';
 import SettingsToogle from '@/components/settings-menu';
 
-// TODO: Score do jogador.
 // TODO: Circulo da foto, <Tempo para jogada>. 
 // TODO: Estilizar componente do player para ficar mais bonito.
 
@@ -41,7 +40,7 @@ const GamePage: React.FC = () => {
   const { socket, isConnected } = useSocket();
   const gameSession = localStorage.getItem('game') || '';
   if (!gameSession) {
-    router.back();
+    router.push("/games");
   }
   const gameId = Number(gameSession);
   const [game, setGame] = useState<GameProps | null>(null);
@@ -171,6 +170,7 @@ const GamePage: React.FC = () => {
       loadTopCard();
       loadCards();
       loadPlayableCards();
+      loadScore();
       console.log("Game is connected");
     }
 
@@ -179,6 +179,7 @@ const GamePage: React.FC = () => {
         loadGame();
         loadGameStatus();
         loadTopCard();
+        loadScore();
       }
       if (message?.updatedHand === 'update') {
         loadCards();
@@ -276,6 +277,14 @@ const GamePage: React.FC = () => {
     );
   }
 
+  let score = 0;
+  Object.keys(scores).forEach((_name) => {
+    if (_name === user?.username) {
+      score = scores[_name];
+    }
+  });
+
+
   return (
     <div className={styles.pageContainer}>
       {finishGame ? (
@@ -297,7 +306,7 @@ const GamePage: React.FC = () => {
           </audio>
           <div className={styles.tableContainer}>
             <div className={styles.playersContainer}>
-              {Object.keys(gameStatus.players).map((playerName, index) => (
+              {Object.keys(gameStatus.players).map((playerName, _index) => (
                 <Player
                   key={playerName}
                   playerName={playerName}
@@ -312,6 +321,9 @@ const GamePage: React.FC = () => {
             </div>
             <UnoButton gameId={gameId} />
             <Table currentPlayer={isCurrentPlayer} gameId={gameId} topCard={topCard} className={styles.tableContainer} />
+            <div className={styles.score}>
+              <h4>Score: <span>{score}</span> </h4>
+            </div>
           </div>
           <HandPlayer currentPlayer={isCurrentPlayer} gameId={gameId} cards={cards} playableCards={playableCards} className={styles.handContainer} />
           <SettingsToogle game={game} onVolumeChange={handleVolumeChange} />

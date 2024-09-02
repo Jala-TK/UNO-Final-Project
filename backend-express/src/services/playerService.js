@@ -4,9 +4,27 @@ import GamePlayer from '../models/gamePlayer.js';
 import { hashPassword } from '../utils/passwordUtils.js';
 import { Op } from 'sequelize';
 
-export const createNewPlayer = async (username, email, password) => {
-  const hashedPassword = hashPassword(password);
-  await Player.create({ username, email, password: hashedPassword });
+export const createNewPlayer = async (username, email, password, photo) => {
+  try {
+    const hashedPassword = hashPassword(password);
+    if (photo) {
+      await Player.create({
+        username,
+        email,
+        password: hashedPassword,
+        photo: photo,
+      });
+    } else {
+      await Player.create({
+        username,
+        email,
+        password: hashedPassword,
+      });
+    }
+  } catch (error) {
+    console.error('Error creating player:', error);
+    throw error; // Re-throw para manipulação adicional
+  }
 };
 
 export const findPlayerById = async (playerId) => {
@@ -26,14 +44,14 @@ export const findExistPlayerByUsername = async (username) => {
 };
 
 export const updateWins = async (player, wins) => {
-  return await player.update({ wins: player.wins + wins });
+  player.wins += wins;
+  await player.save();
 };
 
 export const findExistingPlayer = async (username, email) => {
   const player = await Player.findOne({
     where: {
       [Op.or]: [{ username: username }, { email: email }],
-      auditExcluded: false,
     },
   });
   if (player) {

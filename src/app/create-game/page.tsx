@@ -17,26 +17,19 @@ export default function CreateRoom() {
   const { user } = useAuth();
   const [title, setTitle] = useState('');
   const [maxPlayers, setMaxPlayers] = useState('');
-  const [password, setPassword] = useState('');
   const [messageError, setMessageError] = useState('');
   const [loadingRequest, setLoadingRequest] = useState(false);
 
   const handleTitleChange = (value: string) => setTitle(value);
   const handleMaxPlayersChange = (value: string) => setMaxPlayers(value);
-  const handlePasswordChange = (value: string) => setPassword(value);
-
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
-    if (!password || !title || !maxPlayers) return;
-    if (password.length < 4) {
-      return setMessageError('Senha muito pequena');
-    }
+    if (!title || !maxPlayers) return;
 
     setLoadingRequest(true);
     const data = {
       title,
       maxPlayers,
-      // password //TODO: Adicionar o campo password
     };
 
     try {
@@ -79,14 +72,14 @@ export default function CreateRoom() {
         <h2 className={styles.title}>Create Game</h2>
         <form onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
-            <InputUsername required onChange={handleTitleChange} label='Title' title={title} />
+            <InputUsername required root onChange={handleTitleChange} label='Title' title={title} className={styles.inputText} />
           </div>
           <div className={styles.formGroup}>
-            <InputNumber required onChange={handleMaxPlayersChange} label='Max Players' maxPlayers={maxPlayers} />
+            <InputNumber required root onChange={handleMaxPlayersChange} label='Max Players' maxPlayers={maxPlayers} className={styles.inputText} />
           </div>
-          <div className={styles.formGroup}>
+          {/*           <div className={styles.formGroup}>
             <InputPassword required onChange={handlePasswordChange} label='Senha' password={password} />
-          </div>
+          </div> */}
           <div className={styles.Buttons}>
             <ButtonSend type="submit" label='Create' disabledLoading={loadingRequest} />
           </div>

@@ -71,13 +71,13 @@ const SettingsMenu: React.FC<SettingsMenuProps> = ({ game, onVolumeChange }) => 
         </button>
         {isExpanded && (
           <div className={styles.menuItems}>
-            <button className={styles.iconButton} onClick={() => handleInfoButtonClick('info')}>
+            <button className={styles.iconButton} onClick={infoDisplayed ? handleCloseInfo : () => handleInfoButtonClick('info')}>
               <img src="/assets/icons/Game Info.svg" alt="" />
             </button>
-            <button className={styles.iconButton} onClick={() => handleInfoButtonClick('sound')}>
+            <button className={styles.iconButton} onClick={infoDisplayed ? handleCloseInfo : () => handleInfoButtonClick('sound')}>
               <img src="/assets/icons/Sound Buttom.svg" alt="" />
             </button>
-            <button className={styles.iconButton} onClick={() => handleInfoButtonClick('leave')}>
+            <button className={styles.iconButton} onClick={infoDisplayed ? handleCloseInfo : () => handleInfoButtonClick('leave')}>
               <img src="/assets/icons/Leave Game Buttom.svg" alt="" />
             </button>
           </div>

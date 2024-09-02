@@ -1,17 +1,80 @@
-.backgroundIcon {
+.player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 10px;
+  color: #fff;
+  z-index: 10;
+}
+
+.profile {
+  position: relative;
+  width: 100%;
+  max-width: 200px;
+  min-width: 100px;
+  margin: auto;
+}
+
+.profileContainer {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  background-color: #3d3a44;
+  border-radius: 50%;
+}
+
+.profileIcon {
+  display: flex;
+  justify-content: center;
   position: absolute;
-  overflow: hidden;
+  top: 2.5%;
+  left: 2.5%;
+  width: 95%;
+  height: 95%;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: opacity 0.3s;
+}
+
+.profileIconHover {
+  opacity: 0.5;
+}
+
+.winsOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+}
+
+.winsText {
+  font-size: 16px;
+  color: #fff;
+  cursor: none;
+}
+
+.challengeButton {
+  position: absolute;
+  cursor: pointer;
+  bottom: 0%;
+  left: 0%;
+  z-index: 11;
 }
 
 .sirenIcon {
-  position: relative;
-  width: 100%;
+  width: 30px;
+  height: 30px;
   background-size: cover;
   background-repeat: no-repeat;
-  transform: rotate(90deg);
   border-radius: 50%;
   background-color: #000;
-  border: 5px solid #000;
+  border: 2px solid #000;
   box-shadow: 0px 0px 10px 5px rgba(255, 3, 3, 0.5);
 }
 
@@ -19,164 +82,78 @@
   box-shadow: 0px 0px 10px 5px rgba(255, 3, 3, 1);
 }
 
-.challengeButtom {
+.cards {
   position: absolute;
-  top: 65%;
-  right: 5%;
-  transform: rotate(-90deg);
-  transform-origin: 0 0;
-  cursor: pointer;
+  top: 0%;
+  right: 0%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 11;
 }
 
-.cardGameIcon {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  border-radius: 56px;
-  width: 54.3px;
-  height: 54.3px;
+.cardGame {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
   overflow: hidden;
-  object-fit: contain;
+  top: 0;
 }
-.vectorIcon {
-  position: absolute;
-  height: 89.43%;
-  width: 72.87%;
-  top: 5.21%;
-  right: 13.59%;
-  bottom: 5.37%;
-  left: 13.53%;
-  max-width: 100%;
-  overflow: hidden;
-  max-height: 100%;
-}
+
+.vectorIcon,
 .cardGameChild {
   position: absolute;
-  height: 78.62%;
-  width: 63.91%;
-  top: 10%;
-  right: 18.1%;
-  bottom: 11.38%;
-  left: 17.99%;
-  border-radius: 6px;
-  max-width: 100%;
-  overflow: hidden;
-  max-height: 100%;
-}
-
-.profile {
-  width: 192px;
-  position: relative;
-  height: 212px;
-  z-index: 1;
-}
-
-.info {
-  display: flex;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 40%;
-  padding: 10%;
-  font-size: 15px;
-}
-
-.texts {
-  position: relative;
-  height: 30%;
-  width: 70%;
-  bottom: 20%;
-}
-
-.cards {
-  position: relative;
-  height: 30%;
-  width: 20%;
-  bottom: 20%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .cartas {
   position: absolute;
-  top: calc(50% - 7.49px);
-  left: calc(50% - 5.01px);
-}
-.cardGame {
-  position: absolute;
-  top: 3.48px;
-  left: 16.52px;
-  border-radius: 56px;
-  width: 43.5px;
-  height: 43.5px;
-  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
 }
 
-.profileContainer {
-  display: flex;
-  position: relative;
-  align-items: center;
-  justify-content: center;
-  height: 65%;
-  width: 70%;
-  margin: auto;
+.info {
+  width: 100%;
   background-color: #3d3a44;
-  border-radius: 50%;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
 }
 
-.currentPlayer {
-  background-color: #4d397c;
-}
-
-.profileIcon {
-  position: relative;
-  margin: auto;
-  width: 95%;
-  height: 95%;
-  border-radius: 50%;
-  z-index: 2;
-}
-
-.points {
-  position: relative;
-}
-.scores {
-  position: absolute;
-  top: 31.86px;
-  left: 0px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-}
 .name {
+  font-size: 16px;
+}
+
+.scores {
+  font-size: 14px;
+}
+
+.progressCircle {
   position: absolute;
-  top: 0px;
-  left: 0.41px;
-  border-radius: 56px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  font-size: 20px;
-}
-
-.player {
-  position: relative;
-  font-size: 10px;
-  color: #fff;
-}
-
-.playersContainer {
-  position: relative;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  transform: rotate(-90deg);
 }
 
-.playerWrapper {
-  position: absolute;
-  width: 20%;
-  height: 20%;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+.progressCircleBackground {
+  fill: none;
+  stroke: #ec2f2f;
+  stroke-width: 10;
+}
+
+.progressCircleForeground {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s linear;
 }

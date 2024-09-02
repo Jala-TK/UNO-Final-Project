@@ -18,6 +18,10 @@ export const checkHand = async (req, res, next) => {
 
     const validCards = [];
 
+    if (!topCard) {
+      return res.status(404).json({ message: 'No top card discarded' });
+    }
+
     for (const card of cards) {
       if (isCardPlayable(card, topCard)) {
         validCards.push({

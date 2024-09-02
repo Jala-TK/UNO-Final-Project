@@ -1,6 +1,7 @@
 'use client';
 import { createTheme } from '@mui/material/styles';
 import localFont from 'next/font/local';
+import Colors from '@/utils/layout/colors';
 
 const satoshi = localFont({
   src: [
@@ -22,6 +23,10 @@ const satoshi = localFont({
   ],
 });
 const theme = createTheme({
+  palette: {
+    primary: Colors.whiteIce,
+    secondary: Colors.blackShadown,
+  },
   typography: {
     fontFamily: satoshi.style.fontFamily,
   },

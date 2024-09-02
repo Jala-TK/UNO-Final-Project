@@ -43,6 +43,18 @@
   z-index: 2;
 }
 
+.score {
+  position: fixed;
+  font-weight: bold;
+  color: #f1c40f;
+  top: 10%;
+  right: 3%;
+}
+.score span {
+  color: white;
+  font-size: 24px;
+}
+
 /* Topo */
 .player:not(.currentUser):nth-child(1) {
   grid-column: 2;

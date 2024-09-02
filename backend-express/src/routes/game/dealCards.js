@@ -63,7 +63,8 @@ export const dealCards = async (req, res, next) => {
     io.emit('update', {
       type: 'dealCards',
       game: game.id,
-      player: user.username,
+      player: req.user.username,
+      updatedHand: 'update',
       updateGame: game.id,
     });
     io.emit('update', 'playerInGame');

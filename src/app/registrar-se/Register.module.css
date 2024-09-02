@@ -72,3 +72,54 @@
 .errorMessage {
   color: var(--red);
 }
+
+.photoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.photoPlaceholder {
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  color: #999;
+  flex-direction: column;
+}
+
+.photoPreviewContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.photoPreview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.defaultPhoto {
+  opacity: 0.8;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.textPhoto {
+  text-align: center;
+  cursor: pointer;
+  color: #fff;
+}
