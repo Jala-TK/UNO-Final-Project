@@ -29,9 +29,12 @@ export const leaveGame = async (req, res, next) => {
 
       io.emit('update', {
         type: 'leaveGame',
-        game: newGame.id,
+        updateGame: game_id,
+        player: user.username,
       });
       io.emit('update', 'playerInGame');
+
+      //TODO: Colocar verificação para se sobrar apenas um jogador ele vencer o jogo.
 
       return res
         .status(200)

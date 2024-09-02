@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './Game.module.css';
 import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
 import HandPlayer from '@/components/game/hand';
@@ -20,7 +20,8 @@ import {
   getTopCard,
   fetchCardsData,
   fetchCardsPlayableData,
-  fetchScoreData
+  fetchScoreData,
+  skip
 } from '@/services/gameService';
 import { useMessage } from '@/context/MessageContext';
 import MessageBar from '@/components/message-bar';
@@ -29,23 +30,20 @@ import { useAuth } from '@/context/AuthContext';
 import Podio from '@/components/game/end-game';
 import SettingsToogle from '@/components/settings-menu';
 
-// TODO: Botao sair do jogo.
-// TODO: Ação sair do jogo.
 // TODO: Score do jogador.
-// TODO: Som ?!
 // TODO: Circulo da foto, <Tempo para jogada>. 
-
+// TODO: Estilizar componente do player para ficar mais bonito.
 
 
 const GamePage: React.FC = () => {
-  const router = useRouter()
+  const router = useRouter();
   const { user } = useAuth();
   const { socket, isConnected } = useSocket();
   const gameSession = localStorage.getItem('game') || '';
   if (!gameSession) {
     router.back();
   }
-  const gameId = Number(gameSession)
+  const gameId = Number(gameSession);
   const [game, setGame] = useState<GameProps | null>(null);
   const [gameStatus, setGameStatus] = useState<GameStatusProps | null>(null);
   const [isCurrentPlayer, setIsCurrentPlayer] = useState<boolean>(false);
@@ -57,6 +55,9 @@ const GamePage: React.FC = () => {
   const { message, setMessage } = useMessage();
   const [playableCards, setPlayableCards] = useState<Card[]>([]);
   const [scores, setScores] = useState<Scores[]>([]);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [timeLeft, setTimeLeft] = useState(50);
+
 
   const loadGame = async () => {
     try {
@@ -120,7 +121,6 @@ const GamePage: React.FC = () => {
       const data = await fetchCardsPlayableData(gameId);
       if (data.success) {
         setPlayableCards(data.data);
-        console.log("playableCards", data.data);
       }
     } catch (error) {
       setMessage(handleError(error));
@@ -138,6 +138,14 @@ const GamePage: React.FC = () => {
     }
   };
 
+  const skipTurn = async () => {
+    try {
+      await skip(gameId);
+    } catch (error) {
+      setMessage(handleError(error));
+    }
+  };
+
   const leaveGame = async () => {
     try {
       await exitGame(gameId);
@@ -150,7 +158,6 @@ const GamePage: React.FC = () => {
   const handlerCurrentPlayer = async () => {
     if (gameStatus && gameStatus.current_player) {
       const isCurrentPlayer = gameStatus.current_player === user?.username;
-      console.log("currentPlayer", isCurrentPlayer, gameStatus.current_player);
       setIsCurrentPlayer(isCurrentPlayer);
     }
   };
@@ -161,7 +168,7 @@ const GamePage: React.FC = () => {
     if (isConnected) {
       loadGame();
       loadGameStatus();
-      loadTopCard()
+      loadTopCard();
       loadCards();
       loadPlayableCards();
       console.log("Game is connected");
@@ -169,21 +176,18 @@ const GamePage: React.FC = () => {
 
     const handleUpdate = async (message: any) => {
       if (message?.updateGame === gameId || message === 'updatedGame' || message.type === 'drawCards') {
-        console.log('Jogos atualizados', message);
         loadGame();
         loadGameStatus();
-        loadTopCard()
+        loadTopCard();
       }
       if (message?.updatedHand === 'update') {
-        console.log('Cartas atualizadas', message);
         loadCards();
-        loadPlayableCards()
+        loadPlayableCards();
       }
 
       if (message.type == "winGame" || message === 'winGame') {
         setFinishGame(true);
         loadScore();
-        console.log(`${message.player}, ganhou o jogo!`)
         setMessage(`${message.player}, ganhou o jogo!`);
       }
     };
@@ -196,8 +200,38 @@ const GamePage: React.FC = () => {
   }, [socket, isConnected]);
 
   useEffect(() => {
+    setTimeLeft(50);
     handlerCurrentPlayer();
+    setMessage('')
   }, [gameStatus]);
+
+  // TODO: Verificar alternativa para o useEffect.
+  useEffect(() => {
+    let timer: string | number | NodeJS.Timeout | undefined;
+
+    if (isCurrentPlayer) {
+      timer = setInterval(() => {
+        setTimeLeft((prevTime) => {
+          if (prevTime <= 1) {
+            clearInterval(timer);
+            skipTurn();
+            return 0;
+          }
+          return prevTime - 1;
+        });
+      }, 1000);
+    }
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [isCurrentPlayer, skipTurn]);
+
+  useEffect(() => {
+    if (isCurrentPlayer && timeLeft > 0) {
+      setMessage(`You have ${timeLeft} seconds to make a move.`);
+    }
+  }, [timeLeft, setMessage]);
 
   const handleCloseDialog = () => {
     setMessageError('');
@@ -212,10 +246,15 @@ const GamePage: React.FC = () => {
 
   const handleConfirm = async () => {
     const start = await startGame(gameId);
-    const dealer = await dealerCards(gameId, game?.players || [])
+    const dealer = await dealerCards(gameId, game?.players || []);
     if (start && dealer) {
       setShowPopup(false);
-      console.log('Game Started');
+    }
+  };
+
+  const handleVolumeChange = (volume: number) => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
     }
   };
 
@@ -252,7 +291,7 @@ const GamePage: React.FC = () => {
               <Button onClick={handleCloseDialog}>Ok</Button>
             </DialogActions>
           </Dialog>
-          <audio autoPlay loop>
+          <audio ref={audioRef} autoPlay loop>
             <source src="/assets/sound/batman.mp3" type="audio/mpeg" />
             Seu navegador não suporta o elemento de áudio.
           </audio>
@@ -275,7 +314,7 @@ const GamePage: React.FC = () => {
             <Table currentPlayer={isCurrentPlayer} gameId={gameId} topCard={topCard} className={styles.tableContainer} />
           </div>
           <HandPlayer currentPlayer={isCurrentPlayer} gameId={gameId} cards={cards} playableCards={playableCards} className={styles.handContainer} />
-          <SettingsToogle game={game} />
+          <SettingsToogle game={game} onVolumeChange={handleVolumeChange} />
         </>
       )}
     </div>

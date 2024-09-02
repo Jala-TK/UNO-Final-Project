@@ -179,6 +179,17 @@ export async function sayUno(
   };
 }
 
+export async function skip(
+  gameId: number | null
+): Promise<{ success: boolean; message: string; data: any }> {
+  const result = await apiClient().post(`/api/game/skip`, { game_id: gameId });
+  return {
+    success: result.status === 200,
+    message: result.data.message,
+    data: result.data,
+  };
+}
+
 export async function fetchScoreData(
   gameId: number | null
 ): Promise<{ success: boolean; message: string; data: Scores[] }> {

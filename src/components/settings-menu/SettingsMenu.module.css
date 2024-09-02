@@ -100,3 +100,8 @@
   background-color: #c23737;
   color: #fff;
 }
+
+.volume {
+  width: 80%;
+  min-width: 100px;
+}

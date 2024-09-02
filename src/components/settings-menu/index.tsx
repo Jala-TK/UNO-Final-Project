@@ -8,6 +8,7 @@ import SliderComponent from '../slider';
 
 interface SettingsMenuProps {
   game: GameProps;
+  onVolumeChange: (volume: number) => void;
 }
 
 interface InfoProps {
@@ -15,12 +16,12 @@ interface InfoProps {
   content: GameProps | string;
 }
 
-const SettingsMenu: React.FC<SettingsMenuProps> = ({ game }) => {
+const SettingsMenu: React.FC<SettingsMenuProps> = ({ game, onVolumeChange }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [infoDisplayed, setInfoDisplayed] = useState(false);
   const [title, setTitle] = useState<string | null>(null);
   const [type, setType] = useState<string | null>(null);
-  const router = useRouter()
+  const router = useRouter();
 
   const leaveGame = async () => {
     try {
@@ -58,10 +59,9 @@ const SettingsMenu: React.FC<SettingsMenuProps> = ({ game }) => {
     console.log('Leaving game...');
     setInfoDisplayed(false);
     leaveGame().then(() => {
-      router.push("/login");
+      router.push('/games');
     });
-  }
-
+  };
 
   return (
     <div>
@@ -91,7 +91,7 @@ const SettingsMenu: React.FC<SettingsMenuProps> = ({ game }) => {
           <div className={styles.cardContent}>
             <h2>{title}</h2>
             <div className={styles[`${type}`]}>
-              {(type === 'info') && (
+              {type === 'info' && (
                 <>
                   <p>Title: {game.title}</p>
                   <p>Code: {game.id}</p>
@@ -99,16 +99,22 @@ const SettingsMenu: React.FC<SettingsMenuProps> = ({ game }) => {
                   <p>Creator: {game.creator}</p>
                 </>
               )}
-              {(type === 'sound') && (
+              {type === 'sound' && (
                 <>
-                  <SliderComponent />
+                  <div className={styles.volume}>
+                    <SliderComponent onVolumeChange={onVolumeChange} />
+                  </div>
                 </>
               )}
-              {(type === 'leave') && (
+              {type === 'leave' && (
                 <>
                   <div className={styles.buttons}>
-                    <button className={styles.buttonYes} onClick={handleLeaveGame}>Yes</button>
-                    <button className={styles.buttonNo} onClick={handleCloseInfo}>No</button>
+                    <button className={styles.buttonYes} onClick={handleLeaveGame}>
+                      Yes
+                    </button>
+                    <button className={styles.buttonNo} onClick={handleCloseInfo}>
+                      No
+                    </button>
                   </div>
                 </>
               )}
