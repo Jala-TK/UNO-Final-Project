@@ -1,31 +1,123 @@
 import React, { useState } from 'react';
-import SettingsMenu from './menu';
-import InfoDisplay from './info-display';
+import styles from './SettingsMenu.module.css';
+import { GameProps } from '@/types/types';
+import { exitGame } from '@/services/gameService';
+import { handleError } from '@/utils/handleError';
+import { useRouter } from 'next/navigation';
+import SliderComponent from '../slider';
 
+interface SettingsMenuProps {
+  game: GameProps;
+}
 
-const SettingsToogle: React.FC = () => {
-  const [info, setInfo] = useState({ title: '', content: '' });
-  const [infoVisible, setInfoVisible] = useState(false);
+interface InfoProps {
+  title: string;
+  content: GameProps | string;
+}
 
-  const handleButtonClick = (type: string) => {
-    if (type === 'info1') {
-      setInfo({ title: 'Max Players', content: '10' });
-    } else if (type === 'info2') {
-      setInfo({ title: 'Volume', content: '' });
+const SettingsMenu: React.FC<SettingsMenuProps> = ({ game }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [infoDisplayed, setInfoDisplayed] = useState(false);
+  const [title, setTitle] = useState<string | null>(null);
+  const [type, setType] = useState<string | null>(null);
+  const router = useRouter()
+
+  const leaveGame = async () => {
+    try {
+      await exitGame(game.id);
+      localStorage.removeItem('game');
+    } catch (error) {
+      console.log(handleError(error));
     }
-    setInfoVisible(!infoVisible);
+  };
+
+  const handleMainButtonClick = () => {
+    setIsExpanded(!isExpanded);
+    if (infoDisplayed) {
+      setInfoDisplayed(false);
+    }
+  };
+
+  const handleInfoButtonClick = (type: string) => {
+    setType(type);
+    if (type === 'info') {
+      setTitle('Info Game');
+    } else if (type === 'sound') {
+      setTitle('Volume');
+    } else if (type === 'leave') {
+      setTitle('Leave Game?');
+    }
+    setInfoDisplayed(true);
   };
 
   const handleCloseInfo = () => {
-    setInfoVisible(false);
+    setInfoDisplayed(false);
   };
+
+  const handleLeaveGame = () => {
+    console.log('Leaving game...');
+    setInfoDisplayed(false);
+    leaveGame().then(() => {
+      router.push("/login");
+    });
+  }
+
 
   return (
     <div>
-      <SettingsMenu onButtonClick={handleButtonClick} />
-      {infoVisible && <InfoDisplay title={info.title} content={info.content} onClose={handleCloseInfo} />}
+      <div className={styles.menuContainer}>
+        <button className={styles.iconButton} onClick={handleMainButtonClick}>
+          <img src="/assets/icons/Config Button.svg" alt="" />
+        </button>
+        {isExpanded && (
+          <div className={styles.menuItems}>
+            <button className={styles.iconButton} onClick={() => handleInfoButtonClick('info')}>
+              <img src="/assets/icons/Game Info.svg" alt="" />
+            </button>
+            <button className={styles.iconButton} onClick={() => handleInfoButtonClick('sound')}>
+              <img src="/assets/icons/Sound Buttom.svg" alt="" />
+            </button>
+            <button className={styles.iconButton} onClick={() => handleInfoButtonClick('leave')}>
+              <img src="/assets/icons/Leave Game Buttom.svg" alt="" />
+            </button>
+          </div>
+        )}
+      </div>
+      {infoDisplayed && (
+        <div className={styles.infoCard}>
+          <button className={styles.closeButton} onClick={handleCloseInfo}>
+            X
+          </button>
+          <div className={styles.cardContent}>
+            <h2>{title}</h2>
+            <div className={styles[`${type}`]}>
+              {(type === 'info') && (
+                <>
+                  <p>Title: {game.title}</p>
+                  <p>Code: {game.id}</p>
+                  <p>Max Players: {game.maxPlayers}</p>
+                  <p>Creator: {game.creator}</p>
+                </>
+              )}
+              {(type === 'sound') && (
+                <>
+                  <SliderComponent />
+                </>
+              )}
+              {(type === 'leave') && (
+                <>
+                  <div className={styles.buttons}>
+                    <button className={styles.buttonYes} onClick={handleLeaveGame}>Yes</button>
+                    <button className={styles.buttonNo} onClick={handleCloseInfo}>No</button>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default SettingsToogle;
+export default SettingsMenu;

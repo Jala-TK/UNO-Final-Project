@@ -6,7 +6,6 @@ import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
 import HandPlayer from '@/components/game/hand';
 import Table from '@/components/game/table';
 import Player from '@/components/game/player';
-import { destroyCookie, parseCookies, setCookie } from 'nookies';
 import { useRouter } from "next/navigation";
 import PopUpSettings from '@/components/popup';
 import { Card, GameProps, GameStatusProps, Scores } from '@/types/types';
@@ -253,6 +252,10 @@ const GamePage: React.FC = () => {
               <Button onClick={handleCloseDialog}>Ok</Button>
             </DialogActions>
           </Dialog>
+          <audio autoPlay loop>
+            <source src="/assets/sound/batman.mp3" type="audio/mpeg" />
+            Seu navegador não suporta o elemento de áudio.
+          </audio>
           <div className={styles.tableContainer}>
             <div className={styles.playersContainer}>
               {Object.keys(gameStatus.players).map((playerName, index) => (
@@ -272,7 +275,7 @@ const GamePage: React.FC = () => {
             <Table currentPlayer={isCurrentPlayer} gameId={gameId} topCard={topCard} className={styles.tableContainer} />
           </div>
           <HandPlayer currentPlayer={isCurrentPlayer} gameId={gameId} cards={cards} playableCards={playableCards} className={styles.handContainer} />
-          <SettingsToogle />
+          <SettingsToogle game={game} />
         </>
       )}
     </div>

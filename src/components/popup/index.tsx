@@ -10,7 +10,7 @@ interface PopUpSettingsProps {
   onConfirm: () => void;
 }
 
-const PopUpSettings: NextPage<PopUpProps> = ({
+const PopUpSettings: NextPage<PopUpSettingsProps> = ({
   title,
   waitingMessage,
   playerCount,
