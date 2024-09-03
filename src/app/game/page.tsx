@@ -78,11 +78,7 @@ const GamePage: React.FC = () => {
             .some((playerName) => playerName === user?.username);
 
         if (inGame) {
-          if (data.data.status == 'Finished') {
-            router.push("/games");
-          } else {
-            setGameStatus(data.data);
-          }
+          setGameStatus(data.data);
         }
         else {
           router.push("/games");
@@ -287,7 +283,7 @@ const GamePage: React.FC = () => {
 
   return (
     <div className={styles.pageContainer}>
-      {finishGame ? (
+      {finishGame || gameStatus.status === 'Finished' ? (
         <Podio scores={scores} />
       ) : (
         <>
