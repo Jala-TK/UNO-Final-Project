@@ -28,7 +28,6 @@ export const handleReverse = async (game, res) => {
   await updateGame(game, {
     clockwise: !game.clockwise,
   });
-  await setNextPlayer(game.id, 1, res);
 };
 
 export const handleSkip = async (game, res) => {
