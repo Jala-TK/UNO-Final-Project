@@ -8,7 +8,7 @@
 /dist
 
 # testing
-/coverage
+# /coverage
 
 # next.js
 /.next/
@@ -38,6 +38,6 @@ next-env.d.ts
 
 # express
 backend-express/logs/
-backend-express/coverage/
+#backend-express/coverage/
 logs/*
 error.log
