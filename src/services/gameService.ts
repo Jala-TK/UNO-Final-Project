@@ -1,5 +1,11 @@
 import { apiClient } from '@/services/fetch';
-import { GameProps, GameStatusProps, Card, Scores } from '@/types/types';
+import {
+  GameProps,
+  GameStatusProps,
+  Card,
+  Scores,
+  CardPlayable,
+} from '@/types/types';
 export async function fetchGameStatusData(
   gameId: number | null
 ): Promise<{ success: boolean; message: string; data: GameStatusProps }> {

@@ -28,7 +28,7 @@ const Deck: NextPage<DeckProps> = ({ gameId, currentPlayer }) => {
         <div key={index} className={styles.deckCard} style={{ zIndex: index }}>
           <img alt={`Card ${index + 1}`}
             src={'/assets/rooms/card-monte.png'}
-            onDoubleClick={() => handleDoubleClick()}
+            onClick={() => handleDoubleClick()}
           />
         </div>
       ))}

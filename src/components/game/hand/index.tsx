@@ -105,7 +105,7 @@ const HandPlayer: React.FC<HandPlayerProps> = ({ currentPlayer, gameId, cards, c
                 className={`${styles.imageCard} ${playableCards ? (isPlayable(card, playableCards) ? styles.playableCard : '') : ''}`}
                 alt={card.description}
                 src={card.image}
-                onDoubleClick={() => handleDoubleClick(card)}
+                onClick={() => handleDoubleClick(card)}
               />
             </div>
           ))}
