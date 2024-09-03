@@ -13,7 +13,7 @@ function getMimeType(byteArray) {
   };
 
   const header = Array.from(byteArray.subarray(0, 4))
-    .map((byte) => byte.toString(16).padStart(2, '0').toUpperCase())
+    .map((byte: any) => byte.toString(16).padStart(2, '0').toUpperCase())
     .join('');
 
   return signatures[header] || 'application/octet-stream';

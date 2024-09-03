@@ -113,7 +113,7 @@ const GamePage: React.FC = () => {
 
   const loadPlayableCards = async () => {
     try {
-      const data = await fetchCardsPlayableData(gameId);
+      const data: any = await fetchCardsPlayableData(gameId);
       if (data.success) {
         setPlayableCards(data.data);
       }
