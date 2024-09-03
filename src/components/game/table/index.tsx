@@ -1,8 +1,10 @@
 import type { NextPage } from 'next';
 import styles from './Table.module.css';
 import Pile from '../pile';
-import React, { useState } from 'react';
+import React from 'react';
 import Deck from '@/components/game/deck';
+import { Card } from '@/types/types';
+
 interface TableProps {
   topCard: Card | null;
   className: string

@@ -92,7 +92,7 @@ const HandPlayer: React.FC<HandPlayerProps> = ({ currentPlayer, gameId, cards, c
     <div className={className}>
       <div className={styles.handPlayer}>
         <button
-          className={`${styles.carouselButton} ${styles.prevButton}`}
+          className={cards.length > ITEMS_PER_PAGE ? `${styles.carouselButton} ${styles.prevButton}` : styles.invisibleArrow}
           onClick={() => rotateCards('left')}
           disabled={cards.length <= ITEMS_PER_PAGE}
         >
@@ -111,7 +111,8 @@ const HandPlayer: React.FC<HandPlayerProps> = ({ currentPlayer, gameId, cards, c
           ))}
         </div>
         <button
-          className={`${styles.carouselButton} ${styles.nextButton}`}
+          className={cards.length > ITEMS_PER_PAGE ? `${styles.carouselButton} ${styles.nextButton}` : styles.invisibleArrow}
+
           onClick={() => rotateCards('right')}
           disabled={cards.length <= ITEMS_PER_PAGE}
         >
